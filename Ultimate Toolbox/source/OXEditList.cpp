@@ -254,7 +254,8 @@ void COXEditListHeader::OnPaint()
 	// Do not call CStatic::OnPaint() for painting messages
 }
 
-LONG COXEditListHeader::OnSetText(UINT wParam, LONG_PTR lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG_PTR
+LRESULT COXEditListHeader::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -266,7 +267,8 @@ LONG COXEditListHeader::OnSetText(UINT wParam, LONG_PTR lParam)
 	return TRUE;
 }
 
-LONG COXEditListHeader::OnGetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEditListHeader::OnGetText(WPARAM wParam, LPARAM lParam)
 {
 	if(wParam>0)
 	{
@@ -278,7 +280,8 @@ LONG COXEditListHeader::OnGetText(UINT wParam, LONG lParam)
 	return (LONG)wParam;
 }
 
-LONG COXEditListHeader::OnGetTextLength(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEditListHeader::OnGetTextLength(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);

@@ -54,6 +54,9 @@
 
 #include "OXDllExt.h"
 
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 // for drag and drop support
 #include "OXDragDropSupport.h"
 #include "OXMainRes.h"
@@ -802,16 +805,18 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg int OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnNcPaint();
 	//}}AFX_MSG
 
 	// drag and drop support
-	virtual LONG OnDragEnter(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDragOver(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDragLeave(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDrop(WPARAM wParam, LPARAM lParam);
+	// v9.3 - update 03 - 64-bit - return values were declared as LONG - changed to LRESULT
+	virtual LRESULT OnDragEnter(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDragOver(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDragLeave(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDrop(WPARAM wParam, LPARAM lParam);
 
 	// advanced customization commands handlers
 	afx_msg void OnCustBMDelete();

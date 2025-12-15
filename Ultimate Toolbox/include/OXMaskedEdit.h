@@ -430,11 +430,13 @@ protected:
 	afx_msg void OnKillfocus();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
-	afx_msg LRESULT OnCut(UINT wParam, LONG lParam) ;
-	afx_msg LRESULT OnCopy(UINT wParam, LONG lParam) ;
-	afx_msg LRESULT OnPaste(UINT wParam, LONG lParam) ;
-	afx_msg LRESULT OnClear(UINT wParam, LONG lParam) ;
-	afx_msg LRESULT OnSetText(UINT wParam, LPARAM lParam) ;
+	// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG,
+	// but should have been WPARAM and LPARAM
+	afx_msg LRESULT OnCut(WPARAM wParam, LPARAM lParam) ;
+	afx_msg LRESULT OnCopy(WPARAM wParam, LPARAM lParam) ;
+	afx_msg LRESULT OnPaste(WPARAM wParam, LPARAM lParam) ;
+	afx_msg LRESULT OnClear(WPARAM wParam, LPARAM lParam) ;
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam) ;
 	
 	DECLARE_MESSAGE_MAP()
 };

@@ -96,7 +96,9 @@ Resource files:
 
 #include "MFCToolBar.h"
 
-#define CToolBar CMFCToolBar
+// v9.3 - update 05 - CMFCToolBar is now COXMFCToolBar to avoid conflict (VS2010)
+//#define CToolBar CMFCToolBar
+#define CToolBar COXMFCToolBar
 
 typedef struct _tagOXCUSTOMIZE_TOOLBARINFO
 {

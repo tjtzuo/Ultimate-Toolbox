@@ -17,10 +17,14 @@
 // //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit - moved include from below
+#include "UTB64Bit.h"
+
 #include "OX3DTabView.h"
 #include "OXSkins.h"
 
-#include "UTB64Bit.h"
+//#include "UTB64Bit.h"
 
 #ifndef __OXMFCIMPL_H__
 #if _MFC_VER >= 0x0700
@@ -387,11 +391,13 @@ BOOL COX3DTabViewContainer::InsertPage(int nIndex,
 	ASSERT(pWnd->m_hWnd==NULL);       // not yet created
 
 	DWORD dwStyle=AFX_WS_DEFAULT_VIEW;
-	/*if(!afxData.bWin95)
+// v9.3 update 02 - VS2008 - AUX_DATA no longer has this
+#if _MFC_VER < 0x0800
+	if(!afxData.bWin95)
 	{
 		dwStyle&=~WS_BORDER;
-	}*/
-
+	}
+#endif
 	DWORD dwID=GetUniqueId();
 
 	// Create with the right size

@@ -1342,7 +1342,8 @@ BOOL COXWABook::Init()
 	stWabParam.cbSize=sizeof(WAB_PARAM);
 	stWabParam.hwnd=m_hWnd;
 
-#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0700))
+// v9.3 - update 04 fixes for unicode builds in vc6 CHANGED _MFC_VER - AAW 2009-03-29
+#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0600))
 	char szBuffer[_MAX_PATH];
 #endif // _UNICODE
 
@@ -1352,7 +1353,9 @@ BOOL COXWABook::Init()
 	}
 	else
 	{
-#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0700))
+
+// v9.3 - update 04 fixes for unicode builds in vc6 CHANGED _MFC_VER - AAW 2009-03-29
+#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0600))
 		::WideCharToMultiByte(CP_ACP, WC_SEPCHARS, m_sBookPath, m_sBookPath.GetLength(),
 			szBuffer, _MAX_PATH, NULL, NULL);
 		stWabParam.szFileName = szBuffer;
@@ -1485,8 +1488,12 @@ BOOL COXWABook::EditUser(UINT nCount, ENTRYID *pEntry)
 	ASSERT(nCount);
 
 	m_nError=NULL;
+// v9.3 - update 03 - 64-bit - modified this - could switch on _MSC_VER? - TD
+#ifndef _WIN64
 	ULONG hWnd=NULL;
-
+#else
+	ULONG_PTR hWnd=NULL;
+#endif
 	HRESULT hRslt=m_pIAddrBook->Details(&hWnd,NULL,NULL,nCount,
 		pEntry,NULL,NULL,NULL,NULL);
 	
@@ -1653,7 +1660,8 @@ COXMailUser* COXWABook::SearchLDAP(LPTSTR lpszLDAPURL, ULONG ulFlags)
 
 	HRESULT hRslt;
 
-#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0700))
+// v9.3 - update 04 fixes for unicode builds in vc6 CHANGED _MFC_VER - AAW 2009-03-29
+#if (defined _UNICODE) && ((defined WABIMPORTPARAM) || (_MFC_VER >= 0x0600))
 	char szBuffer[_MAX_PATH];
 	::WideCharToMultiByte(CP_ACP, WC_SEPCHARS, lpszLDAPURL, -1,
 		szBuffer, _MAX_PATH, NULL, NULL);
@@ -1849,7 +1857,8 @@ ADRLIST* COXWABook::SelectUser(tOXWABOptions* pOptions, ULONG ulFlags,
 		AdrParm.lppszDestTitles=NULL;
 	}
 
-	ULONG_PTR nhWnd=(ULONG_PTR) m_hWnd;
+	// v9.3 - update 03 - 64-bit - was using ULONG_PTR here - TD
+	ULONG nhWnd=(ULONG) m_hWnd;
 
 	//we are ready
 	HRESULT hRslt=m_pIAddrBook->Address(&nhWnd,&AdrParm,

@@ -14,10 +14,14 @@
 // //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit - include moved from below
+#include "UTB64Bit.h"
+
 #include "OXCustomizeManager.h"
 
 #include "UTBStrOp.h"
-#include "UTB64Bit.h"
+//#include "UTB64Bit.h"
 
 const int OXCUTOMIZEMANAGER_MIN_WIDTH=520;
 const int OXCUTOMIZEMANAGER_MIN_HEIGHT=450;

@@ -104,7 +104,8 @@ BOOL COXContextHelpDialog::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 	}
 
-LONG COXContextHelpDialog::OnHelp(UINT_PTR, LONG_PTR lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXContextHelpDialog::OnHelp(UINT_PTR, LONG_PTR lParam)
 	{
 	ASSERT(AfxGetApp() != NULL);
 	DWORD_PTR dwID=(DWORD_PTR)(LPVOID)GetHelpIDs();
@@ -116,7 +117,8 @@ LONG COXContextHelpDialog::OnHelp(UINT_PTR, LONG_PTR lParam)
 	return 0;
 	}
 
-LONG COXContextHelpDialog::OnHelpContextMenu(UINT_PTR wParam, LONG_PTR)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXContextHelpDialog::OnHelpContextMenu(UINT_PTR wParam, LONG_PTR)
 	{
 	ASSERT(AfxGetApp() != NULL);
 	DWORD_PTR dwID=(DWORD_PTR)(LPVOID)GetHelpIDs();

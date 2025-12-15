@@ -134,8 +134,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 
-	afx_msg LONG OnHelp(UINT_PTR wParam, LONG_PTR lParam);
-	afx_msg LONG OnHelpContextMenu(UINT_PTR wParam, LONG_PTR lParam);
+	// v9.3 - update 03 - 64-bit - return values were declared as LONG - changed to LRESULT
+	afx_msg LRESULT OnHelp(UINT_PTR wParam, LONG_PTR lParam);
+	afx_msg LRESULT OnHelpContextMenu(UINT_PTR wParam, LONG_PTR lParam);
 	
 	DECLARE_MESSAGE_MAP()
 

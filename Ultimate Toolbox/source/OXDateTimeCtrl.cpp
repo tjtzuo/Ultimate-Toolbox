@@ -17,6 +17,10 @@
 //
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
 #include "OXDateTimeCtrl.h"
 
 #ifdef _DEBUG

@@ -203,7 +203,8 @@ void COXBitmapMenuOrganizer::Empty(BOOL bCopyText/*=TRUE*/)
 	{
 
 		COXBitmapMenu* pBitmapMenu=m_BitmapMenuList.RemoveHead();
-		TRACE(_T("\nEmpty: Found bitmapmenu %x - Line: %d, %s"), pBitmapMenu, __LINE__, __FILE__);
+		// v9.3 - update 04 fixed gibberish output due to __FILE__ not being UNICODE - AAW 2009-03-29
+		//TRACE(_T("\nEmpty: Found bitmapmenu %x - Line: %d, %s"), pBitmapMenu, __LINE__, TEXT( __FILE__ ));
 		RestoreBitmapMenu(pBitmapMenu,bCopyText);
 
 		//delete pBitmapMenu;
@@ -1093,6 +1094,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 	switch (uMsg)
 	{
 	case WM_MENUCHAR:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_MENUCHAR\n"));
 		{
 			CMenu* pMenu=CMenu::FromHandle((HMENU)lParam);
 			int nChar=towlower(LOWORD(wParam));
@@ -1103,6 +1105,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 	
 	case WM_INITMENUPOPUP:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_INITMENUPOPUP\n"));
 		{
 			CMenu* pPopupMenu=CMenu::FromHandle((HMENU)wParam);
 			UINT nIndex=(UINT) LOWORD(lParam); 
@@ -1140,7 +1143,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 			// in OnMeasureitem.
 			if(bSysMenu)
 			{
-				TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc: System Menu skipping Ownerdraw\n"));
+				TRACE(_T("\nCOXBitmapMenuOrganizer::MenuOrganizerProc: System Menu skipping Ownerdraw\n"));
 				bHandled=FALSE;
 				break;
 			}
@@ -1159,6 +1162,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_MEASUREITEM:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_MEASUREITEM\n"));
 		{
 			int nIDCtl=(int)wParam;
 			LPMEASUREITEMSTRUCT lpMeasureItemStruct=
@@ -1169,6 +1173,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_COMMAND:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_COMMAND\n"));
 		{
 			if(HIWORD(wParam)==0)
 			{
@@ -1176,10 +1181,25 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 
 				if(nCmdID==ID_OX_SHOWALLITEMS)
 				{
+					// v9.3 update 01 modification Manfred Drasch
+					POSITION pos=m_BitmapMenuList.GetHeadPosition();
+					while(pos!=NULL)
+					{
+						COXBitmapMenu* pBitmapMenu=m_BitmapMenuList.GetNext(pos);
+						RestoreBitmapMenu(pBitmapMenu,TRUE);
+					}
+					// end modification Manfred Drasch
+
 					m_bForceToDisplayHiddenItems=TRUE;
 
 					// current menu
 					UpdateActivePopupMenuCount();
+
+					// v9.3 update 01 modification Manfred Drasch
+					if (m_nActivePopupMenuCount == 0)
+						break;
+					// end modification Manfred Drasch
+
 					ASSERT(m_nActivePopupMenuCount>0);
 					OXPOPUPMENUTRACE pmt=
 						m_arrPopupMenusTrace[m_nActivePopupMenuCount-1];
@@ -1218,10 +1238,12 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 					ASSERT(hWnd!=NULL);
 					if(bSpecialCase || bMenuBar)
 					{
+						TRACE(_T("MenuOrganizerProc ::SendMessage(hWnd,WM_KEYDOWN,VK_ESCAPE,0x00010001);"));
 						::SendMessage(hWnd,WM_KEYDOWN,VK_ESCAPE,0x00010001);
 					}
 					else
 					{
+						TRACE(_T("MenuOrganizerProc ::PostMessage(hWnd,WM_KEYDOWN,VK_ESCAPE,0x00010001);"));
 						::PostMessage(hWnd,WM_KEYDOWN,VK_ESCAPE,0x00010001);
 					}
 
@@ -1231,7 +1253,9 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 					}
 						
 					// repopulate menus
-					POSITION pos=m_BitmapMenuList.GetHeadPosition();
+					// v9.3 update 01 modification Manfred Drasch - POSITION pos declared above
+					// POSITION pos=m_BitmapMenuList.GetHeadPosition();
+					pos=m_BitmapMenuList.GetHeadPosition();
 					while(pos!=NULL)
 					{
 						COXBitmapMenu* pBitmapMenu=m_BitmapMenuList.GetNext(pos);
@@ -1295,6 +1319,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_ENTERMENULOOP:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_ENTERMENULOOP\n"));
 		{
 			if(wParam==0)
 			{
@@ -1307,6 +1332,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_EXITMENULOOP:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_EXITMENULOOP\n"));
 		{
 			if(wParam==0)
 			{
@@ -1353,6 +1379,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_MENUSELECT:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_MENUSELECT\n"));
 		{
 			if(lParam!=NULL && m_arrPopupMenusTrace.GetSize()>0)
 			{
@@ -1402,6 +1429,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_OX_SAVEMENUSTATE:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc - WM_OX_SAVEMENUSTATE\n"));
 		{
 			// save info about recently used submenu items
 			HMENU hMenu=(HMENU)wParam;
@@ -1414,6 +1442,7 @@ LRESULT COXBitmapMenuOrganizer::MenuOrganizerProc(HWND hWnd, UINT uMsg,
 		}
 
 	case WM_OX_LOADMENUSTATE:
+		TRACE(_T("COXBitmapMenuOrganizer::MenuOrganizerProc\n"));
 		{
 			// load info about recently used submenu items
 			HMENU hMenu=(HMENU)wParam;
@@ -1648,7 +1677,8 @@ void COXBitmapMenuOrganizer::ConvertBitmapMenu(COXBitmapMenu* pBitmapMenu,
 			{		
 
 				pItemInfo=new COXItemInfo(pImageInfo, sText);
-				TRACE(_T("\nCreated COXItemInfo at %x - Line: %d, %s"), pItemInfo, __LINE__, __FILE__);
+				// v9.3 - update 04 fixed gibberish output due to __FILE__ not being UNICODE - AAW 2009-03-29
+				TRACE(_T("\nCreated COXItemInfo at %x - Line: %d, %s"), pItemInfo, __LINE__, TEXT( __FILE__ ));
 				miiPut.dwItemData=(DWORD_PTR)pItemInfo;
 				pBitmapMenu->AddItemInfo(pItemInfo);
 			}			
@@ -1721,7 +1751,8 @@ void COXBitmapMenuOrganizer::RestoreBitmapMenu(COXBitmapMenu* pBitmapMenu,
 	{
 		if(m_BitmapMenuList.GetAt(pos)==pBitmapMenu)
 		{
-			TRACE(_T("\nRemoving bitmapmenu at %x - Line: %d, %s"), pBitmapMenu, __LINE__, __FILE__);
+			// v9.3 - update 04 fixed gibberish output due to __FILE__ not being UNICODE - AAW 2009-03-29
+			TRACE(_T("\nRemoving bitmapmenu at %x - Line: %d, %s"), pBitmapMenu, __LINE__, TEXT( __FILE__ ));
 			m_BitmapMenuList.RemoveAt(pos);
 			break;
 		}
@@ -2386,6 +2417,8 @@ MenuMouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 #endif
 #endif
 
+	TRACE(_T("COXBitmapMenuOrganizer::MenuMouseHookProc code: %0X, wParam: %0X, lParam: %0X \n"));
+
 	ASSERT(g_pfnOldMouseHookProc!=NULL);
 
 	if(nCode<0)
@@ -2476,7 +2509,8 @@ MenuMouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 							pBMOrganizer->m_pFrameWnd->PostMessage(WM_COMMAND,
 								MAKEWPARAM(ID_OX_SHOWALLITEMS,0));
 						}
-						return 1;
+						// modicication Manfred Drasch - return removed
+ 						// return 1;
 					}
 				}
 			}
@@ -2499,51 +2533,56 @@ MenuKeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 #endif
 	ASSERT(g_pfnOldKeyboardHookProc!=NULL);
 
-	if(nCode<0)
-	{
-		// have to call the default implementation
-	    return ::CallNextHookEx(g_pfnOldKeyboardHookProc,nCode,wParam,lParam);
-	}
+// v9.3 update 01 modification - removed by Manfred Drasch
+// avoid crash with return over arrow menu item
 
-	if(wParam!=VK_RETURN)
-	{
-		// have to call the default implementation
-	    return ::CallNextHookEx(g_pfnOldKeyboardHookProc,nCode,wParam,lParam);
-	}
-	
-	COXBitmapMenuOrganizer* pBMOrganizer=
-		COXBitmapMenuOrganizer::FindOrganizer(AfxGetMainWnd()->GetSafeHwnd());
-	ASSERT(pBMOrganizer!=NULL);
-	ASSERT(pBMOrganizer->IsShowOnlyRecentlyUsedItems());
-
-	CWnd* pWnd=CWnd::GetDesktopWindow()->GetTopWindow();
-	ASSERT(pWnd!=NULL);
-	// find if pWnd is on of the windows that host popup menus
-	POSITION pos=pBMOrganizer->m_mapPopupMenuWindows.GetStartPosition();
-	while(pos!=NULL)
-	{
-		HMENU hMenu=NULL;
-		HWND hWnd=NULL;
-		pBMOrganizer->m_mapPopupMenuWindows.GetNextAssoc(pos,hMenu,hWnd);
-		ASSERT(hMenu!=NULL);
-		ASSERT(hWnd!=NULL);
-		if(pWnd->GetSafeHwnd()==hWnd)
-		{
-			MENUITEMINFO miInfo={ sizeof(MENUITEMINFO) };
-			miInfo.fMask=MIIM_ID|MIIM_STATE;
-			VERIFY(::GetMenuItemInfo(hMenu,::GetMenuItemCount(hMenu)-1,TRUE,&miInfo));
-			if(miInfo.wID==ID_OX_SHOWALLITEMS && (miInfo.fState&MFS_HILITE))
-			{
-				if((lParam&0xe0000000)==0)
-				{
-					pBMOrganizer->m_pFrameWnd->PostMessage(WM_COMMAND,
-						MAKEWPARAM(ID_OX_SHOWALLITEMS,0));
-				}
-				
-				return 1;
-			}
-		}
-	}
+// 	if(nCode<0)
+// 	{
+// 		// have to call the default implementation
+// 	    return ::CallNextHookEx(g_pfnOldKeyboardHookProc,nCode,wParam,lParam);
+// 	}
+// 
+// 	if(wParam!=VK_RETURN)
+// 	{
+// 		// have to call the default implementation
+// 	    return ::CallNextHookEx(g_pfnOldKeyboardHookProc,nCode,wParam,lParam);
+// 	}
+// 	
+// 	COXBitmapMenuOrganizer* pBMOrganizer=
+// 		COXBitmapMenuOrganizer::FindOrganizer(AfxGetMainWnd()->GetSafeHwnd());
+// 	ASSERT(pBMOrganizer!=NULL);
+// 	ASSERT(pBMOrganizer->IsShowOnlyRecentlyUsedItems());
+// 
+// 	CWnd* pWnd=CWnd::GetDesktopWindow()->GetTopWindow();
+// 	ASSERT(pWnd!=NULL);
+// 	// find if pWnd is on of the windows that host popup menus
+// 	POSITION pos=pBMOrganizer->m_mapPopupMenuWindows.GetStartPosition();
+// 	while(pos!=NULL)
+// 	{
+// 		HMENU hMenu=NULL;
+// 		HWND hWnd=NULL;
+// 		pBMOrganizer->m_mapPopupMenuWindows.GetNextAssoc(pos,hMenu,hWnd);
+// 		ASSERT(hMenu!=NULL);
+// 		ASSERT(hWnd!=NULL);
+// 		if(pWnd->GetSafeHwnd()==hWnd)
+// 		{
+// 			MENUITEMINFO miInfo={ sizeof(MENUITEMINFO) };
+// 			miInfo.fMask=MIIM_ID|MIIM_STATE;
+// 			VERIFY(::GetMenuItemInfo(hMenu,::GetMenuItemCount(hMenu)-1,TRUE,&miInfo));
+// 			if(miInfo.wID==ID_OX_SHOWALLITEMS && (miInfo.fState&MFS_HILITE))
+// 			{
+// 				if((lParam&0xe0000000)==0)
+// 				{
+// 					pBMOrganizer->m_pFrameWnd->PostMessage(WM_COMMAND,
+// 						MAKEWPARAM(ID_OX_SHOWALLITEMS,0));
+// 				}
+// 				
+// 				return 1;
+// 			}
+// 		}
+// 	}
+// 
+// end modification Manfred Drasch
 
     return ::CallNextHookEx(g_pfnOldKeyboardHookProc,nCode,wParam,lParam);
 }

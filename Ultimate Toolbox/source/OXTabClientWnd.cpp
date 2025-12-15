@@ -214,7 +214,8 @@ void COXTabWorkspace::OnDestroy()
 // Description: Timer handler - periodically refreshes tabs, determines
 //				active MDIChild and updates window names
 //////////////////////////////////////////////////////////////////////////////
-void COXTabWorkspace::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXTabWorkspace::OnTimer(OXTPARAM nIDEvent) 
 {
 	if(nIDEvent!=IDT_MDI_STATUS_TIMER)
 	{
@@ -952,7 +953,8 @@ void COXTabClientWnd::CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType)
 
 // Handler for a WM_MDIACTIVATE message. Will select corresponding 
 // tab control item
-LRESULT COXTabClientWnd::OnMDIActivate(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to WPARAM, LPARAM from UINT, LONG
+LRESULT COXTabClientWnd::OnMDIActivate(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
 
@@ -980,7 +982,8 @@ LRESULT COXTabClientWnd::OnMDIActivate(UINT wParam, LONG lParam)
 
 // Handler for WM_MDICREATE message. Will add new item to the 
 // tab control
-LRESULT COXTabClientWnd::OnMDICreate(UINT wParam, LONG lParam)
+	// v9.3 - update 03 - 64-bit - changed these to WPARAM, LPARAM from UINT, LONG
+LRESULT COXTabClientWnd::OnMDICreate(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1005,7 +1008,8 @@ LRESULT COXTabClientWnd::OnMDICreate(UINT wParam, LONG lParam)
 
 // Handler for WM_MDIDESTROY message. Will remove the correspondent item 
 // from the tab control
-LRESULT COXTabClientWnd::OnMDIDestroy(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to WPARAM, LPARAM from UINT, LONG
+LRESULT COXTabClientWnd::OnMDIDestroy(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
 

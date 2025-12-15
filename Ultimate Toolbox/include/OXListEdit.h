@@ -12,7 +12,11 @@
 #include "OXEdit.h"
 
 #pragma warning(disable : 4706)
+
+// v9.3 - update 05 - shouldn't need to include this for VS2010 - problematic for static MFC linkage (?)
+#if _MSC_VER < 1600
 #include <multimon.h>
+#endif
 
 class OX_CLASS_DECL COXListPopup : public CListBox
 {

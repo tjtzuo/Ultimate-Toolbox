@@ -50,6 +50,13 @@ static char THIS_FILE[] = __FILE__ ;
 
 #include "UTBStrOp.h"
 
+// v9.3 - update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29
+// Determine number of elements in an array (not bytes)
+#ifndef _countof
+#define _countof(array) (sizeof(array)/sizeof(array[0]))
+#endif // _countof
+// END AAW
+
 /////////////////////////////////////////////////////////////////////////////
 // Advanced Assert Send state
 
@@ -81,7 +88,13 @@ LPCSTR AppGetAssertEmailAddress()
 CString AppSetAssertEmailAddress(CString csEmailAddress)
 {
 	CString csOldEmailAddress ( g_szEmailAddress ) ;
-	UTBStr::tcsncpy((TCHAR*)g_szEmailAddress, 128, csEmailAddress, __min(csEmailAddress.GetLength()+1, sizeof(g_szEmailAddress)) ) ;
+	// v9.3 - update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29
+#ifdef  _UNICODE
+		::WideCharToMultiByte(CP_ACP, 0, csEmailAddress,csEmailAddress.GetLength()+1, g_szEmailAddress, 128, NULL, NULL);
+#else
+	UTBStr::strncpy(g_szEmailAddress, _countof(g_szEmailAddress), csEmailAddress, __min(csEmailAddress.GetLength()+1, _countof(g_szEmailAddress)) ) ;
+#endif
+	// END AAW
 	return csOldEmailAddress ;
 }
 
@@ -213,6 +226,7 @@ typedef struct _tagSAdvancedAssertData
 	BOOL    bEnableSend ;
 } SAdvancedAssertData;
 
+
 BOOL FAR PASCAL AdvancedAssertDlgProc(HWND hDlg, UINT nMessage, 
 									  WPARAM wParam, LPARAM lParam)
 {
@@ -299,8 +313,11 @@ void AfxDebugBreak()
 #endif
 
 
+// v9.3 - update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29
+//		- strings have been changed back or converted back to char instead of TCHAR where appropriate,
+//		- some wsprintfs are now %hs as well.
 // Note: file names are still ANSI strings (filenames rarely need UNICODE)
-BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName, int nLine)
+BOOL AFXAPI AdvancedAssertFailedLine(LPCSTR lpszCondition, LPCSTR lpszFileName, int nLine)
 {
 #ifdef _WIN32
 #ifdef _DEBUG
@@ -312,11 +329,7 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 		// we remove WM_QUIT because if it is in the queue then the message box won't display
 		MSG msg ;
 		BOOL bQuit = PeekMessage ( &msg, NULL, WM_QUIT, WM_QUIT, PM_REMOVE ) ;
-		char szCondition[MAX_MSG]="" ;
-		int nConditionLength = (int) _tcslen ( lpszCondition ) ;
-		UTBStr::tcsncpy((TCHAR*) szCondition,MAX_MSG, lpszCondition, __min(nConditionLength+1, sizeof(szCondition)) ) ;
-
-		BOOL bResult = _CrtDbgReport ( _CRT_ASSERT, lpszFileName, nLine, NULL, szCondition ) ;
+		BOOL bResult = _CrtDbgReport ( _CRT_ASSERT, lpszFileName, nLine, NULL, lpszCondition ) ;
 		if ( bQuit )
 			PostQuitMessage ( (int)msg.wParam ) ;
 		return bResult ;
@@ -332,7 +345,7 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 
 		// assume the debugger or auxiliary port
 		// Keep the trace down to one line. 
-		wsprintf ( szMessage, _T("ASSERT( %s );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+		wsprintf ( szMessage, _T("ASSERT( %hs );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 		::OutputDebugString ( szMessage ) ;
 		::InterlockedDecrement ( &lAdvancedAssertReallyBusy ) ;
 
@@ -357,7 +370,7 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 		// output into MacsBug looks better if it's done in one string,
 		// since MacsBug always breaks the line after each output
 		// Keep the trace down to one line. 
-		wsprintf ( szMessage, _T("ASSERT( %s );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+		wsprintf ( szMessage, _T("ASSERT( %hs );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 		::OutputDebugString ( szMessage ) ;
 	}
 
@@ -376,7 +389,7 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 		hwndParent = ::GetLastActivePopup ( hwndParent ) ;
 
 	// Separate the assertion from the file and line info when displaying in a message box. 
-	wsprintf ( szMessage, _T("Condition: ASSERT( %s ); ") szCRLF _T("Program:%s ") szCRLF _T("File: %hs ") szCRLF _T("Line: %d"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+	wsprintf ( szMessage, _T("Condition: ASSERT( %hs ); ") szCRLF _T("Program:%s ") szCRLF _T("File: %hs ") szCRLF _T("Line: %d"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 
 	// we remove WM_QUIT because if it is in the queue then the message box
 	// won't display
@@ -407,7 +420,9 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 	if ( ((DWORD_PTR)lpvIgnore  & 0x0003) != 0 ) TRACE( _T("ASSERT( lpvIgnore  & 0x0003) == 0);\n") );
 
 	HINSTANCE hInstance = AfxGetResourceHandle() ;
-	int nCode = (int)::DialogBoxIndirectParam ( hInstance, (LPCDLGTEMPLATE)&dlgAdvancedAssertTemplate, hwndParent, AdvancedAssertDlgProc, (LPARAM)&dataAssert ) ;
+
+	// v9.3 - update 03 - 64-bit - added cast (DLGPROC) to 4th parameter - test! - TD
+	int nCode = (int)::DialogBoxIndirectParam ( hInstance, (LPCDLGTEMPLATE)&dlgAdvancedAssertTemplate, hwndParent, (DLGPROC)AdvancedAssertDlgProc, (LPARAM)&dataAssert ) ;
 	// If the custom version fails, then use the original version. 
 	if ( nCode == -1 )
 		nCode = ::MessageBox ( hwndParent, szMessage, _T("Assertion Failed!"), MB_TASKMODAL | MB_ICONHAND | MB_ABORTRETRYIGNORE | MB_SETFOREGROUND ) ;
@@ -430,10 +445,10 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 		TCHAR szMessage[MAX_MSG ]=szNULL ;
 		TCHAR szExeName[_MAX_PATH]=szNULL ;
 		if ( !GetModuleFileName(NULL, szExeName, _MAX_PATH) )
-			_tcscpy ( szExeName, _T("<program name unknown>") ) ;
+			_tcscpy( szExeName, _T("<program name unknown>") ) ;
 
 		// assume the debugger or auxiliary port
-		wsprintf ( szMessage, _T("ASSERT( %s );  Assertion Failed: %s: File %s, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+		wsprintf ( szMessage, _T("ASSERT( %hs );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 		::OutputDebugString ( szMessage ) ;
 		lAdvancedAssertBusy-- ;
 
@@ -450,11 +465,11 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 	if ( afxTraceEnabled )
 	{
 		// assume the debugger or auxiliary port
-		wsprintf ( szMessage, _T("ASSERT( %s );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+		wsprintf ( szMessage, _T("ASSERT( %hs );  Assertion Failed: %s: File %hs, Line %d\n"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 		::OutputDebugString ( szMessage ) ;
 	}
 
-	wsprintf ( szMessage, _T("Condition: ASSERT( %s ); ") szCRLF _T("Program:%s ") szCRLF _T("File: %s ") szCRLF _T("Line: %d"), lpszCondition, szExeName, lpszFileName, nLine ) ;
+	wsprintf ( szMessage, _T("Condition: ASSERT( %hs ); ") szCRLF _T("Program:%s ") szCRLF _T("File: %hs ") szCRLF _T("Line: %d"), lpszCondition, szExeName, lpszFileName, nLine ) ;
 
 	// we remove WM_QUIT because if it is in the queue then the message box
 	// won't display
@@ -502,17 +517,23 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 		return TRUE ;    // will cause AfxDebugBreak
 	else if ( nCode == IDC_SEND )
 	{
+		// Simple MAPI does not like unicode strings, so convert to regular strings. 
+		char szNote   [MAX_MSG]="" ;
+		char szSubject[MAX_MSG]="" ;
+
 		CString csSubject ;
 		csSubject  = AfxGetApp()->m_pszAppName ;
 		csSubject += " Assertion Failed!" ;
 
-		// Simple MAPI does not like unicode strings, so convert to regular strings. 
-		char szNote   [MAX_MSG]="" ;
-		char szSubject[MAX_MSG]="" ;
-		int nSubjectLength = (int)_tcslen ( csSubject ) ;
 		int nMessageLength = (int)_tcslen ( szMessage ) ;
-		UTBStr::tcsncpy ((TCHAR*) szSubject, MAX_MSG, csSubject, __min(nSubjectLength+1, sizeof(szSubject)) ) ;
-		UTBStr::tcsncpy ((TCHAR*) szNote   , MAX_MSG, szMessage, __min(nMessageLength+1, sizeof(szNote   )) ) ;
+#ifdef  _UNICODE
+		::WideCharToMultiByte(CP_ACP, 0, csSubject,csSubject.GetLength(), szSubject, _countof(szSubject), NULL, NULL);
+		::WideCharToMultiByte(CP_ACP, 0, szMessage, nMessageLength, szNote, _countof(szNote), NULL, NULL);
+#else
+		UTBStr::strncpy(szSubject, _countof(szSubject), csSubject, __min(csSubject.GetLength()+1, _countof(szSubject)) ) ;
+		UTBStr::strncpy(szNote, _countof(szNote), szMessage, __min(nMessageLength+1, _countof(szNote)) ) ;
+#endif
+
 
 		LPCSTR pszAttachment = NULL ;
 		SendMailToBeta ( szSubject, szNote, pszAttachment ) ;
@@ -521,4 +542,6 @@ BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, LPCSTR lpszFileName,
 	AfxAbort() ;     // should not return (but otherwise AfxDebugBreak)
 	return TRUE ;
 }
+// AAW: END
+
 #endif // _DEBUG || BETA

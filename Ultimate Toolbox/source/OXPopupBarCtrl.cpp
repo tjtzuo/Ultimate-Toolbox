@@ -919,7 +919,8 @@ void COXPopupBarCtrl::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 }
 
 
-void COXPopupBarCtrl::OnTimer(UINT nIDEvent)
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXPopupBarCtrl::OnTimer(OXTPARAM nIDEvent)
 {
 	if(nIDEvent==(UINT)m_nCheckMouseTimer)
 	{
@@ -1484,10 +1485,27 @@ BOOL COXPopupBarCtrl::CalcWindowSize()
 	if((HFONT)m_font==NULL)
 	{
 		// Create the font
-		NONCLIENTMETRICS ncm;
-		ncm.cbSize = sizeof(NONCLIENTMETRICS);
-		VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, 
-			sizeof(NONCLIENTMETRICS), &ncm, 0));
+		//////////////////////////////////////////////////////////////////
+		// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+		// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+		// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+		// Code compiled for XP should still run on Vista.
+
+		int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#		if WINVER >= 0x0600
+		// compiled for Vista - check for OS version
+		OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+		ASSERT(GetVersionEx(&vi));
+		if(vi.dwMajorVersion < 6) {
+			// running on lesser version - adjust size of NONCLIENTMETRICS struct
+			ncmSize -= sizeof( int );
+		}
+#		endif
+		NONCLIENTMETRICS ncm={ ncmSize };
+		VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &ncm, 0));
+		// end NONCLIENTMETRICS mods v9.3 update 02
+		/////////////////////////////////////////////////
 		VERIFY(m_font.CreateFontIndirect(&ncm.lfMessageFont));
 	}
 

@@ -45,6 +45,9 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
+// v9.3 - update 03 - 64-bit - included for OXINTRET
+#include "UTB64Bit.h"
+
 #include "OXDllExt.h"
 #include "OXMainRes.h"
 
@@ -258,7 +261,8 @@ public:
 
 	void UpdateAllPanes(BOOL bUpdateRects, BOOL bUpdateText);
 
-	int OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+	// v9.3 - update 03 - using OXINTRET instead of int here
+	OXINTRET OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	

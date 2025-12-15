@@ -42,6 +42,9 @@
 
 #include "OXDllExt.h"
 
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 #ifndef CLR_NONE
 #define CLR_NONE 0xFFFFFFFFL
 #endif // CLR_NONE
@@ -286,7 +289,8 @@ protected:
 	virtual BOOL IsBorder(POINT pt, BOOL bConsiderInvalidAsBorder = TRUE);
 	
 	//{{AFX_MSG(COXSplashWnd)
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
 	//}}AFX_MSG

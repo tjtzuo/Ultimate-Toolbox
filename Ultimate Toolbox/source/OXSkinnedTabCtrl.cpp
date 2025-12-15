@@ -3,6 +3,10 @@
 // Version: 9.3
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
 #include "OXSkinnedTabCtrl.h"
 #include "OXSkins.h"
 

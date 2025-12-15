@@ -374,7 +374,8 @@ public:
 protected:
 	//{{AFX_MSG(COXTabWorkspace)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg BOOL OnSelchange(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
@@ -532,9 +533,10 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(COXTabClientWnd)
-	afx_msg LRESULT OnMDIActivate(UINT wParam, LONG lParam);
-	afx_msg LRESULT OnMDICreate(UINT wParam, LONG lParam);
-	afx_msg LRESULT OnMDIDestroy(UINT wParam, LONG lParam);
+	// v9.3 - update 03 - 64-bit - changed these to WPARAM, LPARAM from UINT, LONG
+	afx_msg LRESULT OnMDIActivate(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMDICreate(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMDIDestroy(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnNcPaint();

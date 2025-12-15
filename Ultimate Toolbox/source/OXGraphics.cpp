@@ -445,8 +445,11 @@ void COXGraphics::DrawRoundedButton(CDC *pDC,
 		
 	DrawBitmap(pDC,nLeft,nTop,nButtonWidth,nButtonHeight,ButtonBitmap,pPalette);
 	
-	delete SphereBitmap;
-	delete ButtonBitmap;
+	// v9.3 Update 01 - modification r.guerzoni - fix resource leak
+	//delete SphereBitmap;
+	//delete ButtonBitmap;
+	delete[] SphereBitmap;
+	delete[] ButtonBitmap;
 }
 
 

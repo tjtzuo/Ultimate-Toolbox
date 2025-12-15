@@ -39,8 +39,11 @@
 // tell linker to link with version.lib for VerQueryValue, etc.
 #pragma comment(linker, "/defaultlib:version.lib")
 
+// v9.3 - update 03 - 64-bit - added extra VC6 guard here - TD
+#if _MSC_VER < 1400
 #ifndef DWORD_PTR // for VC++ 6
 	typedef DWORD DWORD_PTR;
+#endif
 #endif
 
 // we need these type definitions to get information about dll version
@@ -166,7 +169,12 @@ public:
 		POSITION pos=GetStartPosition();
 		while(pos!=NULL)
 		{
+			// v9.3 - update 03 - 64-bit - switch param type - TD
+#ifdef _WIN64
+			DWORD_PTR dwProcessID;
+#else 
 			DWORD dwProcessID;
+#endif
 			PROCESSINFO* pProcessInfo;
 			GetNextAssoc(pos,dwProcessID,pProcessInfo);
 			ASSERT(pProcessInfo!=NULL);

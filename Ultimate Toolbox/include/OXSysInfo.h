@@ -152,6 +152,12 @@ Libraries:
 #ifndef __OXSYSINFO_H__
 #define __OXSYSINFO_H__
 
+#ifdef _WIN64
+#pragma message ("Ultimate Toolbox: COXSysInfo - cpuinf library unavailable for 64 bit - bypassing compilation.")
+// v9.3 - update 03 - 64-bit - The intel cpuinf32 library relies on inline assembly
+// for compilation, which is not implemeted in the MS 64-bit compilers. Update needed. - TD
+#else
+
 #if _MSC_VER >= 1000
 #pragma once
 #endif // _MSC_VER >= 1000
@@ -811,5 +817,7 @@ protected:
 	LPTSTR GetRegistryString(HKEY hKeyClass, LPTSTR lpszSubKey, 
 		LPTSTR lpszValueName) const;
 };
+
+#endif // _WIN64
 
 #endif	// __OXSYSINFO_H__

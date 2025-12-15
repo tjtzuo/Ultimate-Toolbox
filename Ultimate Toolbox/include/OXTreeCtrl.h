@@ -467,6 +467,9 @@
 
 #include "OXDllExt.h"
 
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 #include <afxtempl.h>
 
 #include "OXTreeItem.h"
@@ -532,7 +535,10 @@
 // extended GetNextItem codes
 //
 #define TVGN_FIRSTSELECTED	0x30
+// v9.3 update 02 - VS2008
+#if (_WIN32_IE <= 0x0600)
 #define TVGN_NEXTSELECTED	0x31
+#endif
 #define TVGN_PREVSELECTED	0x32
 #define TVGN_FIRSTDISABLED	0x33
 #define TVGN_NEXTDISABLED	0x34
@@ -1638,7 +1644,8 @@ protected:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnParentNotify(UINT message, LPARAM lParam);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);

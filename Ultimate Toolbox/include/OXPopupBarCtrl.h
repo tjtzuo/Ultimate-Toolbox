@@ -295,6 +295,10 @@ Next are the main points about this class:
 #endif // _MSC_VER >= 1000
 
 #include "OXDllExt.h"
+
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 #include "OXMainRes.h"
 
 #ifndef __AFXTEMPL_H__
@@ -1028,7 +1032,8 @@ protected:
 	afx_msg void OnClose();
 	afx_msg void OnDestroy();
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg LRESULT OnFloatStatus(WPARAM wParam, LPARAM lParam);
 	afx_msg BOOL OnNcCreate(LPCREATESTRUCT lpcs);

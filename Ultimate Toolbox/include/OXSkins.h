@@ -6,6 +6,11 @@
 #include "OXDllExt.h"
 #include "OXShortcutbar.h"
 
+// v9.3 - update 03 - added this for VC6
+#if _MSC_VER < 1400
+#include "multimon.h"	// for HMONITOR etc
+#endif
+
 //Added by Nish to detect if themes are enabled for the running application.
 //Generic function that also works on pre-XP OSes and pre-VC7.1 compilers.
 BOOL IsThemed();
@@ -583,7 +588,8 @@ public:
 	// Returns a reference to a structure containing the item dimention constants
 	virtual OXDIMENSIONCONSTANTS& GetDimentionConstants() = 0;
 	// Handles all messages for the subclassed menu popup window
-	virtual long MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam) = 0;
+	// v9.3 update 03 - 64 bit - change long to LRESULT
+	virtual LRESULT MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam) = 0;
 	// Handles WM_NCPAINT for COXBitmapMenuPopupWnd depending on the skin
 	virtual void OnNcPaintCustomizePopupWnd(COXBitmapMenuPopupWnd* pPopupWnd) = 0;
 	// Handles WM_PAINT for COXShadowedItemWnd depending on the skin
@@ -651,6 +657,10 @@ private:
 #if !defined(COXMenuSkinXP_h)
 #define COXMenuSkinXP_h
 
+// v9.3 update 01 modification Manfred Drasch for DrawMenuShadow change
+#define MenuIsOnTop		1	
+#define MenuIsOnLeft	2
+// end modification Manfred Drasch
 
 class COXMenubarSkinXP;
 class COXSkinXP;
@@ -685,7 +695,9 @@ public:
 	COXSkinXP* m_pSkinXP;
 	OXDIMENSIONCONSTANTS m_DimensionConstants;
 	COLORREF DarkenColor(long lScale, COLORREF lColor);
-	void DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OXSHADOWARRAY* pShadowArray);
+	// v9.3 update 01 modification Manfred Drasch 
+	// void DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OXSHADOWARRAY* pShadowArray);
+	void DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OXSHADOWARRAY* pShadowArray, int nMenPos = 0);
 	void DrawMenuItemShadow(HDC hDC, LPRECT lpRect, UINT nMenuItemShadowType);
 	CMap<HWND, HWND, CPoint, CPoint> m_mapHWNDtoPos;
 };

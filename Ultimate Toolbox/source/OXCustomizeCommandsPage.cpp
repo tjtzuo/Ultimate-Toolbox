@@ -1379,7 +1379,12 @@ void COXCustomizeCommandsPage::OnTBCustomizeCommand(UINT nID, NMHDR* pNMHDR,
 			else
 			{
 				ASSERT(!bCustomButton);
-				HMENU hMenu=pMenuBar->GetMenu();
+// v9.3 update 02 - GetMenu in COXMenuBar changed to return CMenu* - use GetHMenu
+#if _MFC_VER >= 0x0800 
+				HMENU hMenu = pMenuBar->GetHMenu();
+#else
+				HMENU hMenu = pMenuBar->GetMenu();
+#endif
 				ASSERT(hMenu!=NULL);
 				MENUITEMINFO menuItemInfo={ sizeof(MENUITEMINFO) };
 				menuItemInfo.fMask=MIIM_TYPE;
@@ -1489,7 +1494,12 @@ void COXCustomizeCommandsPage::OnTBCustomizeCommand(UINT nID, NMHDR* pNMHDR,
 					if(!dlgAppearance.m_sText.IsEmpty() && 
 						sText.Compare(dlgAppearance.m_sText)!=0)
 					{
-						HMENU hMenu=pMenuBar->GetMenu();
+// v9.3 update 02 - GetMenu in COXMenuBar changed to return CMenu* - use GetHMenu
+#if _MFC_VER >= 0x0800 
+						HMENU hMenu= pMenuBar->GetHMenu();
+#else
+						HMENU hMenu= pMenuBar->GetMenu();
+#endif
 						ASSERT(hMenu!=NULL);
 						MENUITEMINFO menuItemInfo={ sizeof(MENUITEMINFO) };
 						menuItemInfo.fMask=MIIM_TYPE;
@@ -1541,7 +1551,12 @@ void COXCustomizeCommandsPage::OnTBCustomizeCommand(UINT nID, NMHDR* pNMHDR,
 			{
 				ASSERT(pMenuBar!=NULL);
 
-				HMENU hMenu=pMenuBar->GetMenu();
+// v9.3 update 02 - GetMenu in COXMenuBar changed to return CMenu* - use GetHMenu
+#if _MFC_VER >= 0x0800 
+				HMENU hMenu= pMenuBar->GetHMenu();
+#else
+				HMENU hMenu= pMenuBar->GetMenu();
+#endif
 				ASSERT(hMenu!=NULL);
 				CMenu* pMenu=CMenu::FromHandle(hMenu);
 				ASSERT(pMenu!=NULL);

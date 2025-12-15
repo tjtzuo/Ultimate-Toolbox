@@ -17,6 +17,10 @@
 // //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit 
+#include "UTB64Bit.h"
+
 #include "OXSizeCtrlBar.h"
 
 #include "OXMainRes.h"  // for some resource strings
@@ -325,7 +329,8 @@ void COXSizeControlBar::EnableDocking(DWORD dwDockStyle)
 
 // message handler. Force the parent of the control bar to update it's style
 // after floating, otherwise we'll wait till an WM_NCHITTEST.
-LONG COXSizeControlBar::OnAfterFloatMessage(UINT /* wParam */, LONG /* lParam */)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXSizeControlBar::OnAfterFloatMessage(WPARAM /* wParam */, LPARAM /* lParam */)
 {
 	CWnd* pFrame = GetParentFrame();
 	if(pFrame != NULL && pFrame->IsKindOf(RUNTIME_CLASS(COXSizableMiniDockFrameWnd)))
@@ -473,7 +478,8 @@ BOOL COXSizeControlBar::IsProbablyFloating()
 }
 
 
-LONG COXSizeControlBar::OnAddContextMenuItems(WPARAM /* wParam */, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed return value to LRESULT from LONG
+LRESULT COXSizeControlBar::OnAddContextMenuItems(WPARAM /* wParam */, LPARAM lParam)
 {
 	HMENU hMenu = (HMENU)lParam;		// handle of menu.
 	CMenu Menu;

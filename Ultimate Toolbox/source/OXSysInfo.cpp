@@ -12,6 +12,12 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+
+#ifdef _WIN64
+#pragma message ("Ultimate Toolbox: COXSysInfo - cpuinf library unavailable for 64 bit - bypassing compilation.")
+// v9.3 - update 03 - 64-bit - The intel cpuinf32 library relies on inline assembly
+// for compilation, which is not implemeted in the MS 64-bit compilers. Update needed. - TD
+#else
 #include "OXSysInfo.h"
 #include "OXMainRes.h"
 
@@ -2201,3 +2207,4 @@ int _cdecl DevModeCompare(const void *elem1, const void *elem2)
 }
 
   
+#endif // _WIN64

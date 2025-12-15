@@ -507,7 +507,8 @@ void COXRollup::DrawCaption(int nDisplayElement)
 	m_pTitleBar->SetActivation(nDisplayElement);
 	}
 
-void COXRollup::OnTimer(UINT nIDEvent)
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXRollup::OnTimer(OXTPARAM nIDEvent)
 	{
 	// this is not my timer event...
 	if ((m_myTimerID)!= nIDEvent)

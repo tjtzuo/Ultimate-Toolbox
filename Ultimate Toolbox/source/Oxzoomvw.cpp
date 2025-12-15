@@ -1280,6 +1280,8 @@ UINT COXZoomView::GetMouseScrollLines()
 			RegCloseKey(hKey);
 		}
 	}
+// v9.3 update 02 - VS2008 - AUX_DATA no longer has these
+#if _MFC_VER < 0x0800
 #if _MFC_VER > 0x0421
 	else if (!afxData.bWin95)
 #else
@@ -1288,10 +1290,10 @@ UINT COXZoomView::GetMouseScrollLines()
 	{
 		::SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &uCachedScrollLines, 0);
 	}
+#endif	// _MFC_VER < 0x0800
 
 	return uCachedScrollLines;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // COXZoomView diagnostics

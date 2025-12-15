@@ -18,8 +18,12 @@
 
 #include "stdafx.h"
 #include <windowsx.h>
-#include "OXMonthCalCtrl.h"
+
+// v93 update 03 - 64-bit - moved here from below
 #include "UTB64Bit.h"
+
+#include "OXMonthCalCtrl.h"
+//#include "UTB64Bit.h"
 
 
 #ifdef _DEBUG
@@ -1074,8 +1078,8 @@ BOOL COXMonthCalCtrl::OnGetDayState(NMHDR *pHdr, LRESULT *pRes)
 
 	return FALSE;
 }
-
-int COXMonthCalCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+// v9.3 - update 03 - 64-bit - using OXINTRET instead of int here - see UTB64Bit.h
+OXINTRET COXMonthCalCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 {
 	ASSERT_VALID(this);
 	ASSERT(::IsWindow(GetSafeHwnd()));

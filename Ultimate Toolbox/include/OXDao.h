@@ -1,14 +1,22 @@
 
+/***************************************************
 // Version: 9.3
 
-/***************************************************
-MFC DAO FrameWork Wrapper Class
-Dundas Software Ltd. 1997 - 2003
+// This software along with its related components, documentation and files ("The Libraries")
+// is © 1994-2007 The Code Project (1612916 Ontario Limited) and use of The Libraries is
+// governed by a software license agreement ("Agreement").  Copies of the Agreement are
+// available at The Code Project (www.codeproject.com), as part of the package you downloaded
+// to obtain this file, or directly from our office.  For a copy of the license governing
+// this software, you may contact us at legalaffairs@codeproject.com, or by calling 416-849-8900.
 ****************************************************/
 
 #ifndef COXDaoClassDefined
 #define COXDaoClassDefined
 
+// v9.3 - update 01 - DAO obsolete in 64-bit - TD
+#ifdef _WIN64
+#pragma message ("Ultimate Toolbox: DAO classes not available for Win64 platforms - bypassing compilation")
+#else
 #if _MSC_VER >= 1000
 #pragma once
 #endif // _MSC_VER >= 1000
@@ -168,4 +176,5 @@ static LPCTSTR COXDao_errorStrings[] = {
 	_T("")
 	};
 
+#endif	// _WIN64
 #endif

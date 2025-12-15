@@ -24,6 +24,9 @@
 #include "path.h"		// To get current dir, create a dir, etc.
 #include "OXMainRes.h"
 
+// v9.3 - update 03 - 64-bit - added for PtrToUlong
+#include "UTB64Bit.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char BASED_CODE THIS_FILE[] = __FILE__;

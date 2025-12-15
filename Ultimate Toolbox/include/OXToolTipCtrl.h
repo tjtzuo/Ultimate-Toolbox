@@ -184,6 +184,9 @@ Source code files:
 
 #include "OXDllExt.h"
 
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 class COXToolTipInfo;
 
 struct OXTOOLINFO : public TOOLINFO
@@ -723,7 +726,8 @@ private:
 protected:
 	//{{AFX_MSG(COXToolTipCtrl)
 	afx_msg void OnPaint();
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnDestroy();

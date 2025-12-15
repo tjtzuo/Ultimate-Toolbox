@@ -81,7 +81,8 @@ BOOL COXContextHelpPropertyPage::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-LONG COXContextHelpPropertyPage::OnHelp(UINT, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXContextHelpPropertyPage::OnHelp(WPARAM, LPARAM lParam)
 {
 	ASSERT(AfxGetApp() != NULL);
 
@@ -94,7 +95,8 @@ LONG COXContextHelpPropertyPage::OnHelp(UINT, LONG lParam)
 	return 0;
 }
 
-LONG COXContextHelpPropertyPage::OnHelpContextMenu(UINT wParam, LONG)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXContextHelpPropertyPage::OnHelpContextMenu(WPARAM wParam, LPARAM)
 {
 	ASSERT(AfxGetApp() != NULL);
 	DWORD_PTR dwID=(DWORD_PTR)(LPVOID)GetHelpIDs();

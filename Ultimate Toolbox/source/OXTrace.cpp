@@ -414,7 +414,9 @@ void COXTrace::WriteMsg(LPCTSTR lpstrMessage)
 				m_File.Write(lpstrLine, (nIndex + 2) * sizeof(TCHAR));
 			}
 		}
-		delete lpstrLine;
+	
+		// v9.3 Update 01 - change delete to delete[] r.guerzoni
+		delete[] lpstrLine;
 			
 		if (m_File.m_hFile != CFile::hFileNull && m_bFlushOnWrite)
 		{

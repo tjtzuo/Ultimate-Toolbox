@@ -702,7 +702,9 @@ void COXEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 			{
 				if(nSelectionStart>=1)
 				{
-					while(nSelectionStart>0)
+					// v9.3 update 01 change - user mina 
+					// while(nSelectionStart>0)
+					while(nSelectionStart>0 && nSelectionStart <= nSelectionEnd )
 					{
 						nSelectionStart--; // Do the equivalent of a backspace.
 
@@ -751,7 +753,8 @@ void COXEdit::OnSetFocus(CWnd* pOldWnd)
 }
 
 
-LONG COXEdit::OnCut(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEdit::OnCut(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -779,7 +782,8 @@ LONG COXEdit::OnCut(UINT wParam, LONG lParam)
 }
 
 
-LONG COXEdit::OnCopy(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEdit::OnCopy(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -791,7 +795,8 @@ LONG COXEdit::OnCopy(UINT wParam, LONG lParam)
 }
 
 
-LONG COXEdit::OnPaste(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEdit::OnPaste(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -835,7 +840,8 @@ LONG COXEdit::OnPaste(UINT wParam, LONG lParam)
 }
 
 
-LONG COXEdit::OnClear(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXEdit::OnClear(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -872,7 +878,8 @@ void COXEdit::OnLButtonDown(UINT nFlags, CPoint point)
 }
 
 
-LRESULT COXEdit::OnSetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to WPARAM, LPARAM from UINT, LONG
+LRESULT COXEdit::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1369,6 +1376,9 @@ int COXNumericEdit::DeleteRange(int& nSelectionStart, int& nSelectionEnd)
 {
 	ASSERT(nSelectionStart >= 0);
 	ASSERT(nSelectionStart <= nSelectionEnd);
+
+	// v9.3 update 01 TD select '-' sign and hit delete for infinite loop... (potential fix)
+	if(nSelectionEnd == -1) return 0;
 
 	nSelectionStart = GetNextInputLocation( nSelectionStart );
 
@@ -2201,6 +2211,11 @@ int COXNumericEdit::GetGroupSeparatorSymbolsInserted(int nStartPos/* = 0*/,
 	if(nEndPos == -1)
 	{
 		nEndPos = PtrToInt(m_arrInputData.GetSize()) - 1;
+	}
+	// v9.3 update 01 TD - asserts with no leading 0, no decimal group etc and single digit/sign 
+	// selected for delete - hangs in release if Backspace selected on highlight '-'
+	if(nEndPos == nStartPos || (nEndPos == -1 && nStartPos == 0)) {
+		return 0;
 	}
 	ASSERT(nEndPos >= nStartPos);
 	ASSERT(nStartPos >= 0 && nStartPos <= m_arrInputData.GetSize());

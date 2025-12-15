@@ -179,6 +179,7 @@ void COXDragDockContext::StartDrag(CPoint pt)
 	}
 	m_rectDragHorzAlone=CRect(CPoint(rectBorder.left,rect.top),rectBorder.Size());
 	m_rectDragVertAlone=CRect(CPoint(rect.left,rectBorder.top),rectBorder.Size());
+
 	m_rectDragHorzAlone.bottom=m_rectDragHorzAlone.top+pSzBar->m_HorzDockSize.cy;
 	m_rectDragVertAlone.right=m_rectDragVertAlone.left+pSzBar->m_VertDockSize.cx;
 	//
@@ -512,8 +513,22 @@ DWORD COXDragDockContext::CanDock()
 				if(nBars!=0)
 				{
 					m_rectDragDock = m_rectDragHorz;
-					m_rectDragDock.right = m_rectDragDock.left+
-						m_rectDragHorzAlone.Width()/(nBars+1);
+
+					// v9.3 - update 04 fixed resizing of docked item if moving to same bar - AAW 2009-03-29
+					if (m_pBar->m_pDockBar == m_pTargetDockBar)
+					{
+						// if we're planning to move it to the same bar, don't change our width.
+						CRect rct;
+						m_pBar->GetWindowRect(&rct);
+						m_rectDragDock.bottom = m_rectDragDock.right +
+							rct.Width();
+					}
+					else
+					// AAW END
+					{
+						m_rectDragDock.right = m_rectDragDock.left+
+							m_rectDragHorzAlone.Width()/(nBars+1);
+					}
 				}
 			}
 		}		
@@ -530,8 +545,20 @@ DWORD COXDragDockContext::CanDock()
 				if(nBars!=0)
 				{
 					m_rectDragDock = m_rectDragVert;
-					m_rectDragDock.bottom = m_rectDragDock.top+
-						m_rectDragVertAlone.Height()/(nBars+1);
+					// v9.3 - update 04 fixed resizing of docked item if moving to same bar - AAW 2009-03-29
+					if (m_pBar->m_pDockBar == m_pTargetDockBar)
+					{   // if we're planning to move it to the same bar, don't change our height.
+						CRect rct;
+						m_pBar->GetWindowRect(&rct);
+						m_rectDragDock.bottom = m_rectDragDock.top +
+							rct.Height();
+					}
+					else
+					// AAW END
+					{
+						m_rectDragDock.bottom = m_rectDragDock.top+
+							m_rectDragVertAlone.Height()/(nBars+1);
+					}
 				}
 			}
 		}		

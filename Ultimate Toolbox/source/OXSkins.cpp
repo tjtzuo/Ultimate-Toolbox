@@ -10,6 +10,10 @@
 // Version: 9.3
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit - moved here from below
+#include "UTB64Bit.h"
+
 #include "OXSkins.h"
 #include "OXCoolToolBar.h"
 #include "OXMenuBar.h"
@@ -1783,8 +1787,29 @@ void COXTabSkinClassic::OnPaintTabCtrl(CTabCtrl* pTabCtrl)
 			r2.top += ht;
 			r2.bottom += ht;
 
-			NONCLIENTMETRICS nclim;
-			nclim.cbSize=sizeof(NONCLIENTMETRICS);
+			//////////////////////////////////////////////////////////////////
+			// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+			// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+			// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+			// Code compiled for XP should still run on Vista.
+
+			int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#			if WINVER >= 0x0600
+			// compiled for Vista - check for OS version
+			OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+			ASSERT(GetVersionEx(&vi));
+			if(vi.dwMajorVersion < 6) {
+				// running on lesser version - adjust size of NONCLIENTMETRICS struct
+				ncmSize -= sizeof( int );
+			}
+#			endif
+
+			NONCLIENTMETRICS nclim={ ncmSize };
+			VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &nclim, 0));
+			// end NONCLIENTMETRICS mods v9.3 update 02
+			/////////////////////////////////////////////////
+
 			::SystemParametersInfo(SPI_GETNONCLIENTMETRICS,
 				sizeof(NONCLIENTMETRICS),&nclim,0);
 			LOGFONT lf = nclim.lfMenuFont;			
@@ -1821,11 +1846,30 @@ COXTabSkinXP::COXTabSkinXP(COXSkinXP* pSkinXP)
 	m_pSkinXP = pSkinXP;
 
 	m_sepPen.CreatePen( PS_SOLID, 1, ::GetSysColor(COLOR_3DSHADOW) );
-	NONCLIENTMETRICS nclim;
-	nclim.cbSize=sizeof(NONCLIENTMETRICS);
-	::SystemParametersInfo(SPI_GETNONCLIENTMETRICS,
-							sizeof(NONCLIENTMETRICS),
-							&nclim,0);
+
+	//////////////////////////////////////////////////////////////////
+	// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+	// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+	// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+	// Code compiled for XP should still run on Vista.
+
+	int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#	if WINVER >= 0x0600
+	// compiled for Vista - check for OS version
+	OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+	ASSERT(GetVersionEx(&vi));
+	if(vi.dwMajorVersion < 6) {
+		// running on lesser version - adjust size of NONCLIENTMETRICS struct
+		ncmSize -= sizeof( int );
+	}
+#	endif
+
+	NONCLIENTMETRICS nclim={ ncmSize };
+	VERIFY(::SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &nclim, 0));
+	// end NONCLIENTMETRICS mods v9.3 update 02
+	/////////////////////////////////////////////////
+
 	m_tabFont.CreateFontIndirect(&nclim.lfMenuFont);
 
 	m_btnFill.CreateSolidBrush( m_pSkinXP->GetInactiveTabTextColor() );
@@ -3585,7 +3629,12 @@ void SetShadowPixel(HDC hDC, int iXPos, int iYPos, COLORREF clr, bool bSaveShado
 }
 
 // Draws a menu shadow for the given rectangle
-void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OXSHADOWARRAY* pShadowArray)
+// v9.3 update 01 modification Manfred Drasch for DrawMenuShadow change
+// #define MenuIsOnTop		1	
+// #define MenuIsOnLeft	2
+// For added parameter nMenPos all other values ignored
+// end modification Manfred Drasch
+void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OXSHADOWARRAY* pShadowArray, int nMenPos/* = 0*/)
 {
 	int iArrayIndex = 0;
 	bool bSaveShadow, bUseSavedShadow;
@@ -3611,6 +3660,7 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 	CRect rectMenuItem(lpItemRect); // the rectangle of the menu item in screen coordinates
 	CRect rectMenu(lpRect);
 
+
 	// Draw the shadow - get the pixels from the desktop, darken them
 	// and place them on the popup window
 	HDC hDesktopDC = ::GetWindowDC(::GetDesktopWindow());
@@ -3623,7 +3673,7 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 	CBitmap bitmap;
 	bitmap.CreateCompatibleBitmap(pDC, rectMenu.Width(), rectMenu.Height());
 	CBitmap *pOldBitmap = dcMem.SelectObject(&bitmap);
-	
+
 	// working with a mem bitmap at 0,0 for GetPixel
 	dcMem.BitBlt(0,0, rectMenu.Width(), rectMenu.Height(), pDC, rectMenu.left, rectMenu.top, SRCCOPY);
 
@@ -3638,7 +3688,7 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 
 	// Right shadow 
 	for (x = 1; x <= 4; x++)
-	{ 
+	{
 		// Copy the top right pixels
 		for (y = 1; y <= 4; y++)
 		{
@@ -3654,11 +3704,11 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 			pt.x = iRight - x;
 			pt.y = iTop + y - 1;
 			clr = GetShadowPixel(dcMem.m_hDC, pt.x, pt.y, bUseSavedShadow);
-			if (!rectMenuItem.PtInRect(pt))
-			{
+			if( (nMenPos == MenuIsOnLeft) && (pt.y >= rectMenuItem.top - 1 && pt.y <= rectMenuItem.bottom) )
+				SetShadowPixel(hDC, pt.x, pt.y, clr, bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
+			else
 				// Darken the pixel
 				SetShadowPixel(hDC, pt.x, pt.y, DarkenColor(3 * x * y, clr), bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
-			}
 		}
 
 		// Vertical line
@@ -3667,12 +3717,10 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 			pt.x = iRight - x;
 			pt.y = y;
 			clr = GetShadowPixel(dcMem.m_hDC, pt.x, pt.y, bUseSavedShadow);
-			// TD review this ...
-//			if (!rectMenuItem.PtInRect(pt))
-//			{
-				// Darken the pixel
+			if( (nMenPos == MenuIsOnLeft) && (y >= rectMenuItem.top - 1 && y <= rectMenuItem.bottom) )
+				SetShadowPixel(hDC, pt.x, pt.y, clr, bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
+			else
 				SetShadowPixel(hDC, pt.x, pt.y, DarkenColor(15 * x, clr), bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
-//			}
 		}
 
 		// Bottom right corner
@@ -3703,11 +3751,11 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 			pt.x = iLeft - x + 4;
 			pt.y = iBottom - y;
 			clr = GetShadowPixel(dcMem.m_hDC, pt.x, pt.y, bUseSavedShadow);
-			if (!rectMenuItem.PtInRect(pt))
-			{
+			if( (nMenPos == MenuIsOnTop) && (pt.x >= rectMenuItem.left - 1 && pt.x <= rectMenuItem.right) )
+				SetShadowPixel(hDC, pt.x, pt.y, clr, bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
+			else
 				// Darken the pixel
 				SetShadowPixel(hDC, pt.x, pt.y, DarkenColor(3 * (5 - x) * y, clr), bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
-			}
 		}
 		
 		// Horizontal line
@@ -3716,44 +3764,46 @@ void COXMenuSkinXP::DrawMenuShadow(HDC hDC, LPRECT lpRect, LPRECT lpItemRect, OX
 			pt.x = x;
 			pt.y = iBottom - y;
 			clr = GetShadowPixel(dcMem.m_hDC, pt.x, pt.y, bUseSavedShadow);
-			if (!rectMenuItem.PtInRect(pt))
-			{
+			if( (nMenPos == MenuIsOnTop) && (x >= rectMenuItem.left - 1 && x <= rectMenuItem.right) )
+				SetShadowPixel(hDC, pt.x, pt.y, clr, bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
+			else
 				// Darken the pixel
 				SetShadowPixel(hDC, pt.x, pt.y, DarkenColor(15 * y, clr), bSaveShadow, bUseSavedShadow, pShadowArray, iArrayIndex);
-			}
 		}
 	} 
+
 	// done with bitmap here
 	dcMem.SelectObject(pOldBitmap);
+	bitmap.DeleteObject();
 
-	// Draw the intersection of the item rectangle and the shadow
-	{
-		CRect rectIntersection;
-		rectIntersection.IntersectRect(lpRect, lpItemRect);
-		rectIntersection.OffsetRect(-lpRect->left, -lpRect->top);
-		FillIntersectionRect(hDC, rectIntersection);
-		HPEN hPen = ::CreatePen(PS_SOLID, 1, m_pSkinXP->GetMenuBorderColor());
-		HPEN hOldPen = (HPEN) ::SelectObject(hDC, hPen);
-
-		if (rectIntersection.Width() > rectIntersection.Height())
-		{
-			// We have a bottom menu
-			::MoveToEx(hDC, rectIntersection.left, rectIntersection.top, NULL);
-			::LineTo(hDC, rectIntersection.left, rectIntersection.bottom);
-			::MoveToEx(hDC, rectIntersection.right - 1, rectIntersection.top, NULL);
-			::LineTo(hDC, rectIntersection.right - 1, rectIntersection.bottom);
-		}
-		else
-		{
-			// We have a right menu
-			::MoveToEx(hDC, rectIntersection.left, rectIntersection.top, NULL);
-			::LineTo(hDC, rectIntersection.right, rectIntersection.top);
-			::MoveToEx(hDC, rectIntersection.left, rectIntersection.bottom - 1, NULL);
-			::LineTo(hDC, rectIntersection.right, rectIntersection.bottom - 1);
-		}
-		::SelectObject(hDC, hOldPen);
-		::DeleteObject(hPen);
-	}
+// 	// Draw the intersection of the item rectangle and the shadow
+// 	{
+// 		CRect rectIntersection;
+// 		rectIntersection.IntersectRect(lpRect, lpItemRect);
+// 		rectIntersection.OffsetRect(-lpRect->left, -lpRect->top);
+// 		FillIntersectionRect(hDC, rectIntersection);
+// 		HPEN hPen = ::CreatePen(PS_SOLID, 1, m_pSkinXP->GetMenuBorderColor());
+// 		HPEN hOldPen = (HPEN) ::SelectObject(hDC, hPen);
+// 
+// 		if (rectIntersection.Width() > rectIntersection.Height())
+// 		{
+// 			// We have a bottom menu
+// 			::MoveToEx(hDC, rectIntersection.left, rectIntersection.top, NULL);
+// 			::LineTo(hDC, rectIntersection.left, rectIntersection.bottom);
+// 			::MoveToEx(hDC, rectIntersection.right - 1, rectIntersection.top, NULL);
+// 			::LineTo(hDC, rectIntersection.right - 1, rectIntersection.bottom);
+// 		}
+// 		else
+// 		{
+// 			// We have a right menu
+// 			::MoveToEx(hDC, rectIntersection.left, rectIntersection.top, NULL);
+// 			::LineTo(hDC, rectIntersection.right, rectIntersection.top);
+// 			::MoveToEx(hDC, rectIntersection.left, rectIntersection.bottom - 1, NULL);
+// 			::LineTo(hDC, rectIntersection.right, rectIntersection.bottom - 1);
+// 		}
+// 		::SelectObject(hDC, hOldPen);
+// 		::DeleteObject(hPen);
+// 	}
 
 	::ReleaseDC(0, hDesktopDC);
 }
@@ -4000,6 +4050,8 @@ LRESULT COXMenuSkinXP::MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMs
 		}
 		break;
 
+
+		// v9.3 update 01 modifications Manfred Drasch
 		case WM_NCPAINT:
 		{
 			// For Windows95/98/ME/NT/XP we must perform the drawing here
@@ -4040,34 +4092,89 @@ LRESULT COXMenuSkinXP::MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMs
 				m_mapHWNDtoPos.Lookup(hWnd, ptTopLeft);
 				m_mapHWNDtoPos.RemoveKey(hWnd);
 
-				DrawMenuShadow(pDC->m_hDC, rectWnd, pBitmapMenu->m_rectDropDownItem,
-					pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd));
-				
-				// Draw the menu frame
+				// Interrupt the menu frame where it meets the menu item
+				CRect rectDropDownItem(pBitmapMenu->m_rectDropDownItem);
+				rectDropDownItem.OffsetRect(-ptOffset.x, -ptOffset.y);
+
+				bool fDrawJoiningLine = TRUE;
+
+				int nOffset1 = 0;	// Multimonitor!
+				int nOffset2 = 0;
+				// Get the rectangle of the monitor closest to the menu rectangle
+				CRect rctMonitor;
+				HMONITOR hMonitor = ::MonitorFromRect(pBitmapMenu->m_rectDropDownItem, MONITOR_DEFAULTTONEAREST);
+				MONITORINFO mi;
+				mi.cbSize = sizeof(MONITORINFO);
+				if(hMonitor!=NULL && ::GetMonitorInfo(hMonitor, &mi))
+				{
+					rctMonitor = mi.rcMonitor;
+					if ((pBitmapMenu->m_rectDropDownItem.left < 0) && (pBitmapMenu->m_rectDropDownItem.right >= 0))
+					{
+						if (rctMonitor.left < 0)
+							nOffset1 = pBitmapMenu->m_rectDropDownItem.right + 1;
+						else
+							nOffset2 = pBitmapMenu->m_rectDropDownItem.left;
+					}
+					else if (pBitmapMenu->m_rectDropDownItem.right >= rctMonitor.right)
+					{
+						nOffset1 = pBitmapMenu->m_rectDropDownItem.right - rctMonitor.right + 1;
+					}
+				}
+
+				if (rectDropDownItem.bottom == rectFrame.top)
+				{
+					// The drop down item is on top of the menu
+					rectDropDownItem.top = 0;
+					rectDropDownItem.bottom = 1;
+					rectDropDownItem.left = rectDropDownItem.left + 1 - nOffset2;
+					rectDropDownItem.right = rectDropDownItem.right - 1 - nOffset1;
+					DrawMenuShadow(pDC->m_hDC, rectWnd, rectDropDownItem, pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd));
+				}
+				else if (rectDropDownItem.top == rectFrame.bottom)
+				{
+					// The drop down item is at the bottom of the menu
+					rectDropDownItem.bottom = rectDropDownItem.top;
+					rectDropDownItem.top = rectDropDownItem.bottom - 1;
+					rectDropDownItem.left = rectDropDownItem.left + 1 - nOffset2;
+					rectDropDownItem.right = rectDropDownItem.right - 1 - nOffset1;
+					DrawMenuShadow(pDC->m_hDC, rectWnd, rectDropDownItem, pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd), MenuIsOnTop);
+				}
+				else if (rectDropDownItem.right == rectFrame.left)
+				{
+					// The drop down item is on the left of the menu
+					rectDropDownItem.left = 0;
+					rectDropDownItem.right = 1;
+					rectDropDownItem.bottom -= 1;
+					rectDropDownItem.top += 1;
+					DrawMenuShadow(pDC->m_hDC, rectWnd, rectDropDownItem, pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd));
+				}
+				else if (rectDropDownItem.left == rectFrame.right)
+				{
+					// The drop down item is on the right of the menu
+					rectDropDownItem.right = rectDropDownItem.left;
+					rectDropDownItem.left = rectDropDownItem.right - 1;
+					rectDropDownItem.bottom -= 1;
+					rectDropDownItem.top += 1;
+					DrawMenuShadow(pDC->m_hDC, rectWnd, rectDropDownItem, pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd), MenuIsOnLeft);
+				}
+				else
+				{
+					DrawMenuShadow(pDC->m_hDC, rectWnd, rectDropDownItem, pBitmapMenu->m_PopupWndStack.GetShadowArray(hWnd));
+					fDrawJoiningLine = false;
+				}
+
+				// Draw the menu frame etc.	after !!! DrawMenuShadow()
 				pDC->FillSolidRect(rectFrame, m_pSkinXP->GetMenuFaceColor());
 				DrawItemStrip(pDC, CRect(rectFrame.left, rectFrame.top + 2,
 					rectFrame.left + m_DimensionConstants.m_nGapLeftBitmap + pBitmapMenu->m_nBitmapExtent + 8,
 					rectFrame.bottom - 4));
 				CBrush brush;
-				brush.CreateSolidBrush(m_pSkinXP->GetMenuBorderColor());
+//				brush.CreateSolidBrush(m_pSkinXP->GetMenuBorderColor());
+				brush.CreateSolidBrush(::GetSysColor(COLOR_BTNSHADOW));
 				pDC->FrameRect(rectFrame, &brush);
 
-				// Interrupt the menu frame where it meets the menu item
-
-				CRect rectDropDownItem(pBitmapMenu->m_rectDropDownItem);
-				rectDropDownItem.OffsetRect(-ptOffset.x, -ptOffset.y);
-				if (rectDropDownItem.bottom == rectFrame.top || rectDropDownItem.top == rectFrame.bottom)
-				{
-					// The drop down item is either on top or at the bottom of the menu
-					rectDropDownItem.InflateRect(-1, 1);
+				if (fDrawJoiningLine)
 					DrawJoiningLine(pDC, rectDropDownItem);
-				}
-				else if (rectDropDownItem.right == rectFrame.left || rectDropDownItem.left == rectFrame.right)
-				{
-					// The drop down item is either on the left or on the right of the menu
-					rectDropDownItem.InflateRect(1, -1);
-					DrawJoiningLine(pDC, rectDropDownItem);
-				}
 
 				::ReleaseDC(hWnd, hDC);
 				return 0;
@@ -4124,8 +4231,6 @@ LRESULT COXMenuSkinXP::MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMs
 				rectWnd.right = ptTopLeft.x + iWidth;
 				rectWnd.bottom = ptTopLeft.y + iHeight;
 
-				DrawMenuShadow(dcMem.m_hDC, rectWnd, pBitmapMenu->m_rectDropDownItem, NULL);
-
 				// Determine the frame rectangle
 				CRect rectFrame(rectWindow);
 				rectFrame.DeflateRect(0, 0, 4, 4);
@@ -4147,18 +4252,73 @@ LRESULT COXMenuSkinXP::MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMs
 				// Interrupt the menu frame where it meets the menu item
 				CRect rectDropDownItem(pBitmapMenu->m_rectDropDownItem);
 				rectDropDownItem.OffsetRect(-rectWnd.left, -rectWnd.top);
-				if (rectDropDownItem.bottom == rectFrame.top || rectDropDownItem.top == rectFrame.bottom)
+
+				int nOffset1 = 0;	// Multimonitor!
+				int nOffset2 = 0;
+				// Get the rectangle of the monitor closest to the menu rectangle
+				CRect rctMonitor;
+				HMONITOR hMonitor = ::MonitorFromRect(pBitmapMenu->m_rectDropDownItem, MONITOR_DEFAULTTONEAREST);
+				MONITORINFO mi;
+				mi.cbSize = sizeof(MONITORINFO);
+				if(hMonitor!=NULL && ::GetMonitorInfo(hMonitor, &mi))
 				{
-					// The drop down item is either on top or at the bottom of the menu
-					rectDropDownItem.InflateRect(-1, 1);
-					DrawJoiningLine(&dcMem, rectDropDownItem);
+					rctMonitor = mi.rcMonitor;
+					if ((pBitmapMenu->m_rectDropDownItem.left < 0) && (pBitmapMenu->m_rectDropDownItem.right >= 0))
+					{
+						if (rctMonitor.left < 0)
+							nOffset1 = pBitmapMenu->m_rectDropDownItem.right + 1;
+						else
+							nOffset2 = pBitmapMenu->m_rectDropDownItem.left;
+					}
+					else if (pBitmapMenu->m_rectDropDownItem.right >= rctMonitor.right)
+					{
+						nOffset1 = pBitmapMenu->m_rectDropDownItem.right - rctMonitor.right + 1;
+					}
 				}
-				else if (rectDropDownItem.right == rectFrame.left || rectDropDownItem.left == rectFrame.right)
+
+				if (rectDropDownItem.bottom == rectFrame.top)
 				{
-					// The drop down item is either on the left or on the right of the menu
-					rectDropDownItem.InflateRect(1, -1);
+					// The drop down item is on top of the menu
+					rectDropDownItem.top = 0;
+					rectDropDownItem.bottom = 1;
+					rectDropDownItem.left = rectDropDownItem.left + 1 - nOffset2;
+					rectDropDownItem.right = rectDropDownItem.right - 1 - nOffset1;
 					DrawJoiningLine(&dcMem, rectDropDownItem);
+					DrawMenuShadow(dcMem.m_hDC, rectWnd, rectDropDownItem, NULL);
 				}
+				else if (rectDropDownItem.top == rectFrame.bottom)
+				{
+					// The drop down item is at the bottom of the menu
+					rectDropDownItem.bottom = rectDropDownItem.top;
+					rectDropDownItem.top = rectDropDownItem.bottom - 1;
+					rectDropDownItem.left = rectDropDownItem.left + 1 - nOffset2;
+					rectDropDownItem.right = rectDropDownItem.right - 1 - nOffset1;
+					DrawJoiningLine(&dcMem, rectDropDownItem);
+					DrawMenuShadow(dcMem.m_hDC, rectWnd, rectDropDownItem, NULL, MenuIsOnTop);
+				}
+				else if (rectDropDownItem.right == rectFrame.left)
+				{
+					// The drop down item is on the left of the menu
+					rectDropDownItem.left = 0;
+					rectDropDownItem.right = 1;
+					rectDropDownItem.bottom -= 1;
+					rectDropDownItem.top += 1;
+					DrawJoiningLine(&dcMem, rectDropDownItem);
+					DrawMenuShadow(dcMem.m_hDC, rectWnd, rectDropDownItem, NULL);
+				}
+				else if (rectDropDownItem.left == rectFrame.right)
+				{
+					// The drop down item is on the right of the menu
+					rectDropDownItem.right = rectDropDownItem.left;
+					rectDropDownItem.left = rectDropDownItem.right - 1;
+					rectDropDownItem.bottom -= 1;
+					rectDropDownItem.top += 1;
+					DrawJoiningLine(&dcMem, rectDropDownItem);
+					DrawMenuShadow(dcMem.m_hDC, rectWnd, rectDropDownItem, NULL, MenuIsOnLeft);
+				}
+				else
+					DrawMenuShadow(dcMem.m_hDC, rectWnd, rectDropDownItem, NULL);
+
 
 				// Copy the memory DC to the window DC
 				pDC->BitBlt(0, 0, rectWindow.Width(), rectWindow.Height(), &dcMem, 0, 0, SRCCOPY);
@@ -4168,6 +4328,7 @@ LRESULT COXMenuSkinXP::MenuPopupWndProc(WNDPROC origWndProc, HWND hWnd, UINT nMs
 			}
 		}
 		break;
+		// end section modifications Manfred Drasch
 
 		case WM_WINDOWPOSCHANGING:
 		{
@@ -8141,6 +8302,18 @@ void COXToolbarSkinXP::DrawItem(CDC* pDC, TBBUTTON* pTBB, LPCRECT lpRectItem, CO
 	bool bDisabled = ((pTBB->fsState & TBSTATE_ENABLED) == 0);
 	bool bChecked = ((pTBB->fsState & TBSTATE_CHECKED) != 0);
 
+	// v9.3 update 01 modification Manfred Drasch - for drawing in Vista
+    if(pCoolToolbar->IsKindOf(RUNTIME_CLASS(COXMenuBar)))
+    {
+        COXMenuBar* pMenuBar=DYNAMIC_DOWNCAST(COXMenuBar,pCoolToolbar);
+        if(pMenuBar!=NULL)
+        {
+            if(bSelected)
+                bHot = (pMenuBar->m_nActiveMenuItem == pCoolToolbar->CommandToIndex(pTBB->idCommand));
+        }
+	}
+	// end modification Manfred Drasch
+
 	DWORD dwStyleEx = pCoolToolbar->GetStyleEx();
 
 	if (pCoolToolbar->m_iDropDownIndex == pTBB->idCommand)
@@ -8953,6 +9126,18 @@ void COXToolbarSkin2003::DrawItem(CDC* pDC, TBBUTTON* pTBB, LPCRECT lpRectItem, 
 	bool bHot = (pCoolToolbar->GetToolBarCtrl().GetHotItem() == pCoolToolbar->CommandToIndex(pTBB->idCommand));
 	bool bDisabled = ((pTBB->fsState & TBSTATE_ENABLED) == 0);
 	bool bChecked = ((pTBB->fsState & TBSTATE_CHECKED) != 0);
+
+	// v9.3 update 01 modification Manfred Drasch - for drawing in Vista
+    if(pCoolToolbar->IsKindOf(RUNTIME_CLASS(COXMenuBar)))
+    {
+        COXMenuBar* pMenuBar=DYNAMIC_DOWNCAST(COXMenuBar,pCoolToolbar);
+        if(pMenuBar!=NULL)
+        {
+            if(bSelected)
+                bHot = (pMenuBar->m_nActiveMenuItem == pCoolToolbar->CommandToIndex(pTBB->idCommand));
+        }
+	}
+	// end modification Manfred Drasch
 
 	DWORD dwStyleEx = pCoolToolbar->GetStyleEx();
 	COXSkin2003* pSkin2003 = (COXSkin2003*) m_pSkinXP;

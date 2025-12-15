@@ -408,7 +408,8 @@ void COXTabViewContainer::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-void COXTabViewContainer::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXTabViewContainer::OnTimer(OXTPARAM nIDEvent) 
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -785,6 +786,8 @@ BOOL COXTabViewContainer::SetActivePageIndex(int nIndex)
 			UpdateScrollInfo();
 
 			pWndOld->ShowWindow(SW_HIDE);
+
+
 			PAGEINFO pi=m_arrPages[GetActivePageIndex()];
 			m_nActivePageIndex=-1;
 			UINT nBar=(pi.bHasScrollHorz&pi.bHasScrollVert ? SB_BOTH : 
@@ -849,6 +852,7 @@ BOOL COXTabViewContainer::SetActivePageIndex(int nIndex)
 				}
 
 				RedrawTabBtnArea();
+		
 			}
 		}
 	}

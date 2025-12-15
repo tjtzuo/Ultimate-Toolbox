@@ -225,7 +225,8 @@
 #include "PATHITER.h"
 #include "PROGRESS.h"
 #include "RETURNS.h"
-#include "STDAFX.h"
+// v9.3 - update 05 - removed
+//#include "STDAFX.h"
 #include "WATCHBUF.h"
 #include "XSTATUS4.h"
 #include "XSTRING.h"

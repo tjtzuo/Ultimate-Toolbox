@@ -69,6 +69,268 @@ CODE
 <body lang=EN-US>
 
 <h1>Ultimate Toolbox Change History </h1>
+<h2>Version 9.3 (Update 05)</h2>
+<h3>Miscellaneous changes and fixes including some fixups for VS2010 compilation, as discussed by The Code Project 
+community</h3>
+<p>Changes for update 05 include:</p>
+<ul>
+	<li>CMFCToolbar is renamed COXMFCToolbar to avoid conflict with the new MFC 
+	CMFCToolBar class in VS2010. Files affected:</li>
+</ul>
+<blockquote>
+	<p>MFCToolBar.h<br>
+	OXCoolToolBar.h<br>
+	<font SIZE="2">OXCustomizeToolbarsPage.h</font><font SIZE="1"><br>
+	</font><font size="2">OXEditList.h<br>
+	OXHistoryCombo.h<br>
+	MFCToolBar.cpp</font></p>
+</blockquote>
+<ul>
+	<li>Include guards (_MSC_VER &lt; 1600) added for inclusion of multimon.h - 
+	avoids problems with static MFC linkage in VS2010. Files affected:</li>
+</ul>
+<blockquote>
+	<p>OXEditList.h<br>
+	OXBitmapMenu.cpp<br>
+	OXCalendarEdit.cpp<br>
+	OXToolTipCtrl.cpp</p>
+</blockquote>
+<ul>
+	<li>References to stdafx.h removed from some header files. There was a 
+	sample stdafx.h in the include dir of v93 - projects not using precompiled 
+	headers can have problems. Files affected:</li>
+</ul>
+<blockquote>
+	<p>OXActiveDesktop.h<br>
+	OXMain.h<br>
+	OXShadowedWnd.h<br>
+	OXSkinnedView.h<br>
+	OXSkinnedWnd.h</p>
+</blockquote>
+<ul>
+	<li>Suppressed warning on redef of <font SIZE="2">AFX_IDW_MENUBAR in 
+	oxmenubar.h.</font></li>
+</ul>
+<blockquote>
+	<p>&nbsp;</p>
+</blockquote>
+<h2>Version 9.3 (Update 04)</h2>
+<h3>Changes and fixes for Unicode builds and docking, as discussed by The Code Project 
+community</h3>
+<p>While converting a project to Unicode and trying to debug some undesirable docking
+behavior, a number of issues appeared.  This update resolves those issues.</p>
+<p>Changes for update 04 include:</p>
+<ul>
+<li>Changes to OXMenuBar.cpp and OXBitmapMenuOrganizer.cpp<br />
+Failing to enclose __FILE__ with _T( ) causes a non unicode string to be output as unicode</li>
+<li>Changes to OxDragDockContext.cpp<br />
+When dragging a docked window into the same bar it currently resides on, it tended to shrink.
+The updated code preserves its previous size if the destination is the same dock bar.</li>
+<li>OxAdvancedAssert.cpp/OxAdvancedAssert.h<br />
+This code uses Simple MAPI, which does not support UNICODE.  As a result of some of the string copies
+casting directly to a TCHAR, a wide string was passed as an ANSI string.  This has now been fixed.</li>
+<li>When building DLL's using VS2005 and later, the correct version of comsuppw.lib is linked via pragma in stdafx.cpp</li>
+<li>When building Unicode DLL versions with VC6, OXWABook.cpp does not compile.  The MFC version test has now been updated.</li>
+</ul>
+<p>These changes were submitted by Anthony Wieser at Wieser Software Ltd.</p>
+<p>&nbsp;</p>
+    
+<h2>Version 9.3 (Update 03)</h2>
+<h3>Changes and fixes for 64-bit compilation, as discussed by The Code Project 
+community</h3>
+<p>The major source file changes referenced in this update should all be 
+annotated with 'v9.3 - update 03' in comments. The scope of these changes is for 
+the most part concerned with issues arising from compilation in 64-bit 
+compilation.</p>
+<p>The goal of this update is to enable 64-bit compilation of the core source 
+files, while retaining backward compatibility with VC6, VS2003, and VS2005.<b>
+</b> </p>
+<p>Changes for update 03 include:</p>
+<ul>
+	<li>Changes to UTB64Bit.h:<br>
+	<br>
+	Macros added targeted at return values and parameter declarations that are 
+	now problematic in 64-bit (OnToolHitTest, OnTimer, SendMessageTimeout)<br>
+	Updated identifiers used in the GetWindowLongPtr and GetClassLongPtr API 
+	calls.<br>
+	Redefinitions of PtrToInt, PtrToLong, PtrToUint, PtrToUlong to add cast - 
+	(parameters are now void* in 64 bit).<br>
+&nbsp;</li>
+	<li>Many methods throughout the code base were declared substituting LONG, 
+	DWORD, UINT, etc in place of LRESULT, WPARAM, and LPARAM and needed some 
+	cleanup.<br>
+&nbsp;</li>
+	<li>A few specific function declarations and types were changed in place 
+	based on #ifdef _WIN64.<br>
+&nbsp;</li>
+	<li>Compilation of the DAO class files is removed for 64-bit - DAO is not 
+	available for Win64 based platforms.<br>
+&nbsp;</li>
+	<li>Compilation of OXSysInfo code is removed, as the Intel CPUInf32 library 
+	contains inline assembly which cannot be compiled by the 64-bit VC 
+	compilers.<br>
+&nbsp;</li>
+	<li>64-bit platform configurations were added to the DLL and Static Lib 
+	builds for VS2008 - UT2008.sln and UTStaticLib2008.sln. (Note: The JPEG 
+	library build will need 64-bit configurations added by the end user).<br>
+&nbsp;</li>
+	<li>Warnings arising in 64-bit compilation have not been suppressed since 
+	these changes have not yet been tested.<br>
+&nbsp;</li>
+	<li>The majority of the current sample projects have not been tested against 
+	64-bit - this update addresses only the core source and include files.</li>
+</ul>
+<p>Thanks to JRCooper and nick42 for suggestions and testing.</p>
+<h2>&nbsp;</h2>
+<h2>Version 9.3 (Update 02)</h2>
+<h3>Changes and fixes for VS2008 compatibility, as discussed by The Code Project 
+community</h3>
+<p>The major source file changes referenced in this update should all be annotated 
+with 'v9.3 update 02' in comments. The scope of these changes is specifically 
+limited to issues arising from compilation in Visual Studio 2008 - remaining 
+Windows Vista related issues are not addressed in this update. Changes include: </p>
+<ul>
+	<li>Addition of new project and solution files for the static library and 
+	DLL builds:<br>
+	<br>
+	UTStaticLib2008.vcproj<br>
+	UTStaticLib2008.sln<br>
+	UT2008.vcproj<br>
+	UT2008.sln<br>&nbsp;</li>
+	<li>The latest version of commctrl.h defines TVGN_NEXTSELECTED 0x000B if 
+	_WIN32_IE &gt;= 0x0600. Code in OXTreeCtrl.h which defined this as 0x031 
+	is changed to do nothing for IE 6 or higher. File affected:<br>
+	<br>
+	OXTreeCtrl.h<br>&nbsp;</li>
+	<li>The AUX_DATA structure declared in afximpl.h no longer defines BOOL 
+	bWin95 . This affects some code that was relying on this to 
+	switch APIs for mousewheel info (OXScrollWnd.cpp, OXZoomVw.cpp) and border 
+	style (OX3dTabView.cpp). This may break win95 deployments. Files affected:<br>
+	<br>
+	OXScrollWnd.cpp<br>
+	OXZoomVw.cpp<br>
+	OX3dTabView.cpp<br>
+&nbsp;</li>
+	<li>COXMenuBar was overriding CWnd GetMenu returning an HMENU handle, which 
+	breaks now that the base returns CMenu*. Code in oxmenubar.h now omits the 
+	override for _MFC_VER &gt;= 0x0800, adding a GetHMenu call. Code in 
+	OXMenubar.cpp and OXCustomizeCommandsPage.cpp now switches between these 
+	calls based on _MFC_VER. Files affected:</li>
+</ul>
+<blockquote>
+	<p>oxmenubar.cpp<br>oxmenubar.h<br>oxcustomizecommandspage.cpp</p>
+</blockquote>
+<ul>
+	<li>In VS2008, the NONCLIENTMETRICS structure defined in WinUser.h carries 
+	with it an extra int iPaddedBorderWidth when WINVER is defined as 0x0600 
+	(default - Vista) at compile time. Calls to <font SIZE="2">
+	SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ... ) compiled for Vista will 
+	fail on XP when the NONCLIENTMETRICS::cbSize is set to the 0x0600 value. 
+	Some of these calls are not wrapped in ASSERTs and will fail silently 
+	resulting in missing or wrongly sized fonts, or aborting some window 
+	creation routines. </font></li>
+</ul>
+<blockquote>
+	<p>As an interim fix, code is added to double check the OS version when 
+	these calls are made and adjust the specified size accordingly - this may 
+	not be the only issue in deploying WINVER 0x0600 compiled apps on XP, but 
+	should help. Files affected:</p>
+	<p>OXBitmapMenu.cpp<br>
+	OXMenuBar.cpp<br>
+	OXPopupBarCtrl.cpp<br>
+	OXSkins.cpp<br>
+	OXToolTipCtrl.cpp</p>
+</blockquote>
+<p>Notes:</p>
+<ol>
+	<li>There seems to be a subtle change affecting the UT code for the handling 
+	of docking windows in MFC 8 - this issue remains unresolved with this 
+	update. </li>
+	<li>This update assumes Update 01 has been applied - Update 02 does not 
+	incorporate files changed in Update 01. </li>
+</ol>
+<p>Thanks to Ian Brockbank, szombatha, HRS23, mhorowit, et al for suggestions 
+and submissions.</p>
+<p>&nbsp;</p>
+<h2>Version 9.3 (Update 01)</h2>
+<h3>Changes and fixes submitted by The Code Project community</h3>
+<p>The source file changes referenced in this update should all be annotated 
+with 'v9.3 update 01' in comments. Briefly, the changes include: </p>
+<ul>
+	<li>extensive modifications related to corrections in menu item handling 
+	submitted by Manfred Drasch - files affected:</li>
+</ul>
+<blockquote>
+	<p>oxmenubar.h<br>
+	OxMainRes.h<br>
+	OXSkins.h<br>
+	OXBitmapMenu.cpp<br>
+	OXBitmapMenuOrganizer.cpp<br>
+	OXMenuBar.cpp<br>
+	OXSkins.cpp</p>
+</blockquote>
+<ul>
+	<li>fix for initial sizing of properties window - Manfred Drasch</li>
+</ul>
+<blockquote>
+	<p>OXSizeDockBar.cpp</p>
+</blockquote>
+<ul>
+	<li>fix to ensure removal of tray icon in destructor of 
+	COXCustomizeTrayIconPage - Manfred Drasch</li>
+</ul>
+<blockquote>
+	<p>OXCustomizeTrayIconPage.cpp</p>
+</blockquote>
+<ul>
+	<li>fix for resource leak in COXGraphics::DrawRoundedButton submitted by 
+	r.guerzoni</li>
+</ul>
+<blockquote>
+	<p>OXGraphics.cpp</p>
+</blockquote>
+<ul>
+	<li>change to string deletion in COXTrace::WriteMsg - r.guerzoni</li>
+</ul>
+<blockquote>
+	<p>OXTrace.cpp</p>
+</blockquote>
+<ul>
+	<li>removed OX_CLASS_DECL from COXFullSceenFrame template - incompatible 
+	with DLL builds - ref mschuckmann</li>
+</ul>
+<blockquote>
+	<p>OXFullScreenFrame.h</p>
+</blockquote>
+<ul>
+	<li>correction to COXQuickString::AddString length calculation - Fix by 
+	Maurizio Giunti</li>
+</ul>
+<blockquote>
+	<p>OXQuickString.cpp</p>
+</blockquote>
+<ul>
+	<li>Fixes for incorrect length calculation for unicode conversion re 
+	registry writes - submitted by Karl Edwall</li>
+</ul>
+<blockquote>
+	<p>OXMenuBar.cpp (lines 1384, 2443, 2759)</p>
+</blockquote>
+<ul>
+	<li>removed garbage from registry strings in COXMenuBar::SaveMenuState and 
+	LoadMenuState - Tim Deveaux</li>
+</ul>
+<blockquote>
+	<p>OxMenuBar.cpp</p>
+</blockquote>
+<ul>
+	<li>small fixes to COXNumericEdit to suppress assertions, and fixes 
+	submitted by mina</li>
+</ul>
+<blockquote>
+	<p>OXEdit.cpp</p>
+</blockquote>
+<p>&nbsp;</p>
 <h2>Version 9.3</h2>
     <h3>
         Major release feature:</h3>

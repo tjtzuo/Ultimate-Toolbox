@@ -1,11 +1,13 @@
 /***************************************************
-MFC DAO FrameWork Wrapper Class
-Dundas Software Ltd. 1997 - 2003
 ****************************************************/
 // Version: 9.3
 
-
 #include "stdafx.h"
+
+// v9.3 - update 01 - DAO obsolete in 64-bit - TD
+#ifdef _WIN64
+#pragma message ("Ultimate Toolbox: DAO classes not available for Win64 platforms - bypassing compilation")
+#else
 
 #include "OXDao.h"
 
@@ -1895,3 +1897,4 @@ BOOL COXDao::SetPassword(LPCTSTR pass){
 
 	return TRUE;
 }
+#endif // _WIN64

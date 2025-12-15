@@ -438,7 +438,8 @@ protected:
 	void OnMove(int x, int y);
 	LRESULT OnNcHitTest(CPoint point);
 	void OnRButtonDown(UINT nFlags, CPoint point);
-	void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	void OnTimer(OXTPARAM nIDEvent);
 	void OnWindowPosChanged(WINDOWPOS FAR* lpwndpos);
 	void OnExitSizeMoveLoop();
 
@@ -877,7 +878,8 @@ void COXAppBar<PARENTWND>::OnExitSizeMoveLoop()
 //is inactive
 
 template <class PARENTWND>
-void COXAppBar<PARENTWND>::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXAppBar<PARENTWND>::OnTimer(OXTPARAM nIDEvent) 
 {
 	if (IsAutoHidden() && !m_BarData.bHidden && !m_BarData.bHiding)
 	{

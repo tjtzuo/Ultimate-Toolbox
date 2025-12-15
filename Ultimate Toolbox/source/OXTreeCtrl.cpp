@@ -3848,7 +3848,8 @@ LRESULT COXTreeCtrl::OnNeedItemTip(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void COXTreeCtrl::OnTimer(UINT nIDEvent)
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXTreeCtrl::OnTimer(OXTPARAM nIDEvent)
 {
 	if(nIDEvent==m_nTimerCheckKeyboardInput)
 	{

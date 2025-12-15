@@ -257,9 +257,11 @@ protected:
 	//{{AFX_MSG(COXSeparator)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
-	afx_msg LONG OnSetText(UINT wParam, LONG lParam);
-	afx_msg LONG OnGetText(UINT wParam, LONG lParam);
-	afx_msg LONG OnGetTextLength(UINT wParam, LONG lParam);
+	
+	// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnGetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnGetTextLength(WPARAM wParam, LPARAM lParam);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

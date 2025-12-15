@@ -1164,8 +1164,8 @@ void COXMaskedEdit::OnSetFocus(CWnd* pOldWnd)
 	}
 }
 
-
-LRESULT COXMaskedEdit::OnCut(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG - now WPARAM and LPARAM
+LRESULT COXMaskedEdit::OnCut(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1197,7 +1197,8 @@ LRESULT COXMaskedEdit::OnCut(UINT wParam, LONG lParam)
 	return 0;
 }
 
-LRESULT COXMaskedEdit::OnCopy(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG - now WPARAM and LPARAM
+LRESULT COXMaskedEdit::OnCopy(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1206,7 +1207,8 @@ LRESULT COXMaskedEdit::OnCopy(UINT wParam, LONG lParam)
 	return CEdit::Default();
 }
 
-LRESULT COXMaskedEdit::OnPaste(UINT wParam, LONG lParam) 
+// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG - now WPARAM and LPARAM
+LRESULT COXMaskedEdit::OnPaste(WPARAM wParam, LPARAM lParam) 
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1243,7 +1245,8 @@ LRESULT COXMaskedEdit::OnPaste(UINT wParam, LONG lParam)
 	return 0;
 }
 
-LRESULT COXMaskedEdit::OnClear(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG - now WPARAM and LPARAM
+LRESULT COXMaskedEdit::OnClear(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1331,7 +1334,8 @@ void COXMaskedEdit::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
-LRESULT COXMaskedEdit::OnSetText(UINT wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - these were declared using UINT and LONG - now WPARAM and LPARAM
+LRESULT COXMaskedEdit::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);

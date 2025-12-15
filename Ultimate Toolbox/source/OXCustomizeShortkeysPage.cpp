@@ -16,6 +16,10 @@
 
 
 #include "stdafx.h"
+
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
 #include "OXCustomizeShortkeysPage.h"
 #include "OXCustomizeManager.h"
 

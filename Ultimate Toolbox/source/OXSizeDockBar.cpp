@@ -34,6 +34,10 @@
 
 #pragma warning(disable : 4355)
 
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
+
 #include "OXSplitterRect.h"  // used class specification
 #include "OXRectTracker.h"   // used class specification
 #include "OXSizeCtrlBar.h"   // used class specification
@@ -1084,6 +1088,7 @@ int COXSizeDockBar::CheckSumBars() const
 		else
 		{        
 			CControlBar* pBar = GetDockedControlBar(i);
+
 			ASSERT(pBar == NULL || pBar->IsKindOf(RUNTIME_CLASS(CControlBar)));
 			if (pBar!=NULL && ::IsWindow(pBar->GetSafeHwnd()) && pBar->IsVisible())
 			{
@@ -1633,7 +1638,6 @@ int COXSizeDockBar::TestInsertPosition(CControlBar* pBarIns, CRect rect)
 		{
 		void* pVoid = m_arrBars[nPos];
 		CControlBar* pBar = GetDockedControlBar(nPos);
-		
 		if (pVoid == NULL)
 			{
 			nTotalWidth += nWidth - afxData.cyBorder2;
@@ -2642,21 +2646,44 @@ int COXSizeDockBar::GetVisibleSizeControlBarCount(CControlBar* pBar)
 
 void COXSizeDockBar::TabAllDockedControlBars(COXSizeControlBar* pSelected)
 {
-	for (int i = 0; i < m_arrBars.GetSize(); i++)
-	{
-		COXSizeControlBar* pSizeBar = DYNAMIC_DOWNCAST(COXSizeControlBar, GetDockedControlBar(i));
-		if (pSizeBar != NULL)
-		{
-			if (m_wndDockTabCtrl.FindTab(pSizeBar) < 0)
-				m_wndDockTabCtrl.InsertTab(pSizeBar, 0, FALSE);
-		}
-	}
+	// v9.3 update 01 modifications Manfred Drasch - at inittime in ShowSelectedTab() the Size is set very small
+    CRect rct;
+    int nMaxX = 0;
+    int nMaxY = 0;
 
-	if (pSelected)
-	{
-		m_wndDockTabCtrl.SetCurSel(m_wndDockTabCtrl.FindTab(pSelected));
-		m_wndDockTabCtrl.ShowSelectedTab();
-	}
+    for (int i = 0; i < m_arrBars.GetSize(); i++)
+    {
+        COXSizeControlBar* pSizeBar = DYNAMIC_DOWNCAST(COXSizeControlBar, GetDockedControlBar(i));
+        if (pSizeBar != NULL)
+        {
+            if (m_wndDockTabCtrl.FindTab(pSizeBar) < 0)
+            {
+                if (pSelected)
+                {
+                    pSizeBar->GetWindowRect(&rct);
+                    if (nMaxX < rct.Width())    nMaxX = rct.Width();
+                    if (nMaxY < rct.Height())    nMaxY = rct.Height();
+                }
+                m_wndDockTabCtrl.InsertTab(pSizeBar, 0, FALSE);
+            }
+        }
+    }
+
+    if (pSelected)
+    {
+        m_wndDockTabCtrl.SetCurSel(m_wndDockTabCtrl.FindTab(pSelected));
+
+        pSelected->GetWindowRect(&rct);
+        rct.right = rct.left + nMaxX;
+        rct.bottom = rct.top + nMaxY;
+
+        m_wndDockTabCtrl.ShowSelectedTab();
+
+        pSelected->MoveWindow(&rct);
+
+    }
+	// end modifications Manfred Drasch
+
 }
 
 void COXSizeDockBar::TabAllDockedControlBars(int selectedIndex)

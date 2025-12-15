@@ -17,6 +17,10 @@
                          
 #include "stdafx.h"
 #include <windowsx.h>
+
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
 #include "OXShortcutBar.h"
 #include "OXSkins.h"
 
@@ -884,7 +888,7 @@ BOOL COXSHBListCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, U
 	return bResult;
 }
 
-int COXSHBListCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+OXINTRET COXSHBListCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 {
 	ASSERT_VALID(this);
 	ASSERT(::IsWindow(m_hWnd));
@@ -1237,8 +1241,8 @@ void COXSHBListCtrl::OnRButtonUp(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // OnHandleDrag sets up the drag image, calls DoDragDrop and cleans up 
 // after the drag drop operation finishes.
-
-LONG COXSHBListCtrl::OnHandleDrag(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnHandleDrag(WPARAM wParam, LPARAM lParam)
 {
 	// In the case this control was created as a child window of shortcut bar group
 	// fill structure for notification of parent window of this shortcut bar
@@ -1353,7 +1357,8 @@ LONG COXSHBListCtrl::OnHandleDrag(WPARAM wParam, LPARAM lParam)
 	return (LONG)0;
 }
 
-LONG COXSHBListCtrl::OnCheckCapture(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnCheckCapture(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);
@@ -1430,7 +1435,8 @@ BOOL COXSHBListCtrl::OnItemToolTip(UINT id, NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-LONG COXSHBListCtrl::OnDragEnter(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnDragEnter(WPARAM wParam, LPARAM lParam)
 {
 	// list control should be valid drop target
 	if((GetBarStyle()&SHBS_DISABLEDROPITEM)!=0)
@@ -1476,7 +1482,8 @@ LONG COXSHBListCtrl::OnDragEnter(WPARAM wParam, LPARAM lParam)
 	return (LONG)OnDragOver(wParam,lParam);
 }
 
-LONG COXSHBListCtrl::OnDragOver(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnDragOver(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -1674,7 +1681,8 @@ LONG COXSHBListCtrl::OnDragOver(WPARAM wParam, LPARAM lParam)
 	return (LONG)TRUE;
 }
 
-LONG COXSHBListCtrl::OnDragLeave(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnDragLeave(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -1729,7 +1737,8 @@ LONG COXSHBListCtrl::OnDragLeave(WPARAM wParam, LPARAM lParam)
 	return (LONG)TRUE;
 }
 
-LONG COXSHBListCtrl::OnDrop(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnDrop(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -1976,7 +1985,8 @@ void COXSHBListCtrl::OnChangeItemText(NMHDR* pNotifyStruct, LRESULT* result)
 	*result=0;
 }
 
-LONG COXSHBListCtrl::OnPopulateContextMenu(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnPopulateContextMenu(WPARAM wParam, LPARAM lParam)
 {
 	// Handles SHBM_POPULATECONTEXTMENU message that is fired by parent shortcut bar
 	// in order to populate context menu with our own items
@@ -2019,7 +2029,8 @@ LONG COXSHBListCtrl::OnPopulateContextMenu(WPARAM wParam, LPARAM lParam)
 	return ((LONG)0);
 }
 
-LONG COXSHBListCtrl::OnSetSHBGroup(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnSetSHBGroup(WPARAM wParam, LPARAM lParam)
 {
 	// Handles SHBM_SETSHBGROUP message that is fired by parent shortcut bar
 	// as soon as this control associated with any group 
@@ -2040,7 +2051,8 @@ LONG COXSHBListCtrl::OnSetSHBGroup(WPARAM wParam, LPARAM lParam)
 	return ((LONG)0);
 }
 
-LONG COXSHBListCtrl::OnSHBInfoChanged(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnSHBInfoChanged(WPARAM wParam, LPARAM lParam)
 {
 	// Handles SHBM_SHBINFOCHANGED message that is fired by parent shortcut bar
 	// to notify its child window that some of shortcut bar properties have changed.
@@ -2071,7 +2083,8 @@ LONG COXSHBListCtrl::OnSHBInfoChanged(WPARAM wParam, LPARAM lParam)
 	return ((LONG)0);
 }
 
-LONG COXSHBListCtrl::OnGroupInfoChanged(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnGroupInfoChanged(WPARAM wParam, LPARAM lParam)
 {
 	// Handles SHBM_GROUPINFOCHANGED message that is fired by parent shortcut bar
 	// to notify its child window that some of associated with this control
@@ -2232,7 +2245,8 @@ LRESULT COXSHBListCtrl::OnGetEditControl(WPARAM wParam, LPARAM lParam)
 	return (LRESULT)GetEditControl();
 }
 
-LONG COXSHBListCtrl::OnGetHotItem(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed LONG ret type to LRESULT
+LRESULT COXSHBListCtrl::OnGetHotItem(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
 	UNREFERENCED_PARAMETER(wParam);
@@ -2445,7 +2459,8 @@ LRESULT COXSHBListCtrl::OnUpdate(WPARAM wParam, LPARAM lParam)
 	return Update((int)wParam);
 }
 
-void COXSHBListCtrl::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXSHBListCtrl::OnTimer(OXTPARAM nIDEvent) 
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -5153,7 +5168,12 @@ COXShortcutBar::~COXShortcutBar()
 
 	// delete all SHB_DESCRIPTOR structures we allocated
 	LPSHB_DESCRIPTOR pDescriptor;
-	int nOrder;
+			// v9.3 - update 03 - 64-bit - switch param type - TD
+#ifdef _WIN64
+			INT_PTR nOrder;
+#else 
+			int nOrder;
+#endif
 	POSITION pos=m_mapDescriptors.GetStartPosition();
 	while(pos!=NULL)
 	{
@@ -5300,7 +5320,8 @@ BOOL COXShortcutBar::Create(CWnd* pParentWnd, const RECT& rect,
 }
 
 
-int COXShortcutBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+// v9.3 - update 03 - 64-bit - using OXINTRET here
+OXINTRET COXShortcutBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 {
 	ASSERT_VALID(this);
 	ASSERT(::IsWindow(GetSafeHwnd()));
@@ -6055,7 +6076,8 @@ void COXShortcutBar::OnDestroy()
 	}
 }
 
-void COXShortcutBar::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXShortcutBar::OnTimer(OXTPARAM nIDEvent) 
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -6232,7 +6254,8 @@ void COXShortcutBar::OnChangeGroupHeaderText(NMHDR* pNotifyStruct, LRESULT* resu
 	*result=0;
 }
 
-LONG COXShortcutBar::OnDragOver(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXShortcutBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -6306,7 +6329,8 @@ LONG COXShortcutBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 	return (LONG)TRUE;
 }
 
-LONG COXShortcutBar::OnDragLeave(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXShortcutBar::OnDragLeave(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -8742,7 +8766,12 @@ BOOL COXShortcutBar::CopyGroupInfo(LPSHB_GROUPINFO pDest,
 				// if find any 
 				if(hFindGroup==NULL)
 				{
+// v9.3 - update 03 - 64-bit - switch param decl - TD
+#ifdef _WIN64
+					INT_PTR nOrder;
+#else
 					int nOrder;
+#endif
 					UNREFERENCED_PARAMETER(nOrder);
 					// double check that descriptor was created using AddDescriptor
 					ASSERT(m_mapDescriptors.Lookup(pDest->pDescriptor,nOrder));

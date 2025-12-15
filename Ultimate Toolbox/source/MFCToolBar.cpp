@@ -54,26 +54,27 @@ typedef HRESULT (CALLBACK* AFX_DLLGETVERSIONPROC)(AFX_DLLVERSIONINFO *);
 #endif
 
 // CMFCToolBar
+// v9.3 - update 05 - changed to COXMFCToolBar to avoid conflict (VS2010)
 
-IMPLEMENT_DYNAMIC(CMFCToolBar, TOOLBAR_BASE_CLASS)
+IMPLEMENT_DYNAMIC(COXMFCToolBar, TOOLBAR_BASE_CLASS)
 
-CMFCToolBar::CMFCToolBar()
+COXMFCToolBar::COXMFCToolBar()
 {
 }
 
-CMFCToolBar::~CMFCToolBar()
+COXMFCToolBar::~COXMFCToolBar()
 {
 }
 
 
-BEGIN_MESSAGE_MAP(CMFCToolBar, TOOLBAR_BASE_CLASS)
+BEGIN_MESSAGE_MAP(COXMFCToolBar, TOOLBAR_BASE_CLASS)
 END_MESSAGE_MAP()
 
 
 
-// CMFCToolBar message handlers
+// COXMFCToolBar message handlers
 
-BOOL CMFCToolBar::CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle, DWORD dwStyle, CRect rcBorders, UINT nID)
+BOOL COXMFCToolBar::CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle, DWORD dwStyle, CRect rcBorders, UINT nID)
 {
 #if _MFC_VER >= 0x0700
 	// Remove all alignment styles
@@ -85,7 +86,7 @@ BOOL CMFCToolBar::CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle, DWORD dwStyle, C
 	return TOOLBAR_BASE_CLASS::CreateEx(pParentWnd, dwCtrlStyle, dwStyle, rcBorders, nID);
 }
 
-void CMFCToolBar::SetBarStyle(DWORD dwStyle)
+void COXMFCToolBar::SetBarStyle(DWORD dwStyle)
 {
 #if _MFC_VER >= 0x0700
 	ASSERT((dwStyle & CBRS_ALL) == dwStyle);

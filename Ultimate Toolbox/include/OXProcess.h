@@ -384,9 +384,14 @@ public:
 	//										when memory is in short supply. 
 	// --- Returns:	TRUE if success, or FALSE otherwise
 	// --- Effect:	Retrieves the process minimum and maximum working set sizes
+// v9.3 - udpate 03 - 64-bit - use SIZE_T for > VC6, else DWORD - TD
+#if _MSC_VER > 1400
+	BOOL GetMinMaxWorkingSetSize(SIZE_T& dwMinWorkingSetSize, 
+		SIZE_T& dwMaxWorkingSetSize) const;
+#else
 	BOOL GetMinMaxWorkingSetSize(DWORD& dwMinWorkingSetSize, 
 		DWORD& dwMaxWorkingSetSize) const;
-
+#endif
 	// --- In:		
 	// --- Out:		fileTime
 	//				time

@@ -88,7 +88,9 @@
 #include "OXMainRes.h"
 #include "MFCToolBar.h"
 
-#define CToolBar CMFCToolBar
+// v9.3 - update 05 - CMFCToolBar is now COXMFCToolBar to avoid conflict (VS2010)
+//#define CToolBar CMFCToolBar
+#define CToolBar COXMFCToolBar
 
 #ifdef _UTDEMOBROWSER // DO NOT DEFINE THIS IN YOUR PROJECT
 #include "OXSkinnedComboBox.h"

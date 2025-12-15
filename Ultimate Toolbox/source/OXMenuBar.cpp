@@ -138,6 +138,8 @@ BEGIN_MESSAGE_MAP(COXMenuBar, COXCoolToolBar)
 	ON_COMMAND(ID_OXCUSTTB_DELETE,OnCustTBDelete)
 	// reflect messages to make customization work
 	ON_NOTIFY_REFLECT_EX(TBN_BEGINDRAG, OnTBNBeginDrag)
+	// v9.3 update 01 modification (added) Manfred Drasch
+	ON_MESSAGE(WM_DISPLAYPOPUPMENU_ALLITEMS, OnDisplayPopupMenuAllItems)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -223,7 +225,8 @@ void COXMenuBar::OnChangeDockSide(DWORD dwDockSide)
 	}
 }
 
-LONG COXMenuBar::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXMenuBar::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 {
 	// refresh icon if any is displayed
 	UpdateIcon(TRUE);
@@ -233,7 +236,8 @@ LONG COXMenuBar::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 	return 0L;
 }
 
-LONG COXMenuBar::OnDisplayPopupMenu(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXMenuBar::OnDisplayPopupMenu(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
 
@@ -248,6 +252,30 @@ LONG COXMenuBar::OnDisplayPopupMenu(WPARAM wParam, LPARAM lParam)
 	ASSERT(wParam>=0 && wParam<=(WPARAM)::GetMenuItemCount(m_hMenu));
 
 	DisplayPopupMenu(PtrToInt(wParam));
+
+	return 0;
+}
+// v9.3 update 01 modification (handler added) Manfred Drasch 
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXMenuBar::OnDisplayPopupMenuAllItems(WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+
+	MSG msg;
+	// handle only the last one
+	while(::PeekMessage(&msg,GetSafeHwnd(),
+		WM_DISPLAYPOPUPMENU_ALLITEMS,WM_DISPLAYPOPUPMENU_ALLITEMS,PM_REMOVE))
+	{
+		wParam=msg.wParam;
+	}
+
+	ASSERT(wParam>=0 && wParam<=(WPARAM)::GetMenuItemCount(m_hMenu));
+
+	// while deactivating popup menu the user could have set to
+	// activate another menu item. In this case just post the 
+	// corresponding message
+	if(m_nActivateNextItemShowAll!=-1)
+		DisplayPopupMenu(m_nActivateNextItemShowAll);
 
 	return 0;
 }
@@ -455,6 +483,7 @@ void COXMenuBar::OnLButtonDown(UINT nFlags, CPoint point)
 	else
 		COXCoolToolBar::OnLButtonDown(nFlags, point);
 
+
 	if(GetDraggedButton()==-1  &&  IsInAdvancedCustomizationMode())
 	{
 		if(m_nCheckForDragDropEventTimerID==0)
@@ -462,11 +491,14 @@ void COXMenuBar::OnLButtonDown(UINT nFlags, CPoint point)
 			m_nWouldBeDraggedItem=COXCoolToolBar::HitTest(&point);
 			m_nCheckForDragDropEventTimerID=SetTimer(IDT_OXCHECKFORDRAGDROPEVENT,
 				ID_OXCHECKFORDRAGDROPEVENT_DELAY,NULL);
+			TRACE(_T("\nSetTimer IDT_OXCHECKFORDRAGDROPEVENT\n"));
+
 			ASSERT(m_nCheckForDragDropEventTimerID!=0);
 		}
 		else
 		{
 			KillTimer(m_nCheckForDragDropEventTimerID);
+			TRACE(_T("Kill timer m_nCheckForDragDropEventTimerID\n"));
 			m_nCheckForDragDropEventTimerID=0;
 		}
 	}
@@ -566,6 +598,8 @@ void COXMenuBar::OnMouseMove(UINT nFlags, CPoint point)
 	if(m_nCheckForDragDropEventTimerID!=0 && ::GetKeyState(VK_LBUTTON)>=0)
 	{
 		KillTimer(m_nCheckForDragDropEventTimerID);
+		TRACE(_T("Kill timer m_nCheckForDragDropEventTimerID\n"));
+
 		m_nCheckForDragDropEventTimerID=0;
 	}
 
@@ -605,11 +639,14 @@ void COXMenuBar::OnKillFocus(CWnd* pNewWnd)
 }
 
 
-void COXMenuBar::OnTimer(UINT nIDEvent)
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXMenuBar::OnTimer(OXTPARAM nIDEvent)
 {
 	if((int)nIDEvent==m_nCheckForDragDropEventTimerID)
 	{
 		KillTimer(m_nCheckForDragDropEventTimerID);
+		TRACE(_T("Kill timer m_nCheckForDragDropEventTimerID\n"));
+
 		m_nCheckForDragDropEventTimerID=0;
 
 		if(::IsWindow(GetSafeHwnd()))		
@@ -684,7 +721,12 @@ BOOL COXMenuBar::OnTBNBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 			// mark the control as the one that launched drag'n'drop operation
 			m_bDragDropOwner=TRUE;
 
+// v9.3 update 02 - VS2008 - using GetHMenu
+#if _MFC_VER >= 0x0800
+			CMenu* pMenu=CMenu::FromHandle(GetHMenu());
+#else 
 			CMenu* pMenu=CMenu::FromHandle(GetMenu());
+#endif
 			ASSERT(pMenu!=NULL);
 			CString sText;
 			pMenu->GetMenuString(nIndex,sText,MF_BYPOSITION);
@@ -730,7 +772,8 @@ BOOL COXMenuBar::OnTBNBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-LONG COXMenuBar::OnDragOver(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXMenuBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -880,7 +923,8 @@ LONG COXMenuBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 }
 
 
-LONG COXMenuBar::OnDrop(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXMenuBar::OnDrop(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -937,8 +981,12 @@ LONG COXMenuBar::OnDrop(WPARAM wParam, LPARAM lParam)
 			{
 				nButtonIndex=nButtonCount;
 			}
-
+			// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+			HMENU hMenu=GetHMenu();
+#else
 			HMENU hMenu=GetMenu();
+#endif
 			ASSERT(hMenu!=NULL);
 
 			// Get the drag item info
@@ -1056,8 +1104,12 @@ void COXMenuBar::OnRemoveDraggedButton(int nButtonIndex)
 
 	COXCoolToolBar::OnRemoveDraggedButton(nButtonIndex);
 
+			// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+	HMENU hMenu=GetHMenu();
+#else
 	HMENU hMenu=GetMenu();
-	ASSERT(hMenu!=NULL);
+#endif	ASSERT(hMenu!=NULL);
 	VERIFY(::DeleteMenu(hMenu,nButtonIndex,MF_BYPOSITION));
 	MarkAsChanged();
 }
@@ -1348,7 +1400,9 @@ BOOL COXMenuBar::SetMenu(HMENU hMenu)
 				{
 					LPCSTR lpszUniqueName=
 						pDocument->GetRuntimeClass()->m_lpszClassName;
-					int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
+					// v9.3 update 01 - incorrect string length calculation - noted by Karl Edwall
+					//int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
+					int nLength = lstrlenA(lpszUniqueName) + 1;
 					LPTSTR lpszUnicodeUniqueName=new TCHAR[nLength];
 					memset(lpszUnicodeUniqueName,0,nLength*sizeof(TCHAR));
 					_mbstowcsz(lpszUnicodeUniqueName,lpszUniqueName,nLength);
@@ -1519,13 +1573,14 @@ void COXMenuBar::UpdateIcon(BOOL bRedraw/*=TRUE*/)
 				hIcon=(HICON)(INT_PTR)::GetClassLongPtr(pChild->m_hWnd,GCL_HICON);
 			if(hIcon==NULL)
 			{
+				// v9.3 - update 03 - 64-bit - using OXPDWORD - see UTB64Bit.h
 				if(!::SendMessageTimeout(pChild->m_hWnd,
 					WM_GETICON,ICON_SMALL,0,SMTO_ABORTIFHUNG,1000,
-					(LPDWORD)&hIcon) || hIcon==NULL)
+					(OXPDWORD)&hIcon) || hIcon==NULL)
 				{
 					::SendMessageTimeout(pChild->m_hWnd,
 						WM_GETICON,ICON_BIG,0,SMTO_ABORTIFHUNG,1000,
-						(LPDWORD)&hIcon);
+						(OXPDWORD)&hIcon);
 				}
 
 				if(hIcon==NULL)
@@ -1540,190 +1595,229 @@ void COXMenuBar::UpdateIcon(BOOL bRedraw/*=TRUE*/)
 
 void COXMenuBar::DisplayPopupMenu(int nMenuItem)
 {
-	ASSERT(m_hMenu!=NULL);
-	ASSERT((nMenuItem>=0 && nMenuItem<::GetMenuItemCount(m_hMenu)) ||
-		(GetIcon()!=NULL && nMenuItem==::GetMenuItemCount(m_hMenu)));
+    m_nActivateNextItemShowAll = nMenuItem;
 
-	if (IsInAdvancedCustomizationMode())
-		SaveCustomizedMenu();
+    ASSERT(m_hMenu!=NULL);
+    ASSERT((nMenuItem>=0 && nMenuItem<::GetMenuItemCount(m_hMenu)) ||
+        (GetIcon()!=NULL && nMenuItem==::GetMenuItemCount(m_hMenu)));
 
-	if(m_hMenu==NULL || nMenuItem<0 || nMenuItem>::GetMenuItemCount(m_hMenu) ||
-		(GetIcon()==NULL && nMenuItem==::GetMenuItemCount(m_hMenu)) ||
-		(::GetMenuItemID(m_hMenu,nMenuItem)!=-1 && 
-		::GetMenuItemID(m_hMenu,nMenuItem)!=0xffff))
-	{
-		// make sure the state of previously active button is restored
-		if (m_hMenu && IsInSurfingMode())
-		{
-			CMenu* pMenu=CMenu::FromHandle(m_hMenu);
-			ASSERT(pMenu);
-			CMenu* pSubMenu=pMenu->GetSubMenu(nMenuItem);
-			ASSERT(pSubMenu==NULL);
-			UINT nID=pMenu->GetMenuItemID(nMenuItem);
-			CWnd* pMainWnd=AfxGetMainWnd();
-			pMainWnd->SendMessage(WM_COMMAND,nID);
-		}
-		RestoreMenuButton();
-		return;
-	}
+    if (IsInAdvancedCustomizationMode())
+        SaveCustomizedMenu();
 
-	BOOL bWasInDisplayingMode=IsInDisplayingMode();
+    if(m_hMenu==NULL || nMenuItem<0 || nMenuItem>::GetMenuItemCount(m_hMenu) ||
+        (GetIcon()==NULL && nMenuItem==::GetMenuItemCount(m_hMenu)) ||
+        (::GetMenuItemID(m_hMenu,nMenuItem)!=-1 && 
+        ::GetMenuItemID(m_hMenu,nMenuItem)!=0xffff))
+    {
+        // make sure the state of previously active button is restored
+        if (m_hMenu && IsInSurfingMode())
+        {
+            CMenu* pMenu=CMenu::FromHandle(m_hMenu);
+            ASSERT(pMenu);
+            CMenu* pSubMenu=pMenu->GetSubMenu(nMenuItem);
+            ASSERT(pSubMenu==NULL);
+            UINT nID=pMenu->GetMenuItemID(nMenuItem);
+            CWnd* pMainWnd=AfxGetMainWnd();
+            pMainWnd->SendMessage(WM_COMMAND,nID);
+        }
+        RestoreMenuButton();
+        return;
+    }
 
-	// reset the surfing mode
-	BOOL bWasInSurfingMode=IsInSurfingMode();
-	SetSurfingMode(FALSE);
+    BOOL bWasInDisplayingMode=IsInDisplayingMode();
 
-	// if system menu should be displayed
-	BOOL bSysMenu=(nMenuItem==::GetMenuItemCount(m_hMenu));
+    // reset the surfing mode
+    BOOL bWasInSurfingMode=IsInSurfingMode();
+    SetSurfingMode(FALSE);
 
-	CMenu* pPopup=NULL;
-	if(bSysMenu)
-	{
-		if(IsInAdvancedCustomizationMode())
-			return;
+    // if system menu should be displayed
+    BOOL bSysMenu=(nMenuItem==::GetMenuItemCount(m_hMenu));
 
-		// work out system menu
-		ASSERT_KINDOF(CMDIFrameWnd,m_pFrameWnd);
-	    BOOL bMaximize=FALSE;
-		CMDIChildWnd* pChild=((CMDIFrameWnd*)m_pFrameWnd)->
-			MDIGetActive(&bMaximize);
-		ASSERT(pChild!=NULL && bMaximize);
-		if(pChild==NULL || !bMaximize)
-			return;
+    CMenu* pPopup=NULL;
+    if(bSysMenu)
+    {
+        if(IsInAdvancedCustomizationMode())
+            return;
 
-		pPopup=pChild->GetSystemMenu(FALSE);
-	}
-	else
-	{
-		// work out popup menu
-		CMenu* pMenu=CMenu::FromHandle(m_hMenu);
-		ASSERT(pMenu!=NULL);
-		if(pMenu!=NULL && (pMenu->GetMenuState(nMenuItem,MF_BYPOSITION)&
-			(MF_DISABLED|MF_GRAYED))==0)
-		{
-			pPopup=pMenu->GetSubMenu(nMenuItem);
-		}
-	}
+        // work out system menu
+        ASSERT_KINDOF(CMDIFrameWnd,m_pFrameWnd);
+        BOOL bMaximize=FALSE;
+        CMDIChildWnd* pChild=((CMDIFrameWnd*)m_pFrameWnd)->
+            MDIGetActive(&bMaximize);
+        ASSERT(pChild!=NULL && bMaximize);
+        if(pChild==NULL || !bMaximize)
+            return;
 
-	if(pPopup==NULL && !IsInAdvancedCustomizationMode()) 
-	{
-		// make sure the state of previously active button is restored
-		RestoreMenuButton();
-		return;
-	}
+        pPopup=pChild->GetSystemMenu(FALSE);
+    }
+    else
+    {
+        // work out popup menu
+        CMenu* pMenu=CMenu::FromHandle(m_hMenu);
+        ASSERT(pMenu!=NULL);
+        if(pMenu!=NULL && (pMenu->GetMenuState(nMenuItem,MF_BYPOSITION)&
+            (MF_DISABLED|MF_GRAYED))==0)
+        {
+            pPopup=pMenu->GetSubMenu(nMenuItem);
+        }
+    }
 
-	ASSERT(m_pFrameWnd!=NULL);
+    if(pPopup==NULL && !IsInAdvancedCustomizationMode()) 
+    {
+        // make sure the state of previously active button is restored
+        RestoreMenuButton();
+        return;
+    }
 
-	if(!bWasInSurfingMode)
-	{
-		// send WM_ENTERMENULOOP and WM_INITMENU messages. 
-		if(!bWasInDisplayingMode)
-		{
-			m_pFrameWnd->SendMessage(WM_ENTERMENULOOP,(WPARAM)FALSE);
-			m_pFrameWnd->SendMessage(WM_INITMENU,(WPARAM)m_hMenu);
-		}
-		// send WM_MENUSELECT message
-		m_pFrameWnd->SendMessage(WM_MENUSELECT,MAKEWPARAM((bSysMenu ? 0 : nMenuItem),
-			((bSysMenu ? MF_SYSMENU : MF_POPUP|MF_HILITE))),(LPARAM)m_hMenu);
-	}
+    ASSERT(m_pFrameWnd!=NULL);
 
-	UINT nFlags=TPM_LEFTBUTTON;
+    if(!bWasInSurfingMode)
+    {
+        // send WM_ENTERMENULOOP and WM_INITMENU messages. 
+        if(!bWasInDisplayingMode)
+        {
+            m_pFrameWnd->SendMessage(WM_ENTERMENULOOP,(WPARAM)FALSE);
+            m_pFrameWnd->SendMessage(WM_INITMENU,(WPARAM)m_hMenu);
+        }
+        // send WM_MENUSELECT message
+        m_pFrameWnd->SendMessage(WM_MENUSELECT,MAKEWPARAM((bSysMenu ? 0 : nMenuItem),
+            ((bSysMenu ? MF_SYSMENU : MF_POPUP|MF_HILITE))),(LPARAM)m_hMenu);
+    }
 
-	CRect rect;
-	GetItemRect(nMenuItem,&rect);
-	// translate the current toolbar item rectangle into screen coordinates
-	// so that we'll know where to pop up the menu
-	ClientToScreen(&rect);	
+    UINT nFlags=TPM_LEFTBUTTON;
 
-	// Attach the COXBitmapMenu object if not done already
-	COXBitmapMenu* pBitmapMenu = DYNAMIC_DOWNCAST(COXBitmapMenu, pPopup);
-	BOOL bConvert = FALSE;
-	COXBitmapMenuOrganizer* pOrganizer = COXBitmapMenuOrganizer::FindOrganizer(AfxGetMainWnd()->GetSafeHwnd());
-		
-	if (pOrganizer != NULL)
-	{
-		if (pBitmapMenu == NULL)
-		{
-			pBitmapMenu	= new COXBitmapMenu();
-			TRACE(_T("\nCreated menu at %x - Line: %d, %s"), pBitmapMenu, __LINE__, __FILE__);
-			pBitmapMenu->Attach(pPopup->Detach());
-			pPopup = (CMenu *) pBitmapMenu;
-			pOrganizer->m_BitmapMenuList.AddTail(pBitmapMenu);	
-			bConvert = TRUE;
-		}
-		
-		pOrganizer->ConvertBitmapMenu(pBitmapMenu, bConvert);
-	}
+    CRect rect;
+    GetItemRect(nMenuItem,&rect);
+    // translate the current toolbar item rectangle into screen coordinates
+    // so that we'll know where to pop up the menu
+    ClientToScreen(&rect);    
 
-	
+    // Attach the COXBitmapMenu object if not done already
+    COXBitmapMenu* pBitmapMenu = DYNAMIC_DOWNCAST(COXBitmapMenu, pPopup);
+    BOOL bConvert = FALSE;
+    COXBitmapMenuOrganizer* pOrganizer = COXBitmapMenuOrganizer::FindOrganizer(AfxGetMainWnd()->GetSafeHwnd());
+        
+    if (pOrganizer != NULL)
+    {
+        if (pBitmapMenu == NULL)
+        {
+            pBitmapMenu    = new COXBitmapMenu();
 
-	// Determine top left point of the popup menu
-	CPoint ptPos;
-	UINT nDummy;
-	COXBitmapMenu::DeterminePosition(pPopup, rect, m_dwStyle, ptPos, nFlags, nDummy);
+			// v9.3 - update 04 fixed gibberish output due to __FILE__ not being UNICODE - AAW 2009-03-29
+            TRACE(_T("\nCreated menu at %x - Line: %d, %s"), pBitmapMenu, __LINE__, TEXT( __FILE__ ));
+            pBitmapMenu->Attach(pPopup->Detach());
+            pPopup = (CMenu *) pBitmapMenu;
+            pOrganizer->m_BitmapMenuList.AddTail(pBitmapMenu);    
+            bConvert = TRUE;
+        }
+        
+        pOrganizer->ConvertBitmapMenu(pBitmapMenu, bConvert);
+    }
 
-	// make sure the state of previously active button is restored
-	RestoreMenuButton();	
+    
 
-	// set current active item
-	m_nActiveMenuItem=nMenuItem;
-	m_nActivateNextItem=-1;
+    // Determine top left point of the popup menu
+    CPoint ptPos;
+    UINT nDummy;
+    COXBitmapMenu::DeterminePosition(pPopup, rect, m_dwStyle, ptPos, nFlags, nDummy);
 
-	// set button to pressed state
-	CToolBarCtrl& tool=GetToolBarCtrl();
-	if(!IsInAdvancedCustomizationMode())
-	{
-		tool.PressButton(m_nActiveMenuItem+ID_CMDBASE);
-	}
+    // make sure the state of previously active button is restored
+    RestoreMenuButton();    
 
-	// display popup menu
-	CWnd* pWndOwner=AfxGetMainWnd();
-	if(pPopup!=NULL)
-	{
-		if(IsInAdvancedCustomizationMode())
-		{
-			OXCUSTOMIZEPOPUPMENUINFO cpmi;
-			cpmi.hMenu=pPopup->GetSafeHmenu();
-			cpmi.nFlags=nFlags;
-			cpmi.ptStart = ptPos;
-			SendCustomizeNotification(ID_OXCUSTMB_CUSTOMIZE_POPUP_MENU,(LPARAM)&cpmi);
-			m_nForbiddenItem=-1;
-			RestoreMenuButton();
-		}
-		else
-		{
-			if (pBitmapMenu != NULL)
-				pBitmapMenu->TrackPopupMenu(this, pWndOwner);
-			else
-				pPopup->TrackPopupMenu(nFlags, ptPos.x, ptPos.y, pWndOwner, rect);
+    // set current active item
+    m_nActiveMenuItem=nMenuItem;
+    m_nActivateNextItem=-1;
 
-			// while deactivating popup menu the user could have set to
-			// activate another menu item. In this case just post the 
-			// corresponding message
-			if(m_nActivateNextItem!=-1)
-			{
-				PostMessage(WM_DISPLAYPOPUPMENU,m_nActivateNextItem);
-			}
-			else
-			{
-				// Check whether we are still on the original button
-				CPoint cursorPos;
-				GetCursorPos(&cursorPos);
-				ScreenToClient(&cursorPos);
+    // set button to pressed state
+    CToolBarCtrl& tool=GetToolBarCtrl();
+    if(!IsInAdvancedCustomizationMode())
+    {
+        tool.PressButton(m_nActiveMenuItem+ID_CMDBASE);
+    }
+
+    // display popup menu
+    CWnd* pWndOwner=AfxGetMainWnd();
+    if(pPopup!=NULL)
+    {
+        if(IsInAdvancedCustomizationMode())
+        {
+            OXCUSTOMIZEPOPUPMENUINFO cpmi;
+            cpmi.hMenu=pPopup->GetSafeHmenu();
+            cpmi.nFlags=nFlags;
+            cpmi.ptStart = ptPos;
+            SendCustomizeNotification(ID_OXCUSTMB_CUSTOMIZE_POPUP_MENU,(LPARAM)&cpmi);
+            m_nForbiddenItem=-1;
+            RestoreMenuButton();
+        }
+        else
+        {
+            if (pBitmapMenu != NULL)
+                pBitmapMenu->TrackPopupMenu(this, pWndOwner);
+            else
+                pPopup->TrackPopupMenu(nFlags, ptPos.x, ptPos.y, pWndOwner, rect);
+
+
+			// v9.3 update 01 modification Manfred Drasch - to avoid attempted popup display on app close
+            CPoint cursorPos;
+            GetCursorPos(&cursorPos);
+            ScreenToClient(&cursorPos);
 #if _MFC_VER>0x0421
-				int hitPos=tool.HitTest(&cursorPos);
+            int hitPos=tool.HitTest(&cursorPos);
 #else
-				int hitPos=tool.SendMessage(TB_HITTEST,0,(LPARAM)&cursorPos);
+            int hitPos=tool.SendMessage(TB_HITTEST,0,(LPARAM)&cursorPos);
 #endif
-				if(hitPos==m_nActiveMenuItem)
-				{
-					// Don't allow it to drop down again
-					m_nForbiddenItem=m_nActiveMenuItem; 
-				}
-				RestoreMenuButton();
-			}
-		}
-	}
+
+            // are we over a menu or arrow menupoint?
+            if((m_nActivateNextItem!=-1) && (m_nActivateNextItem != nMenuItem) && (hitPos!=m_nActivateNextItem))
+            {
+                CRect Rect;
+
+                BOOL fHit = FALSE;
+                int nCount = ::GetMenuItemCount(m_hMenu);
+                for (int nLoop = 0; nLoop <= nCount; nLoop++)
+                {
+                    GetItemRect(nLoop, &Rect);
+                    if (Rect.PtInRect(cursorPos))
+                    {
+                        fHit = TRUE;
+                        break;
+                    }
+                }
+                if (!fHit)
+                    m_nActivateNextItem = -1;
+            }
+			// *** end mods Manfred Drasch
+
+
+            // while deactivating popup menu the user could have set to
+            // activate another menu item. In this case just post the 
+            // corresponding message
+            if(m_nActivateNextItem!=-1)
+            {
+                PostMessage(WM_DISPLAYPOPUPMENU,m_nActivateNextItem);
+            }
+            else
+            {
+                // Check whether we are still on the original button
+// v9.3 update 01 *** modification (code removed) Manfred Drasch 
+//                CPoint cursorPos;
+//                GetCursorPos(&cursorPos);
+//                ScreenToClient(&cursorPos);
+//#if _MFC_VER>0x0421
+//                int hitPos=tool.HitTest(&cursorPos);
+//#else
+//                int hitPos=tool.SendMessage(TB_HITTEST,0,(LPARAM)&cursorPos);
+//#endif
+// *** end mods manfred 
+                if(hitPos==m_nActiveMenuItem)
+                {
+                    // Don't allow it to drop down again
+                    m_nForbiddenItem=m_nActiveMenuItem; 
+                }
+                RestoreMenuButton();
+            }
+        }
+    }
 }
 
 void COXMenuBar::RestoreMenuButton()
@@ -2020,8 +2114,13 @@ BOOL COXMenuBar::HandleMenuKey(UINT nChar)
 							if(GetIcon()!=NULL && nItem==nItemCount)
 							{
 								GetToolBarCtrl().GetItemRect(0,rect);
-								rect.DeflateRect(1,1);
-								rect.OffsetRect(-::GetSystemMetrics(SM_CXSMICON),0);
+								
+								// v9.3 update 01 Modification Manfred Drasch
+								// the sysmenu was not shown
+								//	rect.DeflateRect(1,1);
+								//	rect.OffsetRect(-::GetSystemMetrics(SM_CXSMICON),0);
+								ClientToScreen(rect);
+								// end modification Manfred Drasch
 							}
 							else
 							{
@@ -2092,8 +2191,12 @@ BOOL COXMenuBar::HandleMenuKey(UINT nChar)
 							if(GetIcon()!=NULL && nItem==nItemCount)
 							{
 								GetToolBarCtrl().GetItemRect(0,rect);
-								rect.DeflateRect(1,1);
-								rect.OffsetRect(-::GetSystemMetrics(SM_CXSMICON),0);
+								// v9.3 update 01 modification Manfred Drasch
+								// the sysmenu was not shown
+								// rect.DeflateRect(1,1);
+								// rect.OffsetRect(-::GetSystemMetrics(SM_CXSMICON),0);
+								ClientToScreen(rect);
+								// end modification Manfred Drasch
 							}
 							else
 							{
@@ -2297,8 +2400,29 @@ void COXMenuBar::UpdateMenuMetrics(BOOL bRedraw/*=TRUE*/)
 	if((HFONT)m_fontMenu!=NULL)
 		m_fontMenu.DeleteObject();
 	// Menu font, height and color
-	NONCLIENTMETRICS ncm={ sizeof(ncm) };
-	SystemParametersInfo(SPI_GETNONCLIENTMETRICS,sizeof(ncm),&ncm,0);
+	//////////////////////////////////////////////////////////////////
+	// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+	// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+	// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+	// Code compiled for XP should still run on Vista.
+
+	int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#	if WINVER >= 0x0600
+	// compiled for Vista - check for OS version
+	OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+	ASSERT(GetVersionEx(&vi));
+	if(vi.dwMajorVersion < 6) {
+		// running on lesser version - adjust size of NONCLIENTMETRICS struct
+		ncmSize -= sizeof( int );
+	}
+#	endif
+
+	NONCLIENTMETRICS ncm={ ncmSize };
+	VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &ncm, 0));
+	// end NONCLIENTMETRICS mods v9.3 update 02
+	/////////////////////////////////////////////////
+
 	VERIFY(m_fontMenu.CreateFontIndirect(&ncm.lfMenuFont));
 	SetFont(&m_fontMenu,TRUE);
 
@@ -2359,8 +2483,9 @@ BOOL COXMenuBar::SaveBarState(LPCTSTR lpszSubKey, LPCTSTR lpszValueName,
 			if(pDocument!=NULL)
 			{
 				LPCSTR lpszUniqueName=pDocument->GetRuntimeClass()->m_lpszClassName;
-				int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
-				LPTSTR lpszUnicodeUniqueName=new TCHAR[nLength];
+				// v9.3 update 01 - incorrect string length calculation - noted by Karl Edwall
+				//int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
+				int nLength = lstrlenA(lpszUniqueName) + 1;				LPTSTR lpszUnicodeUniqueName=new TCHAR[nLength];
 				memset(lpszUnicodeUniqueName,0,nLength*sizeof(TCHAR));
 				_mbstowcsz(lpszUnicodeUniqueName,lpszUniqueName,nLength);
 				VERIFY(SaveMenuState(hMenu,lpszUnicodeUniqueName));
@@ -2408,7 +2533,9 @@ BOOL COXMenuBar::SaveMenuState(HMENU hMenu, LPCTSTR lpszSubKey)
 	CWinApp* pApp=AfxGetApp();
 	CString sProfileName=lpszSubKey;
 	if(sProfileName.IsEmpty())
-		sProfileName=_T("Menu_Default~!@#$#$%^");
+		// v9.3 update 01 - TD removed garbage here
+		// sProfileName=_T("Menu_Default~!@#$#$%^");
+		sProfileName=_T("Menu_Default_");
 	else
 		sProfileName=_T("Menu_")+sProfileName;
 	CString sValueName=_T("MenuItems");
@@ -2454,7 +2581,9 @@ BOOL COXMenuBar::LoadMenuState(HMENU hMenu, LPCTSTR lpszSubKey)
 	CWinApp* pApp=AfxGetApp();
 	CString sProfileName=lpszSubKey;
 	if(sProfileName.IsEmpty())
-		sProfileName=_T("Menu_Default~!@#$#$%^");
+		// v9.3 update 01 - TD removed garbage here
+		// sProfileName=_T("Menu_Default~!@#$#$%^");
+		sProfileName=_T("Menu_Default");
 	else
 		sProfileName=_T("Menu_")+sProfileName;
 	CString sValueName=_T("MenuDataSize");
@@ -2674,7 +2803,9 @@ BOOL COXMenuBar::SaveCustomizedMenu()
 		if(pDocument!=NULL)
 		{
 			LPCSTR lpszUniqueName=pDocument->GetRuntimeClass()->m_lpszClassName;
-			int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
+			// v9.3 update 01 - incorrect string length calculation - noted by Karl Edwall
+			//int nLength=sizeof(lpszUniqueName)/sizeof(lpszUniqueName[0])+1;
+			int nLength = lstrlenA(lpszUniqueName) + 1;
 			LPTSTR lpszUnicodeUniqueName=new TCHAR[nLength];
 			memset(lpszUnicodeUniqueName,0,nLength*sizeof(TCHAR));
 			_mbstowcsz(lpszUnicodeUniqueName,lpszUniqueName,nLength);

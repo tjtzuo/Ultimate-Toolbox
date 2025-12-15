@@ -17,8 +17,15 @@
 
 #include "stdafx.h"
 
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
+
 #pragma warning(disable : 4706)
+
+// v9.3 - update 05 - shouldn't need to include this for VS2010 - problematic for static MFC linkage (?)
+#if _MSC_VER < 1600
 #include <multimon.h>
+#endif
 
 #include "OXBitmapMenu.h"
 #include "OXBitmapMenuOrganizer.h"
@@ -87,6 +94,7 @@ END_MESSAGE_MAP()
 
 void COXBitmapMenuPopupWnd::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	TRACE(_T("COXBitmapMenuPopupWnd::OnLButtonDown\n"));
 	COXBitmapMenu* pMenu=GetBitmapMenu();
 	if(m_nCheckForDragDropEventTimerID==0 && 
 		pMenu!=NULL && pMenu->IsInCustomizationMode())
@@ -186,7 +194,8 @@ void COXBitmapMenuPopupWnd::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 
-LONG COXBitmapMenuPopupWnd::OnDragEnter(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXBitmapMenuPopupWnd::OnDragEnter(WPARAM wParam, LPARAM lParam)
 {
 	COXBitmapMenu* pMenu=GetBitmapMenu();
 	if(pMenu!=NULL && pMenu->IsInCustomizationMode())
@@ -204,7 +213,8 @@ LONG COXBitmapMenuPopupWnd::OnDragEnter(WPARAM wParam, LPARAM lParam)
 	return (LONG)FALSE;
 }
 
-LONG COXBitmapMenuPopupWnd::OnDragOver(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXBitmapMenuPopupWnd::OnDragOver(WPARAM wParam, LPARAM lParam)
 {
 	COXBitmapMenu* pMenu=GetBitmapMenu();
 	if(pMenu!=NULL && pMenu->IsInCustomizationMode())
@@ -222,7 +232,8 @@ LONG COXBitmapMenuPopupWnd::OnDragOver(WPARAM wParam, LPARAM lParam)
 	return (LONG)FALSE;
 }
 
-LONG COXBitmapMenuPopupWnd::OnDragLeave(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXBitmapMenuPopupWnd::OnDragLeave(WPARAM wParam, LPARAM lParam)
 {
 	COXBitmapMenu* pMenu=GetBitmapMenu();
 	if(pMenu!=NULL && pMenu->IsInCustomizationMode())
@@ -240,7 +251,8 @@ LONG COXBitmapMenuPopupWnd::OnDragLeave(WPARAM wParam, LPARAM lParam)
 	return (LONG)FALSE;
 }
 
-LONG COXBitmapMenuPopupWnd::OnDrop(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXBitmapMenuPopupWnd::OnDrop(WPARAM wParam, LPARAM lParam)
 {
 	COXBitmapMenu* pMenu=GetBitmapMenu();
 	if(pMenu!=NULL && pMenu->IsInCustomizationMode())
@@ -363,8 +375,8 @@ void COXBitmapMenuPopupWnd::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	CWnd::OnSettingChange(uFlags, lpszSection);
 }
 
-
-void COXBitmapMenuPopupWnd::OnTimer(UINT nIDEvent)
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXBitmapMenuPopupWnd::OnTimer(OXTPARAM nIDEvent)
 {
 	if((int)nIDEvent==m_nCheckForDragDropEventTimerID)
 	{
@@ -541,8 +553,29 @@ void COXBitmapMenuPopupWnd::UpdateMenuMetrics()
 		m_fontMenu.DeleteObject();
 
 	// Menu font, height and color
-	NONCLIENTMETRICS ncm={ sizeof(ncm) };
-	SystemParametersInfo(SPI_GETNONCLIENTMETRICS,sizeof(ncm),&ncm,0);
+	//////////////////////////////////////////////////////////////////
+	// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+	// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+	// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+	// Code compiled for XP should still run on Vista.
+
+	int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#	if WINVER >= 0x0600
+	// compiled for Vista - check for OS version
+	OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+	ASSERT(GetVersionEx(&vi));
+	if(vi.dwMajorVersion < 6) {
+		// running on lesser version - adjust size of NONCLIENTMETRICS struct
+		ncmSize -= sizeof( int );
+	}
+#	endif
+
+	NONCLIENTMETRICS ncm={ ncmSize };
+	VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &ncm, 0));
+	// end NONCLIENTMETRICS mods v9.3 update 02
+	/////////////////////////////////////////////////
+
 	VERIFY(m_fontMenu.CreateFontIndirect(&ncm.lfMenuFont));
 }
 
@@ -953,14 +986,35 @@ void COXBitmapMenu::CalcExtents()
 
 	MENUITEMINFO mii={ sizeof(MENUITEMINFO) };
 
-	CFont Font, boldFont;
-	NONCLIENTMETRICS ncm={ sizeof(NONCLIENTMETRICS) };
-
 	COXItemInfo* pItemInfo=NULL;
 	COXImageInfo* pImageInfo=NULL;
 	IMAGEINFO ii={ 0 };
 
-	VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(ncm), &ncm, 0));
+	CFont Font, boldFont;
+
+	//////////////////////////////////////////////////////////////////
+	// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+	// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+	// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+	// Code compiled for XP should still run on Vista.
+
+	int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#	if WINVER >= 0x0600
+	// compiled for Vista - check for OS version
+	OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+	ASSERT(GetVersionEx(&vi));
+	if(vi.dwMajorVersion < 6) {
+		// running on lesser version - adjust size of NONCLIENTMETRICS struct
+		ncmSize -= sizeof( int );
+	}
+#	endif
+
+	NONCLIENTMETRICS ncm={ ncmSize };
+	VERIFY(SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &ncm, 0));
+	// end NONCLIENTMETRICS mods v9.3 update 02
+	/////////////////////////////////////////////////
+
 	VERIFY(Font.CreateFontIndirect(&ncm.lfMenuFont));
 	ncm.lfMenuFont.lfWeight = FW_BOLD; // make the font bold
 	VERIFY(boldFont.CreateFontIndirect(&ncm.lfMenuFont));
@@ -2113,70 +2167,106 @@ CSize COXBitmapMenu::GetPopupMenuSize(CMenu* pMenu)
 	return szMenu;
 }
 
+// v9.3 update 01 fixes and changes: Manfred Drasch
+// Horizontal menu:
+//    * wrong ypos under some circumstances
+//    * avoid a drawingproblem (the menubutton was painted over the popupmenu)
+// Vertical menu:
+//    * wrong xpos under some circumstances
+// Both:
+//    * Menu now shown over vertical Appbar/Sidebar, too
+
 void COXBitmapMenu::DeterminePosition(CMenu* pMenu, LPCRECT lpItemRect, DWORD dwStyle, CPoint& ptTopLeft, UINT& nFlags, UINT& nPosFlags)
 {
-	// Get the rectangle of the monitor closest to the menu rectangle
-	HMONITOR hMonitor = ::MonitorFromRect(lpItemRect, MONITOR_DEFAULTTONEAREST);
-	MONITORINFO mi;
-	mi.cbSize = sizeof(MONITORINFO);
-	::GetMonitorInfo(hMonitor, &mi);
+    // Get the rectangle of the monitor ( + WorkArea) closest to the menu rectangle
+    CRect rctMonitorWorkArea;
+    CRect rctMonitor;
 
-	const int iMixScreenX = mi.rcMonitor.left;
-	const int iMinScreenY = mi.rcMonitor.top;
-	const int iMaxScreenX = mi.rcMonitor.right;
-	const int iMaxScreenY = mi.rcMonitor.bottom;
+    CPoint ptCursor;
+    HMONITOR hMonitor = ::MonitorFromRect(lpItemRect, MONITOR_DEFAULTTONEAREST);
+    MONITORINFO mi;
+    mi.cbSize = sizeof(MONITORINFO);
+    if(hMonitor!=NULL && ::GetMonitorInfo(hMonitor, &mi))
+    {
+        rctMonitorWorkArea = mi.rcWork;
+        rctMonitor = mi.rcMonitor;
+    }
+    else
+    {
+        rctMonitorWorkArea.SetRect(0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN));
+        rctMonitor.SetRect(0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN));
+    }
 
-	CSize sizeMenu = GetPopupMenuSize(pMenu);
-	ptTopLeft.x = 0;
-	ptTopLeft.y = 0;
-	nFlags = 0;
-	if (dwStyle & CBRS_ORIENT_HORZ)
-	{
-		// Horizontal menu
-		ptTopLeft.x = lpItemRect->left;
-		if (ptTopLeft.x < iMixScreenX)
-			ptTopLeft.x = iMixScreenX;
-		if (ptTopLeft.x + sizeMenu.cx > iMaxScreenX)
-			ptTopLeft.x = iMaxScreenX - sizeMenu.cx;
+    CSize sizeMenu = GetPopupMenuSize(pMenu);
+    ptTopLeft.x = 0;
+    ptTopLeft.y = 0;
+    nFlags = 0;
 
-		if (lpItemRect->bottom + sizeMenu.cy > iMaxScreenY)
-		{
-			// The popup menu should be above the item
-			nFlags |= TPM_BOTTOMALIGN;
-			nPosFlags = OX_TPM_TOP;
-			ptTopLeft.y = lpItemRect->top + 1;
-		}
-		else
-		{
-			// The popup menu should be below the item
-			nFlags |= TPM_TOPALIGN;
-			nPosFlags = OX_TPM_BOTTOM;
-			ptTopLeft.y = lpItemRect->bottom - 1;
-		}
-	}
-	else
-	{
-		// Vertical menu
-		if (lpItemRect->right + sizeMenu.cx > iMaxScreenX)
-		{
-			// The popup menu should be left of the item
-			nFlags |= TPM_RIGHTALIGN;
-			nPosFlags = OX_TPM_LEFT;
-			ptTopLeft.x = lpItemRect->left;
-		}
-		else
-		{
-			// The popup menu should be right of the item
-			nFlags |= TPM_LEFTALIGN;
-			nPosFlags = OX_TPM_RIGHT;
-			ptTopLeft.x = lpItemRect->right;
-		}
+    if (dwStyle & CBRS_ORIENT_HORZ)
+    {
+        // Horizontal menu
+        ptTopLeft.x = lpItemRect->left;
 
-		ptTopLeft.y = lpItemRect->top + 1;
-		if (ptTopLeft.y < iMinScreenY)
-			ptTopLeft.y = iMinScreenY;
-		if (ptTopLeft.y + sizeMenu.cy > iMaxScreenY)
-			ptTopLeft.y = iMaxScreenY - sizeMenu.cy - 1;
-	}
+        if (ptTopLeft.x < rctMonitor.left)
+            ptTopLeft.x = rctMonitor.left;
+
+        if (ptTopLeft.x + sizeMenu.cx > rctMonitor.right)
+            ptTopLeft.x = rctMonitor.right - 1;
+        else
+        {
+            if (ptTopLeft.x + sizeMenu.cx + 1 >= rctMonitorWorkArea.right)
+            {
+                ptTopLeft.x += sizeMenu.cx;
+                if (ptTopLeft.x == 0)
+                    ptTopLeft.x = -1;
+            }
+        }
+
+        if (lpItemRect->bottom + sizeMenu.cy > rctMonitorWorkArea.bottom)
+        {
+            // The popup menu should be above the item
+            nFlags |= TPM_BOTTOMALIGN;
+            nPosFlags = OX_TPM_TOP;
+            ptTopLeft.y = lpItemRect->top + 1;
+        }
+        else
+        {
+            // The popup menu should be below the item
+            nFlags |= TPM_TOPALIGN;
+            nPosFlags = OX_TPM_BOTTOM;
+            ptTopLeft.y = lpItemRect->bottom - 1;
+        }
+    }
+    else
+    {
+        // Vertical menu
+        if (lpItemRect->right + sizeMenu.cx > rctMonitor.right)
+        {
+            // The popup menu should be left of the item
+            nFlags |= TPM_RIGHTALIGN;
+            nPosFlags = OX_TPM_LEFT;
+            ptTopLeft.x = lpItemRect->left;
+        }
+        else
+        {
+            // The popup menu should be right of the item
+            nFlags |= TPM_LEFTALIGN;
+            nPosFlags = OX_TPM_RIGHT;
+
+            if (lpItemRect->right + sizeMenu.cx + 1 >= rctMonitorWorkArea.right)
+                ptTopLeft.x = lpItemRect->right + sizeMenu.cx;
+            else
+                ptTopLeft.x = lpItemRect->right;
+
+            if (ptTopLeft.x == 0)
+                ptTopLeft.x = -1;
+        }
+
+        ptTopLeft.y = lpItemRect->top + 1;
+        if (ptTopLeft.y < rctMonitorWorkArea.top)
+            ptTopLeft.y = rctMonitorWorkArea.top;
+
+        if (ptTopLeft.y + sizeMenu.cy > rctMonitorWorkArea.bottom)
+            ptTopLeft.y = rctMonitorWorkArea.bottom - sizeMenu.cy;
+    }
 }
-

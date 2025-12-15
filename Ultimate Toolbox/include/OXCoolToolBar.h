@@ -1719,7 +1719,9 @@ static const TCHAR szCustomizable[]=_T("Customizable");
 
 #include "MFCToolBar.h"
 
-#define CToolBar CMFCToolBar
+// v9.3 - update 05 - CMFCToolBar is now COXMFCToolBar to avoid conflict (VS2010)
+//#define CToolBar CMFCToolBar
+#define CToolBar COXMFCToolBar
 
 // Define the WM_QUERYSNAPING user message used to query a frame window whether or not
 // the snaping and tear-off behavior is enabled
@@ -3139,10 +3141,11 @@ protected:
 	afx_msg BOOL OnTBNGetButtonInfo(NMHDR* pNMHDR, LRESULT* pResult);
 
 	// drag and drop support
-	virtual LONG OnDragEnter(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDragOver(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDragLeave(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDrop(WPARAM wParam, LPARAM lParam);
+	// v9.3 - update 03 - 64-bit - return values were declared as LONG - changed to LRESULT
+	virtual LRESULT OnDragEnter(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDragOver(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDragLeave(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDrop(WPARAM wParam, LPARAM lParam);
 
 	// advanced customization commands handlers
 	afx_msg void OnCustTBDelete();

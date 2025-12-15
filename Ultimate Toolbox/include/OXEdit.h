@@ -543,11 +543,13 @@ protected:
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
-	afx_msg LONG OnCut(UINT wParam, LONG lParam);
-	afx_msg LONG OnCopy(UINT wParam, LONG lParam);
-	afx_msg LONG OnPaste(UINT wParam, LONG lParam);
-	afx_msg LONG OnClear(UINT wParam, LONG lParam);
-	afx_msg LRESULT OnSetText(UINT wParam, LONG lParam) ;
+
+	// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+	afx_msg LRESULT OnCut(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnCopy(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnPaste(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnClear(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam) ;
 	DECLARE_MESSAGE_MAP()
 };
 

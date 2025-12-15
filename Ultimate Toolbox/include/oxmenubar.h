@@ -134,8 +134,10 @@ any additional customization functionality.
 #include "OXCoolToolBar.h"
 
 // default ID for menubar
+// v93 - update 05 - suppress redefinition warning
+#ifndef AFX_IDW_MENUBAR
 #define AFX_IDW_MENUBAR			0xE810
-
+#endif
 
 // base id for menubar buttons that correspond to the index
 #define ID_CMDBASE				1
@@ -227,6 +229,9 @@ public:
 	// m_nActivateNextItem
 	int m_nForbiddenItem;
 
+	// v9.3 update 01 modification manfred for DisplayPopupMenu code
+	int m_nActivateNextItemShowAll;
+
 	// flag that specifies that menu should take entire row
 	// while displayed
 	BOOL m_bForceEntireRow;
@@ -310,11 +315,21 @@ public:
 	// --- Out : 
 	// --- Returns:	Handle to the menu that is used in the menu bar
 	// --- Effect : Retrieves handle to the menubar menu
-	HMENU GetMenu() const & { 
+	// v9.3 update 02 - VS2008 - GetMenu returns CMenu*, so this override
+	// invalid - added GetHMenu. 
+	// TD - tried defaulting to base GetMenu adding operator HMENU with macro
+	// in calling code but seemed problematic - this is clunky but clearer.
+#if _MFC_VER < 0x0800
+	HMENU GetMenu() const { 
 		ASSERT(::IsWindow(GetSafeHwnd()));
 		return m_hMenu; 
 	}
-
+#else
+	HMENU GetHMenu() const { 
+		ASSERT(::IsWindow(GetSafeHwnd()));
+		return m_hMenu; 
+	}
+#endif
 
 	// --- In  :	hMenu	-	handle to the valid menu that will be 
 	//							displayed in the menubar
@@ -428,7 +443,12 @@ public:
 		// mark this menu as a changed one
 		if(!IsMarkedAsChanged())
 		{
+			// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+			m_mapChangedMenus.SetAt(GetHMenu(),PtrToInt(m_mapChangedMenus.GetCount()));
+#else
 			m_mapChangedMenus.SetAt(GetMenu(),PtrToInt(m_mapChangedMenus.GetCount()));
+#endif
 		}
 	}
 
@@ -436,7 +456,12 @@ public:
 	inline BOOL IsMarkedAsChanged()
 	{
 		int nIndex=-1;
-		HMENU hMenu=GetMenu();
+		// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+		HMENU hMenu= GetHMenu();
+#else 
+		HMENU hMenu= GetMenu();	
+#endif
 		return (m_mapChangedMenus.Lookup(hMenu,nIndex));
 	}
 
@@ -579,16 +604,23 @@ protected:
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
-	afx_msg LONG OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam);
+    // v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+	afx_msg LRESULT OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnUpdateMenuItem(CCmdUI* pCmd);
 	afx_msg BOOL OnMenuDropDown(NMHDR* pNotifyStruct, LRESULT* result);
-	afx_msg LONG OnDisplayPopupMenu(WPARAM wParam, LPARAM lParam);
+	// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+	afx_msg LRESULT OnDisplayPopupMenu(WPARAM wParam, LPARAM lParam);
+	
+	// v9.3 update 01 modification (added) Manfred Drasch
+	// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+	afx_msg LRESULT OnDisplayPopupMenuAllItems(WPARAM wParam, LPARAM lParam);
 
 	afx_msg void OnCustTBDelete();
 
@@ -599,8 +631,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	// drag and drop support
-	virtual LONG OnDragOver(WPARAM wParam, LPARAM lParam);
-	virtual LONG OnDrop(WPARAM wParam, LPARAM lParam);
+	// v9.3 - update 03 - 64-bit - return values were declared as LONG - changed to LRESULT
+	virtual LRESULT OnDragOver(WPARAM wParam, LPARAM lParam);
+	virtual LRESULT OnDrop(WPARAM wParam, LPARAM lParam);
 
 	// handler that is called when button is to be removed due to to 
 	// drag'n'drop operation
@@ -1072,7 +1105,9 @@ LRESULT COXMenuBarHost<PARENTWND>::WindowProc(UINT msg, WPARAM wp, LPARAM lp)
 				int nCmdID=LOWORD(wp);
 				if(nCmdID==ID_OX_SHOWALLITEMS)
 				{
-					GetMenuBar().m_nActivateNextItem=GetMenuBar().m_nActiveMenuItem;
+					// v9.3 update 01 modification (replaced) Manfred Drasch
+					// GetMenuBar().m_nActivateNextItem=GetMenuBar().m_nActiveMenuItem;
+					GetMenuBar().PostMessage(WM_DISPLAYPOPUPMENU_ALLITEMS);
 				}
 			}
 			break;
@@ -1268,7 +1303,12 @@ template<class PARENTWND>
 CMenu* COXMenuBarHost<PARENTWND>::GetMenu()
 {
 	if(::IsWindow(GetMenuBar().GetSafeHwnd()))
+// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+		return CMenu::FromHandle(GetMenuBar().GetHMenu());
+#else
 		return CMenu::FromHandle(GetMenuBar().GetMenu());
+#endif
 	else
 		return PARENTWND::GetMenu();
 }
@@ -1921,8 +1961,14 @@ LoadFrame(UINT nIDResource,
 	if(COXMenuBarHost<PARENTFRAME>::LoadFrame(nIDResource,dwDefaultStyle,
 		pParentWnd,pContext))
 	{
-		if(::IsWindow(GetMenuBar().GetSafeHwnd()))
-			m_hMenuDefault=GetMenuBar().GetMenu();
+		if(::IsWindow(GetMenuBar().GetSafeHwnd())) {
+			// v9.3 update 02 - using GetHMenu for VS2008
+#if _MFC_VER >= 0x0800
+			m_hMenuDefault= GetMenuBar().GetHMenu();
+#else
+			m_hMenuDefault= GetMenuBar().GetMenu();
+#endif
+		}
 		return TRUE;
 	}
 

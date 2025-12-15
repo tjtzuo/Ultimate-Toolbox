@@ -102,6 +102,9 @@ Resource files:
 
 #include "OXDllExt.h"
 
+// v9.3 - update 03 - 64bit - included for OXTPARAM
+#include "UTB64Bit.h"
+
 #include "OXCustomizePage.h"
 #include "OXSeparator.h"
 #include "OXStatic.h"
@@ -299,7 +302,8 @@ protected:
 	afx_msg void OnRadioMaxnumberInstanceOnlyone();
 	afx_msg void OnChangeEditLimitNumber();
 	afx_msg void OnItemchangedListInstances(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnTimer(UINT nIDEvent);
+	// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+	afx_msg void OnTimer(OXTPARAM nIDEvent);
 	afx_msg void OnDestroy();
 	afx_msg void OnButtonBringToFront();
 	afx_msg void OnButtonClose();

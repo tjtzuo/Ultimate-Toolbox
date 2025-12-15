@@ -9,7 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "StdAfx.h"
+// v9.3 - update 05 - removed
+//#include "StdAfx.h"
 
 // OXSkinnedView.h : header file
 //

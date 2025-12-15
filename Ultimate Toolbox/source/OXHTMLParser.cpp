@@ -822,7 +822,9 @@ BOOL COXHTMLParser::CanCenter(TagDescriptor* pTag)
 // This MUST be rewritten to use hash tables to get some speed
 TagDescriptor* COXHTMLParser::GetTagDescriptor(LPCTSTR szTag) const
 {
-    DWORD_PTR dwData;
+	// v9.3 - update 03 - 64-bit - HashNode uses DWORD, so revised this - TD
+    // DWORD_PTR dwData;
+    DWORD dwData;
     if (!m_HTMLTagTable.Lookup(szTag, dwData))
         return NULL;
     else

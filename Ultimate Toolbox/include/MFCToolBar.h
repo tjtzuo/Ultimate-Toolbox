@@ -23,14 +23,16 @@
 
 // CMFCToolBar
 
-class OX_CLASS_DECL CMFCToolBar : public TOOLBAR_BASE_CLASS
+// v9.3 - update 05 - changed to COXMFCToolBar to avoid conflict (VS2010)
+
+class OX_CLASS_DECL COXMFCToolBar : public TOOLBAR_BASE_CLASS
 {
-	DECLARE_DYNAMIC(CMFCToolBar)
+	DECLARE_DYNAMIC(COXMFCToolBar)
 
 public:
 	void SetBarStyle(DWORD dwStyle);
-	CMFCToolBar();
-	virtual ~CMFCToolBar();
+	COXMFCToolBar();
+	virtual ~COXMFCToolBar();
 	virtual BOOL CreateEx(CWnd* pParentWnd, DWORD dwCtrlStyle = TBSTYLE_FLAT,
 		DWORD dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,
 		CRect rcBorders = CRect(0, 0, 0, 0),

@@ -1045,6 +1045,8 @@
 #define SHBDSM_BEGINDRAG					WM_OX_APP+80
 #define SHBDSM_QUERYCONTINUEDRAG			WM_OX_APP+81
 #define WM_ACTIVATEVIEWBAR					WM_OX_APP+82
+// v9.3 update 01 modification Manfred Drasch - for changes in OXMenubar.h and .cpp
+#define WM_DISPLAYPOPUPMENU_ALLITEMS		WM_OX_APP+83
 
 #ifdef _OXIE4PATCH
 #define WM_DOCKCHILDWND						WM_OX_APP+90

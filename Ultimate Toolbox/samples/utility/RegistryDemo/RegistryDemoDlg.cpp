@@ -21,7 +21,7 @@ static char THIS_FILE[] = __FILE__;
 // CRegistryDemoDlg dialog
 static const TCHAR szOpen[] =				_T("Open(BOOL bCreate)");
 static const TCHAR szClose[] =				_T("Close()");
-//static const TCHAR szDelete[] =				_T("Delete()");
+static const TCHAR szDelete[] =				_T("Delete()");
 static const TCHAR szIsOpen[] =				_T("IsOpen()");
 static const TCHAR szFlush[] =				_T("Flush()");
 static const TCHAR szGetStringValue[] =		_T("GetStringValue(LPCTSTR pszName, BOOL bAllowUnexpanded)");
@@ -87,7 +87,7 @@ CRegistryDemoDlg::COXAction CRegistryDemoDlg::m_actions[] =
 
 		{ TRUE, TRUE,  FALSE, FALSE, szOpen },
 		{ FALSE,FALSE, FALSE, FALSE, szClose },
-		//{ TRUE, FALSE, FALSE, FALSE, szDelete },
+		{ TRUE, FALSE, FALSE, FALSE, szDelete },
 		{ FALSE,FALSE, FALSE, FALSE, szIsOpen },
 		{ FALSE,FALSE, FALSE, FALSE, szFlush },
 		{ TRUE, TRUE,  TRUE,  FALSE, szGetStringValue },

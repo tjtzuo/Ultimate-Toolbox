@@ -271,7 +271,8 @@ void COXSeparator::OnPaint()
 	// Do not call CStatic::OnPaint() for painting messages
 }
 
-LONG COXSeparator::OnSetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXSeparator::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -283,7 +284,8 @@ LONG COXSeparator::OnSetText(UINT wParam, LONG lParam)
 	return TRUE;
 }
 
-LONG COXSeparator::OnGetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXSeparator::OnGetText(WPARAM wParam, LPARAM lParam)
 {
 	if(wParam>0)
 	{
@@ -294,7 +296,8 @@ LONG COXSeparator::OnGetText(UINT wParam, LONG lParam)
 	return (LONG)wParam;
 }
 
-LONG COXSeparator::OnGetTextLength(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXSeparator::OnGetTextLength(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 	UNREFERENCED_PARAMETER(lParam);

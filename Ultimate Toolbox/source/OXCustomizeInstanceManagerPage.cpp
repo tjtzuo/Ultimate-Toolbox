@@ -433,7 +433,8 @@ void COXCustomizeInstanceManagerPage::OnItemchangedListInstances(NMHDR* pNMHDR,
 	*pResult = 0;
 }
 
-void COXCustomizeInstanceManagerPage::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXCustomizeInstanceManagerPage::OnTimer(OXTPARAM nIDEvent) 
 {
 	// TODO: Add your message handler code here and/or call default
 	if(nIDEvent==m_nTimerCheckInstancesID)

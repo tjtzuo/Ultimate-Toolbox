@@ -697,7 +697,8 @@ void COXCoolToolBar::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 }
 
 
-LONG COXCoolToolBar::OnDragEnter(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXCoolToolBar::OnDragEnter(WPARAM wParam, LPARAM lParam)
 {
 	// toolbar must be in advanced customizable state
 	if(!IsCustomizable(TRUE))
@@ -717,7 +718,8 @@ LONG COXCoolToolBar::OnDragEnter(WPARAM wParam, LPARAM lParam)
 }
 
 
-LONG COXCoolToolBar::OnDragOver(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXCoolToolBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -850,7 +852,8 @@ LONG COXCoolToolBar::OnDragOver(WPARAM wParam, LPARAM lParam)
 }
 
 
-LONG COXCoolToolBar::OnDragLeave(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXCoolToolBar::OnDragLeave(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 
@@ -876,7 +879,8 @@ LONG COXCoolToolBar::OnDragLeave(WPARAM wParam, LPARAM lParam)
 }
 
 
-LONG COXCoolToolBar::OnDrop(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - return value was declared as LONG - changed to LRESULT
+LRESULT COXCoolToolBar::OnDrop(WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(wParam);
 

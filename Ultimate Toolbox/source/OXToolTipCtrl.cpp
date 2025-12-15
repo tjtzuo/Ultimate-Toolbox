@@ -26,7 +26,10 @@
 
 #pragma warning(disable : 4706)
 
+// v9.3 - update 05 - shouldn't need to include this for VS2010 - problematic for static MFC linkage (?)
+#if _MSC_VER < 1600
 #include <multimon.h>
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -189,7 +192,8 @@ void COXToolTipCtrl::OnPaint()
 //              the mouse has been stationary for the specified time, remove
 //              the tip after a specified display time, or periodically check
 //              that the mouse is still within the bounds of the tool.
-void COXToolTipCtrl::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXToolTipCtrl::OnTimer(OXTPARAM nIDEvent) 
 {
     CPoint pt;
     COXToolTipInfo *pToolTip = NULL;
@@ -834,10 +838,29 @@ LPLOGFONT COXToolTipCtrl::GetSystemToolTipFont() const
 {
     static LOGFONT LogFont;
 
-    NONCLIENTMETRICS ncm;
-    ncm.cbSize = sizeof(NONCLIENTMETRICS);
-    if (!SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(NONCLIENTMETRICS), &ncm, 0))
+	//////////////////////////////////////////////////////////////////
+	// v9.3 update 02 - the NONCLIENTMETRICS struct is an int larger 
+	// on Vista vs XP (iPaddedBorderWidth added). Code compiled for 
+	// WINVER 0x0600 will fail the call to SystemParametersInfo on XP.
+	// Code compiled for XP should still run on Vista.
+
+	int ncmSize = sizeof( NONCLIENTMETRICS );
+
+#	if WINVER >= 0x0600
+	// compiled for Vista - check for OS version
+	OSVERSIONINFO vi={ sizeof(OSVERSIONINFO) };
+	ASSERT(GetVersionEx(&vi));
+	if(vi.dwMajorVersion < 6) {
+		// running on lesser version - adjust size of NONCLIENTMETRICS struct
+		ncmSize -= sizeof( int );
+	}
+#	endif
+
+	NONCLIENTMETRICS ncm={ ncmSize };
+	if (!SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncmSize, &ncm, 0))
         return FALSE;
+	// end NONCLIENTMETRICS mods v9.3 update 02
+	/////////////////////////////////////////////////
 
     memcpy(&LogFont, &(ncm.lfStatusFont), sizeof(LOGFONT));
 

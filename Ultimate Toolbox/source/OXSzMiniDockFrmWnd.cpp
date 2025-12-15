@@ -31,6 +31,8 @@
 #define __OXMFCIMPL_H__
 #endif
 
+// v93 update 03 - 64-bit
+#include "UTB64Bit.h"
 
 #include "OXSzMiniDockFrmWnd.h"
 

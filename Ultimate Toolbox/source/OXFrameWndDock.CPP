@@ -18,6 +18,10 @@
 // //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"				// standard MFC include
+
+// v93 update 03 - 64-bit - moved here from below
+#include "UTB64Bit.h"
+
 #include "OXFrameWndDock.h"		// this class specification
 
 #include "OXSzMiniDockFrmWnd.h"	// used class specification
@@ -25,7 +29,7 @@
 #include "OXMDIFloatWnd.h"		// used class specification
 
 #include "UTBStrOp.h"
-#include "UTB64Bit.h"
+//#include "UTB64Bit.h"
 
 #ifndef __OXMFCIMPL_H__
 #if _MFC_VER >= 0x0700
@@ -2333,7 +2337,8 @@ void COXMDIChildWndSizeDock::OnStyleChanging(int nStyleType, LPSTYLESTRUCT lpSty
 	}
 }
 
-LPARAM COXMDIChildWndSizeDock::OnSetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LPARAM, UINT, LONG
+LRESULT COXMDIChildWndSizeDock::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	// TODO: Add your specialized code here and/or call the base class
 
@@ -2729,9 +2734,11 @@ BOOL COXSizeViewBar::DetachMDIChild(BOOL bRedraw)
 	return FALSE;
 }
 
-LONG COXSizeViewBar::OnActivateViewBar(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LPARAM, UINT, LONG
+LRESULT COXSizeViewBar::OnActivateViewBar(WPARAM wParam, LPARAM lParam)
 {
-	BOOL bActive=wParam;
+	// v9.3 - update 03 - 64-bit - added (BOOL) cast
+	BOOL bActive=(BOOL)wParam;
 
 	switch(lParam)
 	{
@@ -2847,7 +2854,8 @@ void COXSizeViewBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 	UpdateDialogControls(pTarget, bDisableIfNoHndler);
 }
 
-LONG COXSizeViewBar::OnAddContextMenuItems(WPARAM wParam, LPARAM lParam)
+// v9.3 - update 03 - 64-bit - changed ret type from LONG to LRESULT
+LRESULT COXSizeViewBar::OnAddContextMenuItems(WPARAM wParam, LPARAM lParam)
 {
 	ASSERT(::IsWindow(m_pChildWnd->m_hWnd));
 
@@ -2858,7 +2866,8 @@ LONG COXSizeViewBar::OnAddContextMenuItems(WPARAM wParam, LPARAM lParam)
 	return TRUE;
 }
 
-LPARAM COXSizeViewBar::OnSetText(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LPARAM, UINT, LONG
+LRESULT COXSizeViewBar::OnSetText(WPARAM wParam, LPARAM lParam)
 {
 	// TODO: Add your specialized code here and/or call the base class
 

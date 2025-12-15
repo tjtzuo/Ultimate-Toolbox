@@ -69,9 +69,9 @@
 #endif
 
 
-
+// v9.3 Update 01 - removed OX_CLASS_DECL - ref mschuckmann
 template <class PARENT_MAIN_FRAME>
-class OX_CLASS_DECL COXFullScreenFrame : public PARENT_MAIN_FRAME
+class  COXFullScreenFrame : public PARENT_MAIN_FRAME
 {
 public:
 

@@ -149,7 +149,8 @@ BOOL COXQuickString::AddString(LPCTSTR szText)
             return FALSE;
         tmp[0] = TEXT('\0');
         
-        m_nBufferSize = m_nLength + 1;
+        //m_nBufferSize = m_nLength + 1; // v9.3 Update 01 - Fix by Maurizio Giunti 2008-01-10
+        m_nBufferSize = nLength + 1; 
         
         if (m_szText)
         {

@@ -1032,7 +1032,7 @@ void COXStatusBar::OnLButtonDblClk(UINT nFlags, CPoint point)
 	
 	}
 
-int COXStatusBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+OXINTRET COXStatusBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 	{
 
 	int key=GetAsyncKeyState(VK_LBUTTON);

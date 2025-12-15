@@ -382,9 +382,14 @@ BOOL COXProcess::IsPriorityBoostDisabled(BOOL& bDisabled) const
 #endif
 }
 
-
+// v9.3 - udpate 03 - 64-bit - use SIZE_T for > VC6, else DWORD - TD
+#if _MSC_VER > 1400
+BOOL COXProcess::GetMinMaxWorkingSetSize(SIZE_T& dwMinWorkingSetSize, 
+										 SIZE_T& dwMaxWorkingSetSize) const
+#else
 BOOL COXProcess::GetMinMaxWorkingSetSize(DWORD& dwMinWorkingSetSize, 
 										 DWORD& dwMaxWorkingSetSize) const
+#endif
 {
 	// Using the process ID, open up a handle to the process
 	HANDLE hProcess=::OpenProcess(PROCESS_QUERY_INFORMATION|PROCESS_VM_READ,

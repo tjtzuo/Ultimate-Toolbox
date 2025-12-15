@@ -567,7 +567,8 @@ int COXCalendarPopup::HitTestNavigation(CPoint pt)
 	return 0; // noting hit
 	}
 
-void COXCalendarPopup::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXCalendarPopup::OnTimer(OXTPARAM nIDEvent) 
 	{
 	// TODO: Add your message handler code here and/or call default
 	ASSERT(nIDEvent == 0);// only one timer set

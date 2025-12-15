@@ -36,8 +36,11 @@
 // Diagnostic support
 
 #if defined(_DEBUG) || defined(BETA)
+
+// v9.3 - update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29 
 #ifdef ASSERT
 #undef ASSERT
+#endif  //AAW: We want to define ASSERT in any case, not just if it's defined already, as it was previously.
 
 /////////////////////////////////////////////////////////////////////////////
 // Desciption : This is an internal function that is used by the ASSERT macro. 
@@ -50,7 +53,10 @@
 // -- Returns : Returns TRUE when user selects Retry.
 // -- Effect  : Sends trace message and presents user with Abort, Retry, Ignore, Send dialog. 
 // Note: file names are still ANSI strings (filenames rarely need UNICODE)
-OX_API_DECL BOOL AFXAPI AdvancedAssertFailedLine(LPCTSTR lpszCondition, 
+
+// v9.3 - update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29 
+//		- condition should remain an ANSI String, don't token paste a _T(string) below either.
+OX_API_DECL BOOL AFXAPI AdvancedAssertFailedLine(LPCSTR lpszCondition, 
 												 LPCSTR lpszFileName, int nLine) ;
 
 #ifndef _WIN32
@@ -61,12 +67,13 @@ void AfxDebugBreak() ;
 #define ASSERT(f) \
 	do \
 		{ \
-		if ( !(f) && AdvancedAssertFailedLine(_T(#f), THIS_FILE, __LINE__) ) \
+		if ( !(f) && AdvancedAssertFailedLine(#f, THIS_FILE, __LINE__) ) \
 			AfxDebugBreak() ; \
 		} \
 	while (0) \
 
-#endif // ASSERT
+// v9.3 - END update 04 fixes for ASSERT in unicode builds- AAW 2009-03-29 
+
 
 #ifdef VERIFY
 #undef VERIFY

@@ -18,6 +18,9 @@
 #ifndef __AdvancedAssertMail_h__
 #define __AdvancedAssertMail_h__
 
+// v9.3 - update 03 - 64-bit - TD
+#include "UTB64Bit.h"	// needed for VC6 ULONG_PTR typedef
+
 // If this is not a debug or a beta version, then don't use any of this code. 
 #if defined(_DEBUG) || defined(BETA)   // entire file
 
@@ -49,7 +52,10 @@ class OX_CLASS_DECL COXAdvancedAssertMail
 		
 		ULONG   Logon   (ULONG ulUIParam, LPSTR lpszName, LPSTR lpszPassword, FLAGS flFlags, ULONG ulReserved) ;
 		ULONG   Logoff  (ULONG ulUIParam, FLAGS flFlags, ULONG ulReserved) ;
-		ULONG   SendMail(ULONG ulUIParam, lpMapiMessage lpMessage, FLAGS flFlags, ULONG ulReserved) ;
+
+		// v9.3 - update 03 - 64-bit - changed first param decl from ULONG to ULONG_PTR
+		// to sync with existing fn definition in .cpp file TD
+		ULONG   SendMail(ULONG_PTR ulUIParam, lpMapiMessage lpMessage, FLAGS flFlags, ULONG ulReserved) ;
 
 	protected:
 		HINSTANCE        m_hInstMail     ;      // handle to MAPI32.DLL

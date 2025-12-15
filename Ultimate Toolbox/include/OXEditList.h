@@ -87,7 +87,9 @@
 #include "OXMainRes.h"
 
 #include "MFCToolBar.h"
-#define CToolBar CMFCToolBar
+// v9.3 - update 05 - CMFCToolBar is now COXMFCToolBar to avoid conflict (VS2010)
+//#define CToolBar CMFCToolBar
+#define CToolBar COXMFCToolBar
 
 class OX_CLASS_DECL COXEditListHeader : public CStatic
 {
@@ -236,9 +238,11 @@ protected:
 	//{{AFX_MSG(COXEditListHeader)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
-	afx_msg LONG OnSetText(UINT wParam, LONG lParam);
-	afx_msg LONG OnGetText(UINT wParam, LONG lParam);
-	afx_msg LONG OnGetTextLength(UINT wParam, LONG lParam);
+
+	// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnGetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnGetTextLength(WPARAM wParam, LPARAM lParam);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG

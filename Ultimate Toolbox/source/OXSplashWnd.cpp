@@ -459,7 +459,8 @@ void COXSplashWnd::PostNcDestroy()
 		CWnd::PostNcDestroy();
 	}
 
-void COXSplashWnd::OnTimer(UINT nIDEvent) 
+// v9.3 - update 03 - 64-bit - using OXTPARAM here - see UTB64Bit.h
+void COXSplashWnd::OnTimer(OXTPARAM nIDEvent) 
 	{
 	if (nIDEvent == OXSPLASHWND_TIMERID_HIDE)
 		{

@@ -19,6 +19,9 @@
 #include "OXFileWatcher.h"
 #include "OXMainRes.h"
 
+// v9.3 - update 03 - 64-bit - included for possible redef of PtrToLong
+#include "UTB64Bit.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char BASED_CODE THIS_FILE[] = __FILE__;

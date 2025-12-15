@@ -94,13 +94,15 @@ BOOL COXContextHelpPropertySheet::PreTranslateMessage(MSG* pMsg)
 	return CPropertySheet::PreTranslateMessage(pMsg);
 	}
 
-LONG COXContextHelpPropertySheet::OnHelp(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXContextHelpPropertySheet::OnHelp(WPARAM wParam, LPARAM lParam)
 	{
 	GetActivePage()->SendMessage(WM_HELP, wParam, lParam);
 	return 0;
 	}
 
-LONG COXContextHelpPropertySheet::OnHelpContextMenu(UINT wParam, LONG lParam)
+// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+LRESULT COXContextHelpPropertySheet::OnHelpContextMenu(WPARAM wParam, LPARAM lParam)
 	{
 	GetActivePage()->SendMessage(WM_CONTEXTMENU, wParam, lParam);
 	return 0;

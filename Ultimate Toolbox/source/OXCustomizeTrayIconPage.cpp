@@ -82,6 +82,11 @@ COXCustomizeTrayIconPage::COXCustomizeTrayIconPage()
 
 COXCustomizeTrayIconPage::~COXCustomizeTrayIconPage()
 {
+	// v9.3 update 01 modification Manfred Drasch - ensure removal of tray icon 
+	if (m_trayIcon.IsShowing())
+        m_trayIcon.Hide();
+	// end modification Manfred Drasch
+
 	if((HMENU)m_contextMenu!=NULL)
 		m_contextMenu.DestroyMenu();
 

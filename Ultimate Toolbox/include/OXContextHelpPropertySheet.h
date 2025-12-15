@@ -145,8 +145,10 @@ protected:
 	//{{AFX_MSG(COXContextHelpPropertySheet)
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	//}}AFX_MSG
-	afx_msg LONG OnHelp(UINT wParam, LONG lParam);
-	afx_msg LONG OnHelpContextMenu(UINT wParam, LONG lParam);
+
+	// v9.3 - update 03 - 64-bit - changed these to LRESULT, WPARAM, LPARAM from LONG, UINT, LONG
+	afx_msg LRESULT OnHelp(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnHelpContextMenu(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 

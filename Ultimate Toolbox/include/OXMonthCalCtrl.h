@@ -415,6 +415,8 @@ Example of handling of OXMCN_GETINFOTIP notification
 #include "OXDllExt.h"
 #include "OXMainRes.h"
 
+#include "UTB64Bit.h"
+
 #ifndef _WIN32_IE
 #if _MFC_VER>=0x0420
 #define _WIN32_IE 0x0300
@@ -1636,7 +1638,8 @@ public:
 	// --- Effect : destructor.
 
 
-	virtual int OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+	// v9.3 - update 01 - 64-bit - using OXINTRET instead of int here - see UTB64Bit.h
+	virtual OXINTRET OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	// --- In  :	point	-	Specifies the x- and y-coordinate of the cursor. 
 	//							These coordinates are always relative to the upper-left 
 	//							corner of the window

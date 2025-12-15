@@ -44,7 +44,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "stdafx.h"
+// v9.3 - update 05 - removed
+//#include "stdafx.h"
 
 #if !defined ADDURL_SILENT
 #error You must include "wininet.h" before <afxdisp.h> and before  afxole.h in stdafx.h.
