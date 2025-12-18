@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c1bdf6c1-073b-4a74-95b4-26d8d5da67a0}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UTSource">
+      <UniqueIdentifier>{702d71c4-ed7a-42be-ba51-505f5482974d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b84a3d7b-c7ae-45c0-b620-d50569a060c0}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{591ac9cf-7ab8-4e89-96aa-fc18c58a5254}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\oxgridedit.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXGridHdr.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXGridList.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXUxTheme.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCdoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCvw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainfrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GridCtrl.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GridCdoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCvw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainfrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\oxgridedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXGridHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXGridList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\GridCdoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\GridCtrl.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon3.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\idr_main.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\OXGridListImg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="GridCtrl.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\GridCtrl.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

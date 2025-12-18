@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{34de4a3d-a1b4-430c-9306-4f0a22134304}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UTSource">
+      <UniqueIdentifier>{357b5bbb-6354-4372-bc13-d1483c0fb868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6b5fc34a-5173-4aeb-81e8-f3059bc18231}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{e7ef71e9-caf0-43d9-89f3-9735acbb7182}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXCalendar.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXCalendarPopup.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\UTSampleAbout\UTSampleAbout.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="OXCalendarDemo1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OXCalendarDemo1Dlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OXCalendarDemo1.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Include\OXCalendar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OXCalendarDemo1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OXCalendarDemo1Dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXCalendarPopup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\OXCalendarDemo1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="OXCalendarDemo1.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\OXCalendarDemo1.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

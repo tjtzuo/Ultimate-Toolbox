@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f37d698f-c109-4f5e-8257-f7d6c379ebac}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UTSource">
+      <UniqueIdentifier>{992f5f62-610f-4176-b30b-aaa9af506cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{a8a4063b-a325-4905-9cbe-e4f7f0954663}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{5d7ca252-32de-4b5b-9c4a-b2b056d36216}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\MFCToolBar.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXEditList.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\oxgridedit.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXGridHdr.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXGridList.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXUxTheme.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\UTSampleAbout\UTSampleAbout.cpp">
+      <Filter>Source Files\UTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="EditList1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditList1Dlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EditList1.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EditList1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditList1Dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXEditList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\EditList1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="EditList1.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\EditList1.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

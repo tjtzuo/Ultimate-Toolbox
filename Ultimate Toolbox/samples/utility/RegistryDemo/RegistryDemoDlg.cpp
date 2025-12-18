@@ -87,7 +87,7 @@ CRegistryDemoDlg::COXAction CRegistryDemoDlg::m_actions[] =
 
 		{ TRUE, TRUE,  FALSE, FALSE, szOpen },
 		{ FALSE,FALSE, FALSE, FALSE, szClose },
-		{ TRUE, FALSE, FALSE, FALSE, szDelete },
+		//{ TRUE, FALSE, FALSE, FALSE, szDelete },
 		{ FALSE,FALSE, FALSE, FALSE, szIsOpen },
 		{ FALSE,FALSE, FALSE, FALSE, szFlush },
 		{ TRUE, TRUE,  TRUE,  FALSE, szGetStringValue },

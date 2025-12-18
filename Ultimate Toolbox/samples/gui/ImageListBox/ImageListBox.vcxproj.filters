@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{da55f80b-21bd-4442-b171-ad542bb5893c}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UTBSource">
+      <UniqueIdentifier>{db7a1c6e-f7f9-40b2-8c1b-e81299054d49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skins Framework">
+      <UniqueIdentifier>{a16e1413-0e4f-42d5-a1a5-ae1301ce6be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2cd0d58a-cc0f-487d-90ad-6d0d04b39add}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{6660c86c-1db1-484e-9783-a26cffdafcd5}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\MFCToolBar.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXAdvancedAssert.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXAdvancedAssertMail.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXBitmapButton.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXColorPickerButton.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXColorPickerCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\oxdocktabctrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXHistoryCombo.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXImageListBox.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXPopupBarCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXSeparator.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSkinnedTabCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\UTSampleAbout\UTSampleAbout.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OX3DTabView.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXBitmapMenu.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXBitmapMenuOrganizer.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXCoolToolBar.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXDragDockContext.CPP">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXFrameWndDock.CPP">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXMDIFloatWnd.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXMenuBar.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXRectTracker.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXShortcutBar.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSizeCtrlBar.CPP">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSizeDockBar.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSizeToolBar.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSkinnedComboBox.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSkinnedSpinCtrl.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSkins.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSplitterRect.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXSzMiniDockFrmWnd.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXTabClientWnd.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\OXUxTheme.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Xstatus4.cpp">
+      <Filter>Source Files\Skins Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageListBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageListBoxDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXToolTipCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ImageListBox.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImageListBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageListBoxDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXImageListBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\il_default.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ImageListBox.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="ImageListBox.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\ImageListBox.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

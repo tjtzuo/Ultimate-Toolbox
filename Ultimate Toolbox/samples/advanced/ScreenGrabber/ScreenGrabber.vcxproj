@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_Shared|Win32">
+      <Configuration>Release_Shared</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{6740553D-5D6E-4F97-BA4F-BEE0F7A9B6A4}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'">
+    <OutDir>.\Release_Shared\</OutDir>
+    <IntDir>.\Release_Shared\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level4</WarningLevel>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Source\UTSampleAbout;..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\ScreenGrabber.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\ScreenGrabber.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Source\UTSampleAbout;..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\ScreenGrabber.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <OutputFile>ScreenGrabber.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Lib\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level4</WarningLevel>
+      <AdditionalIncludeDirectories>..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;..\..\..\Include;..\..\..\Source\UTSampleAbout;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release_Shared\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release_Shared\ScreenGrabber.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release_Shared\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release_Shared\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release_Shared\ScreenGrabber.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;..\..\..\Include;..\..\..\Source\UTSampleAbout;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release_Shared\ScreenGrabber.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <OutputFile>ScreenGrabber.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Lib\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level4</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Source\UTSampleAbout;..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\ScreenGrabber.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\ScreenGrabber.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Source\UTSampleAbout;..\..\..\Lib\Jpeg;..\..\..\Lib\Jpeg\Jpegsrc6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\ScreenGrabber.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <OutputFile>ScreenGrabber.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\Lib\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Source\Copytree.cpp" />
+    <ClCompile Include="..\..\..\Source\Dir.cpp" />
+    <ClCompile Include="..\..\..\Source\Dstrlist.cpp" />
+    <ClCompile Include="..\..\..\Source\File.cpp" />
+    <ClCompile Include="..\..\..\source\MFCToolBar.cpp" />
+    <ClCompile Include="..\..\..\source\OX3DTabView.cpp" />
+    <ClCompile Include="..\..\..\source\OXAdvancedAssert.cpp" />
+    <ClCompile Include="..\..\..\source\OXAdvancedAssertMail.cpp" />
+    <ClCompile Include="..\..\..\source\OXBitmapMenu.cpp" />
+    <ClCompile Include="..\..\..\source\OXBitmapMenuOrganizer.cpp" />
+    <ClCompile Include="..\..\..\Source\OXBMPFle.cpp" />
+    <ClCompile Include="..\..\..\Source\OXContextHelpPropertyPage.cpp" />
+    <ClCompile Include="..\..\..\Source\OXContextHelpPropertySheet.cpp" />
+    <ClCompile Include="..\..\..\source\OXCoolToolBar.cpp" />
+    <ClCompile Include="..\..\..\Source\Oxdib.cpp" />
+    <ClCompile Include="..\..\..\Source\OXDirDlg.cpp" />
+    <ClCompile Include="..\..\..\source\oxdocktabctrl.cpp" />
+    <ClCompile Include="..\..\..\source\OXDragDockContext.CPP" />
+    <ClCompile Include="..\..\..\source\OXFrameWndDock.CPP" />
+    <ClCompile Include="..\..\..\Source\OXGphFle.cpp" />
+    <ClCompile Include="..\..\..\Source\OXHistoryCombo.cpp" />
+    <ClCompile Include="..\..\..\Source\OXJPGCod.cpp" />
+    <ClCompile Include="..\..\..\Source\OXJPGCom.cpp" />
+    <ClCompile Include="..\..\..\Source\OXJPGDom.cpp" />
+    <ClCompile Include="..\..\..\Source\OXJPGExp.cpp" />
+    <ClCompile Include="..\..\..\Source\OXJPGFle.cpp" />
+    <ClCompile Include="..\..\..\Source\OXLayoutManager.cpp" />
+    <ClCompile Include="..\..\..\source\OXMDIFloatWnd.cpp" />
+    <ClCompile Include="..\..\..\source\OXMenuBar.cpp" />
+    <ClCompile Include="..\..\..\source\OXRectTracker.cpp" />
+    <ClCompile Include="..\..\..\Source\OXScreenGrab.cpp" />
+    <ClCompile Include="..\..\..\source\OXShortcutBar.cpp" />
+    <ClCompile Include="..\..\..\source\OXSizeCtrlBar.CPP" />
+    <ClCompile Include="..\..\..\source\OXSizeDockBar.cpp" />
+    <ClCompile Include="..\..\..\source\OXSizeToolBar.cpp" />
+    <ClCompile Include="..\..\..\source\OXSkinnedComboBox.cpp" />
+    <ClCompile Include="..\..\..\source\OXSkinnedSpinCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\OXSkinnedTabCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\OXSkins.cpp" />
+    <ClCompile Include="..\..\..\Source\OXSpinCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\OXSplitterRect.cpp" />
+    <ClCompile Include="..\..\..\source\OXSzMiniDockFrmWnd.cpp" />
+    <ClCompile Include="..\..\..\source\OXTabClientWnd.cpp" />
+    <ClCompile Include="..\..\..\Source\OXTaskbarIcon.cpp" />
+    <ClCompile Include="..\..\..\Source\OXToolTipCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\OXUxTheme.cpp" />
+    <ClCompile Include="..\..\..\Source\Path.cpp" />
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp" />
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp" />
+    <ClCompile Include="..\..\..\Source\UTSampleAbout\UTSampleAbout.cpp" />
+    <ClCompile Include="..\..\..\source\Xstatus4.cpp" />
+    <ClCompile Include="..\..\..\Source\Xstring.cpp" />
+    <ClCompile Include="CaptureTaskbarIcon.cpp" />
+    <ClCompile Include="PropertyPageActivation.cpp" />
+    <ClCompile Include="PropertyPageDestination.cpp" />
+    <ClCompile Include="PropertyPageFile.cpp" />
+    <ClCompile Include="PropertyPageImage.cpp" />
+    <ClCompile Include="PropertyPagePreferences.cpp" />
+    <ClCompile Include="PropertyPageSource.cpp" />
+    <ClCompile Include="PropertySheetCapture.cpp" />
+    <ClCompile Include="ScreenGrabber.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release_Shared|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="WndTrackingHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ScreenGrabber.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Include\OXContextHelpPropertyPage.h" />
+    <ClInclude Include="..\..\..\Include\OXContextHelpPropertySheet.h" />
+    <ClInclude Include="CaptureTaskbarIcon.h" />
+    <ClInclude Include="PropertyPageActivation.h" />
+    <ClInclude Include="PropertyPageDestination.h" />
+    <ClInclude Include="PropertyPageFile.h" />
+    <ClInclude Include="PropertyPageImage.h" />
+    <ClInclude Include="PropertyPagePreferences.h" />
+    <ClInclude Include="PropertyPageSource.h" />
+    <ClInclude Include="PropertySheetCapture.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScreenGrabber.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="WndTrackingHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ScreenGrabber.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\ScreenGrabber.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

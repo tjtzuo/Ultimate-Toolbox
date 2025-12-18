@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UsingDLL", "UsingDLL.vcxproj", "{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Unicode Debug|x86 = Unicode Debug|x86
+		Unicode Release|x86 = Unicode Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Debug|x86.ActiveCfg = Debug|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Debug|x86.Build.0 = Debug|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Release|x86.ActiveCfg = Release|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Release|x86.Build.0 = Release|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Unicode Debug|x86.ActiveCfg = Unicode Debug|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Unicode Debug|x86.Build.0 = Unicode Debug|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Unicode Release|x86.ActiveCfg = Unicode Release|Win32
+		{AFDA916A-F44E-4088-90EA-F8F4D20EFFA1}.Unicode Release|x86.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

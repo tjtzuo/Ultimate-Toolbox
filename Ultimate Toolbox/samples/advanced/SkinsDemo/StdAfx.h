@@ -10,11 +10,13 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
+/*
+// Change this to the appropriate value to target other versions of Windows.
 #ifndef WINVER
-#define WINVER 0x0400
+//#define WINVER 0x0400
+#define WINVER 0x0501// Allow use of features specific to Windows XP or later.
 #endif
-
+*/
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
@@ -27,10 +29,10 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include "OXAdvancedAssert.h"
-
+/*
 #include <WinDef.h>
 #include <multimon.h>
-
+*/
 // Add this line to statically link UTLib*.lib
 //#include "UTStaticLib.h"
 

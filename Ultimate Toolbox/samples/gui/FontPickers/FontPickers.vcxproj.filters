@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4f5297d5-98e3-472f-801a-ad999512232c}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UTBSource">
+      <UniqueIdentifier>{f8bb4c3b-a70a-4c35-9f3f-3d3488694a2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{558cdd3e-4b62-4cfd-ba0c-fc658c155a3c}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{461aa06b-792a-4c1a-ab67-d323dc58e28c}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\UTSampleAbout\HtmlCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXBitmapButton.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXFontComboBox.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXFontPickerButton.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXListBoxEx.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXSeparator.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXStatic.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\OXToolTipCtrl.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UTBStrOp.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\UTSampleAbout\UTSampleAbout.cpp">
+      <Filter>Source Files\UTBSource</Filter>
+    </ClCompile>
+    <ClCompile Include="FontPickers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontPickersDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FontPickers.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FontPickers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontPickersDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXBitmapButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXFontComboBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXFontPickerButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\OXStatic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\font.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FontPickers.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Include\RES\il_fonttype.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="FontPickers.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\FontPickers.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

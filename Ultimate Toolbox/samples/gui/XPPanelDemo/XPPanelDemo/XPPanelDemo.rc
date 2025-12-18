@@ -65,8 +65,8 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\XPPanelDemo.ico"
-IDI_NEWFOLDER           ICON                    "C:\\Program Files\\Microsoft Visual Studio 8\\Common7\\VS2005ImageLibrary\\VS2005ImageLibrary\\VS2005ImageLibrary\\icons\\WinXP\\newfolder.ico"
-IDI_WHEEL               ICON                    "C:\\Program Files\\Microsoft Visual Studio 8\\Common7\\VS2005ImageLibrary\\VS2005ImageLibrary\\VS2005ImageLibrary\\icons\\WinXP\\otheroptions.ico"
+IDI_NEWFOLDER           ICON                    "res\\XPPanelDemo.ico"
+IDI_WHEEL               ICON                    "res\\XPPanelDemo.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
