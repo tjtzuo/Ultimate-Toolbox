@@ -1,4 +1,4 @@
-// ==========================================================================
+﻿// ==========================================================================
 // 					Class Specification : COXResultObj
 // ==========================================================================
 
@@ -120,7 +120,7 @@ public:
 	BOOL IsEmpty() const;
 	// --- In  : 
 	// --- Out : 
-	// --- Returns : Whether this object contains any result item�s (FALSE) or not (TRUE)
+	// --- Returns : Whether this object contains any result itemùs (FALSE) or not (TRUE)
 	// --- Effect : 
 
 	COXResultPart& GetMostSeverePart();

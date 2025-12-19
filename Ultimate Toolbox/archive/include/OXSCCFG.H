@@ -1,11 +1,11 @@
-// ==========================================================================
+ï»¿// ==========================================================================
 // 							Class Specification : COXSerialCommConfig
 // ==========================================================================
 
 // Header file : OXSCCFG.H
 
 // This software along with its related components, documentation and files ("The Libraries")
-// is © 1994-2007 The Code Project (1612916 Ontario Limited) and use of The Libraries is
+// is Â© 1994-2007 The Code Project (1612916 Ontario Limited) and use of The Libraries is
 // governed by a software license agreement ("Agreement").  Copies of the Agreement are
 // available at The Code Project (www.codeproject.com), as part of the package you downloaded
 // to obtain this file, or directly from our office.  For a copy of the license governing
@@ -29,8 +29,8 @@
 //	COXSerialCommConfig class
 //		This object defines the port configuration settings like port ID, baudrate,
 //		bytesize, parity, stopbits and flowcontrol. You can set also the size of
-//		the software buffers and the timeout values of the ‘clear to send’,
-//		‘data set ready’ and ‘Carrier detect’ signals. These settings can be loaded
+//		the software buffers and the timeout values of the â€˜clear to sendâ€™,
+//		â€˜data set readyâ€™ and â€˜Carrier detectâ€™ signals. These settings can be loaded
 //		and saved to disk.
 
 // Remark:

@@ -1,11 +1,11 @@
-// ==========================================================================
+ï»¿// ==========================================================================
 // 					Class Specification : COXSendMail
 // ==========================================================================
 
 // Header file : OXSendMail.h
 
 // This software along with its related components, documentation and files ("The Libraries")
-// is © 1994-2007 The Code Project (1612916 Ontario Limited) and use of The Libraries is
+// is Â© 1994-2007 The Code Project (1612916 Ontario Limited) and use of The Libraries is
 // governed by a software license agreement ("Agreement").  Copies of the Agreement are
 // available at The Code Project (www.codeproject.com), as part of the package you downloaded
 // to obtain this file, or directly from our office.  For a copy of the license governing
@@ -47,7 +47,7 @@
 //	additional privilege for this account: the user-right "Restore Files and Directories" must
 //	be granted. If the service uses the system account you have to impersonate a specific
 //	user account if you send a message. For example, if you use the Microsoft IIS to call
-//	your ISAPI extensions, the IIS will impersonate the anonymous WWW-account ‘USR_COMPUTER_NAME’
+//	your ISAPI extensions, the IIS will impersonate the anonymous WWW-account â€˜USR_COMPUTER_NAMEâ€™
 //	before calling your extension DLL. 
 //	You have to provide a suitable Profile for that user account. If MAPI logs on to a store or
 //	transport provider it uses a MAPI profile which defines the providers to use.
