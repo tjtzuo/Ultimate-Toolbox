@@ -8,7 +8,7 @@ Release*/
 
 # User-specific files
 *.suo
-*.user
+#*.user
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

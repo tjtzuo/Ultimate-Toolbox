@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
-int __cdecl crtReportHookW(int nReportType, wchar_t* wszMsg, int* pnRet)
+static int __cdecl crtReportHookW(int nReportType, wchar_t* wszMsg, int* pnRet)
 {
 	UNREFERENCED_PARAMETER(pnRet);
 	const wchar_t wszTrace[] = L"atlTraceGeneral - ";
@@ -26,7 +26,7 @@ int __cdecl crtReportHookW(int nReportType, wchar_t* wszMsg, int* pnRet)
 	}
 	return FALSE;	// always keep processing
 }
-int __cdecl crtReportHook(int nReportType, char* szMsg, int* pnRet)
+static int __cdecl crtReportHook(int nReportType, char* szMsg, int* pnRet)
 {
 	UNREFERENCED_PARAMETER(pnRet);
 	const char szTrace[] = "atlTraceGeneral - ";

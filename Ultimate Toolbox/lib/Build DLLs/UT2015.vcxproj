@@ -126,9 +126,10 @@
     <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
-    <OutDir>.\ReleaseU\</OutDir>
+    <OutDir>..\DLLs\</OutDir>
     <IntDir>.\ReleaseU\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>UTU</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
@@ -137,9 +138,10 @@
     <TargetName>UTU</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>.\Release\</OutDir>
+    <OutDir>..\DLLs\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>UT</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
@@ -148,9 +150,10 @@
     <TargetName>UT</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
-    <OutDir>.\DebugU\</OutDir>
+    <OutDir>..\DLLs\</OutDir>
     <IntDir>.\DebugU\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>UTDU</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
@@ -159,9 +162,10 @@
     <TargetName>UTDU</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>.\Debug\</OutDir>
+    <OutDir>..\DLLs\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>UTD</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
@@ -202,7 +206,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>..\..\Lib\libs\jpgr.lib;..\..\Lib\libs\cpuinfr.lib;version.lib;mapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\DLLs/UTU.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ProgramDatabaseFile>.\ReleaseU/UTU.pdb</ProgramDatabaseFile>
@@ -299,7 +303,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>..\..\Lib\libs\jpgr.lib;..\..\Lib\libs\cpuinfr.lib;version.lib;mapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\DLLs/UT.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBC;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -397,7 +401,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>..\..\Lib\libs\jpgd.lib;..\..\Lib\libs\cpuinfd.lib;version.lib;mapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\DLLs/UTDU.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -494,7 +498,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>..\..\Lib\libs\jpgd.lib;..\..\Lib\libs\cpuinfd.lib;version.lib;mapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\DLLs/UTD.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>LIBCD;LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -806,7 +810,6 @@
     <ClCompile Include="UT.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Include\OXMain.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
