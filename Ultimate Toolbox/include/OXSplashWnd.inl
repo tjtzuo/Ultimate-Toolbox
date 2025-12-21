@@ -6,6 +6,7 @@
 // ==========================================================================
 // Version: 9.3
 
+#undef CopyRgn
 
 inline BOOL COXSplashWnd::GetAutoDelete() const
 	{ 

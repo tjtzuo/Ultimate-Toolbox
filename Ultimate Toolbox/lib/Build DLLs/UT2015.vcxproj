@@ -17,20 +17,20 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Unicode Debug|Win32">
-      <Configuration>Unicode Debug</Configuration>
+    <ProjectConfiguration Include="DebugUnicode|Win32">
+      <Configuration>DebugUnicode</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Unicode Debug|x64">
-      <Configuration>Unicode Debug</Configuration>
+    <ProjectConfiguration Include="DebugUnicode|x64">
+      <Configuration>DebugUnicode</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Unicode Release|Win32">
-      <Configuration>Unicode Release</Configuration>
+    <ProjectConfiguration Include="ReleaseUnicode|Win32">
+      <Configuration>ReleaseUnicode</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Unicode Release|x64">
-      <Configuration>Unicode Release</Configuration>
+    <ProjectConfiguration Include="ReleaseUnicode|x64">
+      <Configuration>ReleaseUnicode</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -58,7 +58,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -69,7 +69,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -80,7 +80,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -93,7 +93,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
@@ -101,7 +101,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
@@ -109,7 +109,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
@@ -117,7 +117,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
@@ -125,13 +125,13 @@
   <PropertyGroup>
     <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">
     <OutDir>..\DLLs\</OutDir>
     <IntDir>.\ReleaseU\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>UTU</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
@@ -149,13 +149,13 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>UT</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">
     <OutDir>..\DLLs\</OutDir>
     <IntDir>.\DebugU\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <TargetName>UTDU</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">
     <OutDir>..\DLLs\$(Platform)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
@@ -173,7 +173,7 @@
     <LinkIncremental>true</LinkIncremental>
     <TargetName>UTD</TargetName>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
@@ -221,7 +221,7 @@
       <OutputFile>.\ReleaseU/UT.bsc</OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
@@ -369,7 +369,7 @@
       <OutputFile>.\Release/UT.bsc</OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
@@ -417,7 +417,7 @@
       <OutputFile>.\DebugU/UT.bsc</OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
@@ -569,10 +569,10 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
@@ -613,6 +613,11 @@
     <ClCompile Include="..\..\source\OXCaptionPainter.cpp" />
     <ClCompile Include="..\..\source\OXChildFrameState.cpp" />
     <ClCompile Include="..\..\source\OXClipPocket.cpp" />
+    <ClCompile Include="..\..\source\OXCmdlEx.cpp" />
+    <ClCompile Include="..\..\source\OXCmdLne.cpp" />
+    <ClCompile Include="..\..\source\OXCmdOpd.cpp" />
+    <ClCompile Include="..\..\source\OXCmdOpt.cpp">
+    </ClCompile>
     <ClCompile Include="..\..\source\OXCMPFL.CPP" />
     <ClCompile Include="..\..\source\OXColorPickerButton.cpp" />
     <ClCompile Include="..\..\source\OXColorPickerCtrl.cpp" />
@@ -703,6 +708,7 @@
     <ClCompile Include="..\..\source\OXMDIFloatWnd.cpp" />
     <ClCompile Include="..\..\source\OXMenuBar.cpp" />
     <ClCompile Include="..\..\source\OXMetaFile.cpp" />
+    <ClCompile Include="..\..\source\OXMetafileViewer.cpp" />
     <ClCompile Include="..\..\source\OXMonthCalCtrl.cpp" />
     <ClCompile Include="..\..\source\OXMulticlipboardDlg.cpp" />
     <ClCompile Include="..\..\source\OXMultiComboBox.cpp" />
@@ -765,12 +771,14 @@
     <ClCompile Include="..\..\source\OXSplitterWnd.cpp" />
     <ClCompile Include="..\..\source\OXStatic.cpp" />
     <ClCompile Include="..\..\source\OXStaticHyperLink.cpp" />
+    <ClCompile Include="..\..\source\OXStaticMenuItem.cpp" />
     <ClCompile Include="..\..\source\OXStaticText.cpp" />
     <ClCompile Include="..\..\source\OXSysInfo.cpp" />
     <ClCompile Include="..\..\source\OXSzMiniDockFrmWnd.cpp" />
     <ClCompile Include="..\..\source\OXTabClientWnd.cpp" />
     <ClCompile Include="..\..\source\OXTabView.cpp" />
     <ClCompile Include="..\..\source\OXTaskbarIcon.cpp" />
+    <ClCompile Include="..\..\source\OXTimer.cpp" />
     <ClCompile Include="..\..\source\OXTleBar.CPP" />
     <ClCompile Include="..\..\source\OXToolTipCtrl.cpp" />
     <ClCompile Include="..\..\source\OXTrace.cpp" />
@@ -786,8 +794,10 @@
     <ClCompile Include="..\..\source\OXUsertl.cpp" />
     <ClCompile Include="..\..\source\OXUUDec.cpp" />
     <ClCompile Include="..\..\source\OXUxTheme.cpp" />
+    <ClCompile Include="..\..\source\OXVerinfo.cpp" />
     <ClCompile Include="..\..\source\OXWatchedDir.cpp" />
     <ClCompile Include="..\..\source\oxwebctrl.cpp" />
+    <ClCompile Include="..\..\source\OXWebView.cpp" />
     <ClCompile Include="..\..\source\OXWorkspaceState.cpp" />
     <ClCompile Include="..\..\source\Oxzoomvw.cpp" />
     <ClCompile Include="..\..\source\Path.cpp" />
@@ -802,10 +812,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="UT.cpp" />
   </ItemGroup>

@@ -7,7 +7,7 @@
 
 // CUsingDLLDlg dialog
 
-#include "OXStaticHyperLink.h"
+//#include "OXStaticHyperLink.h"
 #include "afxwin.h"
 
 class CUsingDLLDlg : public CDialog

@@ -75,8 +75,8 @@
 // ... Make sure linker uses the the multi media library
 #pragma comment(lib, "winmm.lib ")
 
-
-
+#undef GlobalAllocPtr
+#undef GlobalFreePtr
 
 // all possible sound sources 
 //

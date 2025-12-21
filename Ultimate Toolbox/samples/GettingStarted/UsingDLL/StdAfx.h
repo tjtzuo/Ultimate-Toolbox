@@ -21,7 +21,7 @@
 #include <afxext.h>         // MFC extensions
 
 
-
+#include <WinInet.h>
 
 
 #ifndef _AFX_NO_OLE_SUPPORT
@@ -39,8 +39,8 @@
 #define _LINK_TO_UTB_IN_EXTDLL
 #include "UTDLL.h"
 
+#define OXTRACEON
 
-
-
+#include "OXMain.h"
 
 

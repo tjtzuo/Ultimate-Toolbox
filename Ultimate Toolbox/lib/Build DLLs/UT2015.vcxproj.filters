@@ -692,6 +692,33 @@
     <ClCompile Include="..\..\source\XSTRING.CPP">
       <Filter>Source Files\Ultimate ToolBox Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\OXTimer.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXVerinfo.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCmdLne.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCmdOpd.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCmdOpt.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCmdlEx.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXMetafileViewer.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXStaticMenuItem.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXWebView.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
