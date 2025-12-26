@@ -233,5 +233,9 @@
 #include "OXTimer.h"
 #include "OXVerinfo.h"
 #include "OXCmdOpt.h"
+#include "OXVariant.h"
+#include "OXBlob.h"
+#include "OXCommMsg.h"
+#include "OXCommunicator.h"
 
 #endif //_OXMAIN_H__

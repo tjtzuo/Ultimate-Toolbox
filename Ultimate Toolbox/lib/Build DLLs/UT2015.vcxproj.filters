@@ -18,11 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\include\OXMain.rc">
-      <Filter>Source Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -719,9 +714,24 @@
     <ClCompile Include="..\..\source\OXWebView.cpp">
       <Filter>Source Files\Ultimate ToolBox Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\OXBlob.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCommMsg.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXCommunicator.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\OXVariant.cpp">
+      <Filter>Source Files\Ultimate ToolBox Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OXMainRes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -729,22 +739,10 @@
     <Image Include="..\..\include\res\command_group.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\..\Include\RES\command_group.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\..\include\res\custom_button.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\..\Include\RES\custom_button.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\..\include\res\new_popup_menu.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\Include\RES\new_popup_menu.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\Include\RES\noimage.ico">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\include\res\noimage.ico">
@@ -759,7 +757,109 @@
     <Image Include="..\..\include\res\separator.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\..\Include\RES\separator.ico">
+    <Image Include="..\..\include\res\OXGridListImg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXEditListImg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\caption.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\tabbedmdi.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcusttabmdi_orient.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcusttabmdi_settings.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcusttabmdi_appearance.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcusttabmdi_display.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcusttabmdi_positioning.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\workspace_state.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcustom.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\toolbars.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\commands.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\il_oxcustomize_custom_images.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\bkgnd_painter.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\coolcontrols.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxcustcoolcontrols_controls.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\trayicon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\instance_manager.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\splashwindow.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\shortkeys.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXHistoryComboImg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\intellitarget.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXMulticlipboardDlg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXNetBrowseTreeImg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXNotesBrush.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXNotesBkmarks.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxoption.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\OXOptionHighContrast.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\il_fonttype.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\oxpreviewbtn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\RES\OXRUpBar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\treelist.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\sndplay.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\include\res\sndstop.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -767,16 +867,7 @@
     <None Include="..\..\include\res\OXHandCursor.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\OXHandCursor.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\OXNoHandCursor.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\OXNoHandCursor.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\res\OXNotes.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\OXNotes.cur">
@@ -785,16 +876,7 @@
     <None Include="..\..\include\res\OXSpinHor.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\OXSpinHor.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\OXSpinVer.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\OXSpinVer.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\oxtbcopy.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\oxtbcopy.cur">
@@ -803,34 +885,16 @@
     <None Include="..\..\include\res\oxtbmove.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\oxtbmove.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\oxtbremove.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\oxtbremove.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\scrl_all.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\scrl_all.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\scrl_bottomleft.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\scrl_bottomleft.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\scrl_bottomright.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_bottomright.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_down.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\scrl_down.cur">
@@ -839,16 +903,7 @@
     <None Include="..\..\include\res\scrl_left.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\scrl_left.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\scrl_leftright.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_leftright.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_right.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\scrl_right.cur">
@@ -857,16 +912,7 @@
     <None Include="..\..\include\res\scrl_topbottom.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\scrl_topbottom.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\include\res\scrl_topleft.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_topleft.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\..\Include\RES\scrl_topright.cur">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\include\res\scrl_topright.cur">
@@ -875,8 +921,13 @@
     <None Include="..\..\include\res\scrl_up.cur">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\Include\RES\scrl_up.cur">
-      <Filter>Resource Files</Filter>
-    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UT.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\..\include\OXMain.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

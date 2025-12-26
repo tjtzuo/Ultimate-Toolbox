@@ -564,18 +564,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\include\OXMain.rc">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">\Work\Ultimate Toolbox\UTB9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\source\CONVFILE.CPP" />
     <ClCompile Include="..\..\source\COPYTREE.CPP" />
     <ClCompile Include="..\..\source\CPYSTDLG.CPP" />
@@ -599,6 +587,7 @@
     <ClCompile Include="..\..\source\OXBitmapButton.cpp" />
     <ClCompile Include="..\..\source\OXBitmapMenu.cpp" />
     <ClCompile Include="..\..\source\OXBitmapMenuOrganizer.cpp" />
+    <ClCompile Include="..\..\source\OXBlob.cpp" />
     <ClCompile Include="..\..\source\OXBMPFilePickerCombo.cpp" />
     <ClCompile Include="..\..\source\OXBMPFle.cpp" />
     <ClCompile Include="..\..\source\OXBrowseColorEdit.cpp" />
@@ -622,6 +611,8 @@
     <ClCompile Include="..\..\source\OXColorPickerButton.cpp" />
     <ClCompile Include="..\..\source\OXColorPickerCtrl.cpp" />
     <ClCompile Include="..\..\source\OXComboPickerCtrl.cpp" />
+    <ClCompile Include="..\..\source\OXCommMsg.cpp" />
+    <ClCompile Include="..\..\source\OXCommunicator.cpp" />
     <ClCompile Include="..\..\source\OXCOMPR.CPP" />
     <ClCompile Include="..\..\source\OXContextHelpDialog.cpp" />
     <ClCompile Include="..\..\source\OXContextHelpPropertyPage.cpp" />
@@ -794,6 +785,7 @@
     <ClCompile Include="..\..\source\OXUsertl.cpp" />
     <ClCompile Include="..\..\source\OXUUDec.cpp" />
     <ClCompile Include="..\..\source\OXUxTheme.cpp" />
+    <ClCompile Include="..\..\source\OXVariant.cpp" />
     <ClCompile Include="..\..\source\OXVerinfo.cpp" />
     <ClCompile Include="..\..\source\OXWatchedDir.cpp" />
     <ClCompile Include="..\..\source\oxwebctrl.cpp" />
@@ -820,42 +812,54 @@
     <ClCompile Include="UT.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\OXMainRes.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Include\RES\command_group.ico" />
-    <Image Include="..\..\..\Include\RES\custom_button.ico" />
-    <Image Include="..\..\..\Include\RES\new_popup_menu.ico" />
-    <Image Include="..\..\..\Include\RES\noimage.ico" />
-    <Image Include="..\..\..\Include\RES\separator.ico" />
+    <Image Include="..\..\include\res\bkgnd_painter.bmp" />
+    <Image Include="..\..\include\res\caption.bmp" />
+    <Image Include="..\..\include\res\commands.bmp" />
     <Image Include="..\..\include\res\command_group.ico" />
+    <Image Include="..\..\include\res\coolcontrols.bmp" />
     <Image Include="..\..\include\res\custom_button.ico" />
+    <Image Include="..\..\include\res\il_fonttype.bmp" />
+    <Image Include="..\..\include\res\il_oxcustomize_custom_images.bmp" />
+    <Image Include="..\..\include\res\instance_manager.bmp" />
+    <Image Include="..\..\include\res\intellitarget.bmp" />
     <Image Include="..\..\include\res\new_popup_menu.ico" />
     <Image Include="..\..\include\res\noimage.ico" />
+    <Image Include="..\..\include\res\oxcustcoolcontrols_controls.bmp" />
+    <Image Include="..\..\include\res\oxcustom.bmp" />
+    <Image Include="..\..\include\res\oxcusttabmdi_appearance.bmp" />
+    <Image Include="..\..\include\res\oxcusttabmdi_display.bmp" />
+    <Image Include="..\..\include\res\oxcusttabmdi_orient.bmp" />
+    <Image Include="..\..\include\res\oxcusttabmdi_positioning.bmp" />
+    <Image Include="..\..\include\res\oxcusttabmdi_settings.bmp" />
+    <Image Include="..\..\include\res\OXEditListImg.bmp" />
+    <Image Include="..\..\include\res\OXGridListImg.bmp" />
+    <Image Include="..\..\include\res\OXHistoryComboImg.bmp" />
+    <Image Include="..\..\include\res\OXMulticlipboardDlg.bmp" />
+    <Image Include="..\..\include\res\OXNetBrowseTreeImg.bmp" />
+    <Image Include="..\..\include\res\OXNotesBkmarks.bmp" />
+    <Image Include="..\..\include\res\OXNotesBrush.bmp" />
+    <Image Include="..\..\include\res\oxoption.bmp" />
+    <Image Include="..\..\include\res\OXOptionHighContrast.bmp" />
+    <Image Include="..\..\include\res\oxpreviewbtn.bmp" />
+    <Image Include="..\..\include\RES\OXRUpBar.bmp" />
     <Image Include="..\..\include\res\properti.bmp" />
     <Image Include="..\..\include\res\properties_toolbar.bmp" />
     <Image Include="..\..\include\res\separator.ico" />
+    <Image Include="..\..\include\res\shortkeys.bmp" />
+    <Image Include="..\..\include\res\sndplay.bmp" />
+    <Image Include="..\..\include\res\sndstop.bmp" />
+    <Image Include="..\..\include\res\splashwindow.bmp" />
+    <Image Include="..\..\include\res\tabbedmdi.bmp" />
+    <Image Include="..\..\include\res\toolbars.bmp" />
+    <Image Include="..\..\include\res\trayicon.bmp" />
+    <Image Include="..\..\include\res\treelist.bmp" />
+    <Image Include="..\..\include\res\workspace_state.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Include\RES\OXHandCursor.cur" />
-    <None Include="..\..\..\Include\RES\OXNoHandCursor.cur" />
-    <None Include="..\..\..\Include\res\OXNotes.cur" />
-    <None Include="..\..\..\Include\RES\OXSpinHor.cur" />
-    <None Include="..\..\..\Include\RES\OXSpinVer.cur" />
-    <None Include="..\..\..\Include\RES\oxtbcopy.cur" />
-    <None Include="..\..\..\Include\RES\oxtbmove.cur" />
-    <None Include="..\..\..\Include\RES\oxtbremove.cur" />
-    <None Include="..\..\..\Include\RES\scrl_all.cur" />
-    <None Include="..\..\..\Include\RES\scrl_bottomleft.cur" />
-    <None Include="..\..\..\Include\RES\scrl_bottomright.cur" />
-    <None Include="..\..\..\Include\RES\scrl_down.cur" />
-    <None Include="..\..\..\Include\RES\scrl_left.cur" />
-    <None Include="..\..\..\Include\RES\scrl_leftright.cur" />
-    <None Include="..\..\..\Include\RES\scrl_right.cur" />
-    <None Include="..\..\..\Include\RES\scrl_topbottom.cur" />
-    <None Include="..\..\..\Include\RES\scrl_topleft.cur" />
-    <None Include="..\..\..\Include\RES\scrl_topright.cur" />
-    <None Include="..\..\..\Include\RES\scrl_up.cur" />
     <None Include="..\..\include\res\OXHandCursor.cur" />
     <None Include="..\..\include\res\OXNoHandCursor.cur" />
     <None Include="..\..\include\res\OXNotes.cur" />
@@ -875,6 +879,27 @@
     <None Include="..\..\include\res\scrl_topleft.cur" />
     <None Include="..\..\include\res\scrl_topright.cur" />
     <None Include="..\..\include\res\scrl_up.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\include\OXMain.rc" />
+    <ResourceCompile Include="UT.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugUnicode|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseUnicode|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
